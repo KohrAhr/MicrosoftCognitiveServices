@@ -35,7 +35,9 @@ uses
   { ContentType }
   System.NetConsts,
   { Format }
-  System.SysUtils, uFunctions.StringHelper;
+  System.SysUtils,
+  { StringHelper }
+  uFunctions.StringHelper;
 
 { TFaceApi }
 
@@ -95,45 +97,51 @@ begin
 end;
 
 function TFaceApi.DetectURL(AURL: String; AReturnFaceId, AReturnFaceLandmarks: Boolean; AReturnFaceAttributes: String): String;
-//var
-//  LNameValuePair: TNameValuePair;
-//  LHTTPClient: THTTPClient;
-//	LStream: TStream;
-//  LURL: String;
-//  LHeaders: TNetHeaders;
-//	LResponse: TMemoryStream;
+var
+  LNameValuePair: TNameValuePair;
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LURL: String;
+  LHeaders: TNetHeaders;
+	LResponse: TMemoryStream;
+  LRequestContent: TStringStream;
 begin
-//  LHTTPClient := THTTPClient.Create;
-//  try
-//    SetLength(LHeaders, 1);
-//
-//    LNameValuePair.Name := 'Ocp-Apim-Subscription-Key';
-//    LNameValuePair.Value := AccessKey;
-//    LHeaders[0] := LNameValuePair;
-//
-//    LHTTPClient.ContentType := 'application/json';
-//    LURL := Format(
-//      'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
-//      [
-//        CONST_FACE_API_SERVER_URL[AccessServer],
-//        BoolToStr(AReturnFaceId, True).ToLower,
-//        BoolToStr(AReturnFaceLandmarks, True).ToLower,
-//        AReturnFaceAttributes.ToLower
-//      ]
-//    );
-//    LStream := LHTTPClient.Post(LURL, AURL, nil, LHeaders).ContentStream;
-//
-//    LResponse := TMemoryStream.Create;
-//    try
-//      LResponse.CopyFrom(LStream, LStream.Size);
-//
-//      Result := StringHelper.MemoryStreamToString(LResponse);
-//    finally
-//      LResponse.Free;
-//    end;
-//  finally
-//    LHTTPClient.Free;
-//  end;
+  LRequestContent := nil;
+  LHTTPClient := THTTPClient.Create;
+  try
+    SetLength(LHeaders, 1);
+
+    LNameValuePair.Name := 'Ocp-Apim-Subscription-Key';
+    LNameValuePair.Value := AccessKey;
+    LHeaders[0] := LNameValuePair;
+
+    LHTTPClient.ContentType := 'application/json';
+    LURL := Format(
+      'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
+      [
+        CONST_FACE_API_SERVER_URL[AccessServer],
+        BoolToStr(AReturnFaceId, True).ToLower,
+        BoolToStr(AReturnFaceLandmarks, True).ToLower,
+        AReturnFaceAttributes.ToLower
+      ]
+    );
+
+    LRequestContent := TStringStream.Create('{ "url":"http://1click.lv/index.jpg" }');
+
+    LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
+
+    LResponse := TMemoryStream.Create;
+    try
+      LResponse.CopyFrom(LStream, LStream.Size);
+
+      Result := StringHelper.MemoryStreamToString(LResponse);
+    finally
+      LResponse.Free;
+    end;
+  finally
+    LRequestContent.Free;
+    LHTTPClient.Free;
+  end;
 end;
 
 end.
