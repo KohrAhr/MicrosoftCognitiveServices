@@ -8,18 +8,11 @@ uses
   { TFaceApiServer }
   uFaceApi.Servers.Types,
   { TContentType }
-  uFaceApi.Content.Types;
+  uFaceApi.Content.Types,
+  { TFaceApiBase }
+  uFaceApi.Base;
 
 type
-  TFaceApiBase = class
-  private
-    FAccessKey: String;
-    FAccessServer: TFaceApiServer;
-  public
-    property AccessKey: String read FAccessKey write FAccessKey;
-    property AccessServer: TFaceApiServer read FAccessServer write FAccessServer;
-  end;
-
   TDetectOptions = record
     ReturnFaceId: Boolean;
     ReturnFaceLandmarks: Boolean;
@@ -62,7 +55,7 @@ begin
 
   AccessKey := AAccessKey;
 
-  FAccessServer := AAccessServer;
+  AccessServer := AAccessServer;
 end;
 
 function TFaceApi.Detect(ARequestType: TContentType; AData: String; ADetectOptions: TDetectOptions): String;
