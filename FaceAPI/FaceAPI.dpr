@@ -4,7 +4,9 @@ uses
   Vcl.Forms,
   ufmMain in 'ufmMain.pas' {Form1},
   uFaceApi in 'uFaceApi.pas',
-  uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas';
+  uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas',
+  uFaceApi.Servers.Types in 'uFaceApi.Servers.Types.pas',
+  uFaceApi.Content.Types in 'uFaceApi.Content.Types.pas';
 
 {$R *.res}
 

@@ -6,7 +6,9 @@ uses
   { TStream }
   System.Classes,
   { TFaceApiServer }
-  uFaceApi.Servers.Types;
+  uFaceApi.Servers.Types,
+  { TContentType }
+  uFaceApi.Content.Types;
 
 type
   TFaceApiBase = class
@@ -27,12 +29,6 @@ type
   end;
 
   function Detect(AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = ''): TDetectOptions;
-
-type
-  TContentType = (rtFile, rtUrl);
-
-const
-  CONST_CONTENT_TYPE: array [TContentType] of String = ('application/octet-stream', 'application/json');
 
 type
   TFaceApi = class(TFaceApiBase)
@@ -68,7 +64,6 @@ begin
 
   FAccessServer := AAccessServer;
 end;
-
 
 function TFaceApi.Detect(ARequestType: TContentType; AData: String; ADetectOptions: TDetectOptions): String;
 var
