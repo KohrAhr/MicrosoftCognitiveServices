@@ -3,60 +3,137 @@ unit uFaceApi;
 interface
 
 uses
-  System.Classes;
+  System.Classes,
+  { TFaceApiServer }
+  uFaceApi.Servers.Types;
 
 type
-  TFaceApiServer = (fasGeneral);
-
   TFaceApiBase = class
   private
     FAccessKey: String;
+    FAccessServer: TFaceApiServer;
   public
-    procedure SetAccessKey(AValue: String);
-    procedure SetAccessServer(AValue: TFaceApiServer);
+    property AccessKey: String read FAccessKey write FAccessKey;
+    property AccessServer: TFaceApiServer read FAccessServer write FAccessServer;
   end;
 
   TFaceApi = class(TFaceApiBase)
   public
-//    function Detect(AURL: String; AReturnFaceId, AReturnFaceLandmarks: Boolean): String;
-    function Detect(AFileName: String; AReturnFaceId, AReturnFaceLandmarks: Boolean): String; overload;
-    function Detect(AFile: TMemoryStream; AReturnFaceId, AReturnFaceLandmarks: Boolean): String; overload;
+    function DetectURL(AURL: String; AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = ''): String; overload;
+    function DetectFile(AFileName: String; AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = ''): String; overload;
 
-    constructor Create(AAccessKey: String);
+    constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
 implementation
 
+uses
+  { THTTPClient }
+  System.Net.HttpClient,
+  { TNetHeaders }
+  System.Net.URLClient,
+  { ContentType }
+  System.NetConsts,
+  { Format }
+  System.SysUtils, uFunctions.StringHelper;
+
 { TFaceApi }
 
-function TFaceApi.Detect(AFileName: String; AReturnFaceId, AReturnFaceLandmarks: Boolean): String;
-begin
-
-end;
-
-constructor TFaceApi.Create(AAccessKey: String);
+constructor TFaceApi.Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
 begin
   inherited Create;
 
-  FAccessKey := AAccessKey;
-end;
+  AccessKey := AAccessKey;
 
-function TFaceApi.Detect(AFile: TMemoryStream; AReturnFaceId, AReturnFaceLandmarks: Boolean): String;
-begin
-
+  FAccessServer := AAccessServer;
 end;
 
 
-{ TFaceApiBase }
-
-procedure TFaceApiBase.SetAccessKey(AValue: String);
+function TFaceApi.DetectFile(AFileName: String; AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = ''): String;
+var
+  LNameValuePair: TNameValuePair;
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LURL: String;
+  LHeaders: TNetHeaders;
+	LResponse: TMemoryStream;
 begin
+  if not FileExists(AFileName) then
+    Exit;
 
+  LHTTPClient := THTTPClient.Create;
+  try
+    SetLength(LHeaders, 1);
+
+    LNameValuePair.Name := 'Ocp-Apim-Subscription-Key';
+    LNameValuePair.Value := AccessKey;
+    LHeaders[0] := LNameValuePair;
+
+    LHTTPClient.ContentType := 'application/octet-stream';
+    LURL := Format(
+      'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
+      [
+        CONST_FACE_API_SERVER_URL[AccessServer],
+        BoolToStr(AReturnFaceId, True).ToLower,
+        BoolToStr(AReturnFaceLandmarks, True).ToLower,
+        AReturnFaceAttributes.ToLower
+      ]
+    );
+    LStream := LHTTPClient.Post(LURL, AFileName, nil, LHeaders).ContentStream;
+
+    LResponse := TMemoryStream.Create;
+    try
+      LResponse.CopyFrom(LStream, LStream.Size);
+
+      Result := StringHelper.MemoryStreamToString(LResponse);
+    finally
+      LResponse.Free;
+    end;
+  finally
+    LHTTPClient.Free;
+  end;
 end;
 
-procedure TFaceApiBase.SetAccessServer(AValue: TFaceApiServer);
+function TFaceApi.DetectURL(AURL: String; AReturnFaceId, AReturnFaceLandmarks: Boolean; AReturnFaceAttributes: String): String;
+//var
+//  LNameValuePair: TNameValuePair;
+//  LHTTPClient: THTTPClient;
+//	LStream: TStream;
+//  LURL: String;
+//  LHeaders: TNetHeaders;
+//	LResponse: TMemoryStream;
 begin
-
+//  LHTTPClient := THTTPClient.Create;
+//  try
+//    SetLength(LHeaders, 1);
+//
+//    LNameValuePair.Name := 'Ocp-Apim-Subscription-Key';
+//    LNameValuePair.Value := AccessKey;
+//    LHeaders[0] := LNameValuePair;
+//
+//    LHTTPClient.ContentType := 'application/json';
+//    LURL := Format(
+//      'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
+//      [
+//        CONST_FACE_API_SERVER_URL[AccessServer],
+//        BoolToStr(AReturnFaceId, True).ToLower,
+//        BoolToStr(AReturnFaceLandmarks, True).ToLower,
+//        AReturnFaceAttributes.ToLower
+//      ]
+//    );
+//    LStream := LHTTPClient.Post(LURL, AURL, nil, LHeaders).ContentStream;
+//
+//    LResponse := TMemoryStream.Create;
+//    try
+//      LResponse.CopyFrom(LStream, LStream.Size);
+//
+//      Result := StringHelper.MemoryStreamToString(LResponse);
+//    finally
+//      LResponse.Free;
+//    end;
+//  finally
+//    LHTTPClient.Free;
+//  end;
 end;
 
 end.
