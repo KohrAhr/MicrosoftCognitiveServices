@@ -27,6 +27,9 @@ implementation
 uses
   uFaceApi, uFaceApi.Servers.Types;
 
+const
+  CONST_ACCESS_KEY = '4acb98b9002d4d87878b54bed21af7bc';
+
 {$R *.dfm}
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -34,9 +37,11 @@ var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  LFaceApi := TFaceApi.Create('4acb98b9002d4d87878b54bed21af7bc', fasWestUS);
+  Memo1.Clear;
+
+  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
-    LResult := LFaceApi.DetectFile('D:\Temp\index.jpg', True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion');
+    LResult := LFaceApi.DetectFile('D:\Temp\index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
 
     Memo1.Lines.Add(LResult);
   finally
@@ -49,9 +54,11 @@ var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  LFaceApi := TFaceApi.Create('4acb98b9002d4d87878b54bed21af7bc', fasWestUS);
+  Memo1.Clear;
+
+  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
-    LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion');
+    LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
 
     Memo1.Lines.Add(LResult);
   finally

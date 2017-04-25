@@ -25,11 +25,11 @@ object Form1: TForm1
   object Memo1: TMemo
     Left = 8
     Top = 64
-    Width = 441
+    Width = 817
     Height = 217
-    Lines.Strings = (
-      'Memo1')
+    ScrollBars = ssVertical
     TabOrder = 1
+    WantTabs = True
   end
   object Button2: TButton
     Left = 89
