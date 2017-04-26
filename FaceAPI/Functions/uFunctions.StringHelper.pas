@@ -24,8 +24,7 @@ begin
   LStringStream := TStringStream.Create('', TEncoding.UTF8);
   try
     M.Position := 0;
-    { ZB: M.Size - 1? Hack? Usually we can do TStringStream.LoadFromStream(M) and it will even detect the encoding (in most cases..) }
-    LStringStream.CopyFrom(M, M.Size - 1);
+    LStringStream.CopyFrom(M, M.Size);
     Result := LStringStream.DataString;
   finally
     LStringStream.Free;

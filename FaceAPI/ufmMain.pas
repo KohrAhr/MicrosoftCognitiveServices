@@ -11,8 +11,10 @@ type
     Button1: TButton;
     Memo1: TMemo;
     Button2: TButton;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -25,7 +27,16 @@ var
 implementation
 
 uses
-  uFaceApi, uFaceApi.Servers.Types;
+  uFaceApi, uFaceApi.Servers.Types,
+  { THTTPClient }
+  System.Net.HttpClient,
+  { TNetHeaders }
+  System.Net.URLClient,
+  { ContentType }
+  System.NetConsts,
+  { StringHelper }
+  uFunctions.StringHelper, uFaceApi.Content.Types;
+
 
 const
   CONST_ACCESS_KEY = '4acb98b9002d4d87878b54bed21af7bc';
@@ -41,7 +52,7 @@ begin
 
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
-    LResult := LFaceApi.DetectFile('D:\Temp\index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
+    LResult := LFaceApi.DetectFile('C:\Temp\index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
 
     Memo1.Lines.Add(LResult);
   finally
@@ -59,6 +70,30 @@ begin
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
     LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
+
+    Memo1.Lines.Add(LResult);
+  finally
+    LFaceApi.Free;
+  end;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  LFaceApi: TFaceApi;
+  LResult: String;
+  LRequestContent: TStringStream;
+begin
+  LRequestContent := nil;
+
+  Memo1.Clear;
+
+  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  try
+    LRequestContent := TStringStream.Create;
+
+    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+
+    LResult := LFaceApi.DetectStream(LRequestContent, Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
 
     Memo1.Lines.Add(LResult);
   finally

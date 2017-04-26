@@ -25,10 +25,11 @@ type
 
 type
   TFaceApi = class(TFaceApiBase)
-    function Detect(ARequestType: TContentType; AData: String; ADetectOptions: TDetectOptions): String;
+    function Detect(ARequestType: TContentType; AData: String; AStreamData: TStringStream; ADetectOptions: TDetectOptions): String;
   public
     function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
     function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
+    function DetectStream(AStream: TStringStream; ADetectOptions: TDetectOptions): String;
 
     constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
@@ -58,7 +59,7 @@ begin
   AccessServer := AAccessServer;
 end;
 
-function TFaceApi.Detect(ARequestType: TContentType; AData: String; ADetectOptions: TDetectOptions): String;
+function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TStringStream; ADetectOptions: TDetectOptions): String;
 var
   LNameValuePair: TNameValuePair;
   LHTTPClient: THTTPClient;
@@ -97,7 +98,11 @@ begin
       LStream := LHTTPClient.Post(LURL, AData, nil, LHeaders).ContentStream
     else
       begin
-        LRequestContent := TStringStream.Create(Format('{ "url":"%s" }', [AData]));
+        if ARequestType = rtStream then
+          LRequestContent := AStreamData
+        else
+          LRequestContent := TStringStream.Create(Format('{ "url":"%s" }', [AData]));
+
         LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
       end;
 
@@ -117,12 +122,17 @@ end;
 
 function TFaceApi.DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
 begin
-  Result := Detect(rtFile, AFileName, ADetectOptions);
+  Result := Detect(rtFile, AFileName, nil, ADetectOptions);
+end;
+
+function TFaceApi.DetectStream(AStream: TStringStream; ADetectOptions: TDetectOptions): String;
+begin
+  Result := Detect(rtStream, '', AStream, ADetectOptions);
 end;
 
 function TFaceApi.DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
 begin
-  Result := Detect(rtUrl, AURL, ADetectOptions);
+  Result := Detect(rtUrl, AURL, nil, ADetectOptions);
 end;
 
 { TDetect }

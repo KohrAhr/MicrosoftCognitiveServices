@@ -40,4 +40,13 @@ object Form1: TForm1
     TabOrder = 2
     OnClick = Button2Click
   end
+  object Button3: TButton
+    Left = 170
+    Top = 8
+    Width = 127
+    Height = 25
+    Caption = 'Detect in Stream'
+    TabOrder = 3
+    OnClick = Button3Click
+  end
 end
