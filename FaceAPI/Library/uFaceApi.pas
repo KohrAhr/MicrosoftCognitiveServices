@@ -13,15 +13,24 @@ uses
   uFaceApi.Base;
 
 type
-  TDetectOptions = record
-    ReturnFaceId: Boolean;
-    ReturnFaceLandmarks: Boolean;
-    ReturnFaceAttributes: String;
+  TFaceAttribute = (doAge = 1, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion);
 
-    constructor Create(AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = '');
+  TFaceAttributes = set of TFaceAttribute;
+
+const
+  CONST_FACE_ATTRIBUTES: array [TFaceAttribute] of String = ('age', 'gender', 'headPose', 'smile', 'facialHair', 'glasses', 'emotion');
+
+type
+  TDetectOptions = record
+    FaceId: Boolean;
+    FaceLandmarks: Boolean;
+    FaceAttributes: TFaceAttributes;
+
+    function FaceAttributesToString: String;
+    constructor Create(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []);
   end;
 
-  function Detect(AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = ''): TDetectOptions;
+  function Detect(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
 
 type
   TFaceApi = class(TFaceApiBase)
@@ -86,9 +95,9 @@ begin
       'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
       [
         CONST_FACE_API_SERVER_URL[AccessServer],
-        BoolToStr(ADetectOptions.ReturnFaceId, True).ToLower,
-        BoolToStr(ADetectOptions.ReturnFaceLandmarks, True).ToLower,
-        ADetectOptions.ReturnFaceAttributes.ToLower
+        BoolToStr(ADetectOptions.FaceId, True).ToLower,
+        BoolToStr(ADetectOptions.FaceLandmarks, True).ToLower,
+        ADetectOptions.FaceAttributesToString
       ]
     );
 
@@ -135,18 +144,36 @@ begin
   Result := Detect(rtUrl, AURL, nil, ADetectOptions);
 end;
 
-{ TDetect }
+{ TDetectOptions }
 
-constructor TDetectOptions.Create(AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = '');
+function Detect(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
 begin
-  ReturnFaceId := AReturnFaceId;
-  ReturnFaceLandmarks := AReturnFaceLandmarks;
-  ReturnFaceAttributes := AReturnFaceAttributes;
+  Result := TDetectOptions.Create(AFaceId, AFaceLandmarks, AFaceAttributes);
 end;
 
-function Detect(AReturnFaceId: Boolean; AReturnFaceLandmarks: Boolean = False; AReturnFaceAttributes: String = ''): TDetectOptions;
+constructor TDetectOptions.Create(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []);
 begin
-  Result := TDetectOptions.Create(AReturnFaceId, AReturnFaceLandmarks, AReturnFaceAttributes);
+  FaceId := AFaceId;
+  FaceLandmarks := AFaceLandmarks;
+  FaceAttributes := AFaceAttributes;
+end;
+
+function TDetectOptions.FaceAttributesToString: String;
+var
+  LFaceAttribute: TFaceAttribute;
+begin
+  Result := '';
+
+  for LFaceAttribute := Low(CONST_FACE_ATTRIBUTES) to High(CONST_FACE_ATTRIBUTES) do
+    if LFaceAttribute in FaceAttributes then
+      begin
+        if Result <> '' then
+          Result := Result + ',';
+        Result := Result + CONST_FACE_ATTRIBUTES[LFaceAttribute];
+      end;
+
+//  if Result <> '' then
+//    Result := 'faceAttributes=' + Result;
 end;
 
 end.

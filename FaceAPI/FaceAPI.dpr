@@ -2,7 +2,7 @@ program FaceAPI;
 
 uses
   Vcl.Forms,
-  ufmMain in 'ufmMain.pas' {Form1},
+  ufmMain in 'ufmMain.pas' {fmMain},
   uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas',
   uFaceApi.Base in 'Library\uFaceApi.Base.pas',
   uFaceApi.Content.Types in 'Library\uFaceApi.Content.Types.pas',
@@ -16,6 +16,6 @@ begin
 
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfmMain, fmMain);
   Application.Run;
 end.

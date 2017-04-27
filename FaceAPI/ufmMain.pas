@@ -3,81 +3,73 @@ unit ufmMain;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages,
+  System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
-  TForm1 = class(TForm)
-    Button1: TButton;
-    Memo1: TMemo;
-    Button2: TButton;
-    Button3: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+  TfmMain = class(TForm)
+    btnDetectInFile: TButton;
+    memLog: TMemo;
+    btnDetectInUrl: TButton;
+    btnDetectInStream: TButton;
+    procedure btnDetectInFileClick(Sender: TObject);
+    procedure btnDetectInUrlClick(Sender: TObject);
+    procedure btnDetectInStreamClick(Sender: TObject);
   private
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var
-  Form1: TForm1;
+  fmMain: TfmMain;
 
 implementation
 
 uses
-  uFaceApi, uFaceApi.Servers.Types,
-  { THTTPClient }
-  System.Net.HttpClient,
-  { TNetHeaders }
-  System.Net.URLClient,
-  { ContentType }
-  System.NetConsts,
-  { StringHelper }
-  uFunctions.StringHelper, uFaceApi.Content.Types;
-
+  { TFaceApi }
+  uFaceApi,
+  uFaceApi.Servers.Types;
 
 const
   CONST_ACCESS_KEY = '4acb98b9002d4d87878b54bed21af7bc';
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfmMain.btnDetectInFileClick(Sender: TObject);
 var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  Memo1.Clear;
+  memLog.Clear;
 
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
-    LResult := LFaceApi.DetectFile('C:\Temp\index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
+    LResult := LFaceApi.DetectFile('C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]));
 
-    Memo1.Lines.Add(LResult);
+    memLog.Lines.Add(LResult);
   finally
     LFaceApi.Free;
   end;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  Memo1.Clear;
+  memLog.Clear;
 
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
-    LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
+    LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect(True));
 
-    Memo1.Lines.Add(LResult);
+    memLog.Lines.Add(LResult);
   finally
     LFaceApi.Free;
   end;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
 var
   LFaceApi: TFaceApi;
   LResult: String;
@@ -85,7 +77,7 @@ var
 begin
   LRequestContent := nil;
 
-  Memo1.Clear;
+  memLog.Clear;
 
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
@@ -93,9 +85,9 @@ begin
 
     LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
-    LResult := LFaceApi.DetectStream(LRequestContent, Detect(True, True, 'age,gender,headPose,smile,facialHair,glasses,emotion'));
+    LResult := LFaceApi.DetectStream(LRequestContent, Detect(True, True));
 
-    Memo1.Lines.Add(LResult);
+    memLog.Lines.Add(LResult);
   finally
     LFaceApi.Free;
   end;
