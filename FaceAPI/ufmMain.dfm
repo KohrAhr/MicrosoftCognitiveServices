@@ -51,7 +51,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 202
     Height = 25
-    Caption = 'Detect in file'
+    Caption = 'Detect in File'
     TabOrder = 0
     OnClick = btnDetectInFileClick
   end

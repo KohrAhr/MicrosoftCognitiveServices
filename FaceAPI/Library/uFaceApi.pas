@@ -1,3 +1,6 @@
+/// <summary>
+///   Main Class implementation for Face API Microsoft Cognitive Services 1.0
+/// </summary>
 unit uFaceApi;
 
 interface
@@ -21,15 +24,25 @@ uses
   uFaceApi.FaceDetectOptions;
 
 type
+  /// <summary>
+  ///   Main Class implementation for Face API Microsoft Cognitive Services 1.0
+  /// </summary>
   TFaceApi = class(TFaceApiBase, IFaceApi)
+  private
     function Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
   public
     function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
     function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
     function DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonGroups">interface ListPersonGroups</see>
+    /// </summary>
     function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
+    /// </summary>
     function ListPersonsInPersonGroup(APersonGroup: String): String;
 
     function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
@@ -120,7 +133,11 @@ begin
         if ARequestType = rtStream then
           LRequestContent := TBytesStream.Create(AStreamData.Bytes)
         else
-          LRequestContent := TBytesStream.Create(StringHelper.StringToBytesArray(Format('{ "url":"%s" }', [AData])));
+          LRequestContent := TBytesStream.Create(
+            StringHelper.StringToBytesArray(
+              Format('{ "url":"%s" }', [AData])
+            )
+          );
 
         LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
       end;
