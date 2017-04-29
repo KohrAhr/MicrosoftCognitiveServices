@@ -19,12 +19,19 @@ type
     edtAccessKey: TEdit;
     lblAccessKey: TLabel;
     btnClearLog: TButton;
+    lblPersonName: TLabel;
+    edtPersonName: TEdit;
+    lblPersonUserData: TLabel;
+    edtPersonUserData: TEdit;
+    btnCreatePerson: TButton;
+    Label1: TLabel;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
     procedure btnListPersonGroupsClick(Sender: TObject);
     procedure btnListPersonsInPersonGroupClick(Sender: TObject);
     procedure btnClearLogClick(Sender: TObject);
+    procedure btnCreatePersonClick(Sender: TObject);
   private
   public
   end;
@@ -51,6 +58,20 @@ uses
 procedure TfmMain.btnClearLogClick(Sender: TObject);
 begin
   memLog.Clear;
+end;
+
+procedure TfmMain.btnCreatePersonClick(Sender: TObject);
+var
+  LIFaceApi: IFaceApi;
+  LResult: String;
+begin
+  LIFaceApi := TFaceApi.Create;
+
+  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
+
+  LResult := LIFaceApi.CreatePerson(edtPersonGroup.Text, edtPersonName.Text, edtPersonUserData.Text);
+
+  memLog.Lines.Add(LResult);
 end;
 
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);

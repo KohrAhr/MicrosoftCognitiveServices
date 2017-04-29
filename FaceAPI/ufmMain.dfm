@@ -23,6 +23,27 @@ object fmMain: TfmMain
     Height = 13
     Caption = 'Access key'
   end
+  object lblPersonName: TLabel
+    Left = 592
+    Top = 61
+    Width = 62
+    Height = 13
+    Caption = 'Person name'
+  end
+  object lblPersonUserData: TLabel
+    Left = 592
+    Top = 88
+    Width = 62
+    Height = 13
+    Caption = 'Person name'
+  end
+  object Label1: TLabel
+    Left = 590
+    Top = 34
+    Width = 64
+    Height = 13
+    Caption = 'Person group'
+  end
   object btnDetectInFile: TButton
     Left = 8
     Top = 8
@@ -87,8 +108,8 @@ object fmMain: TfmMain
     OnClick = btnListPersonsInPersonGroupClick
   end
   object edtPersonGroup: TEdit
-    Left = 170
-    Top = 58
+    Left = 660
+    Top = 31
     Width = 121
     Height = 21
     TabOrder = 6
@@ -110,5 +131,30 @@ object fmMain: TfmMain
     Caption = 'Clear log'
     TabOrder = 8
     OnClick = btnClearLogClick
+  end
+  object edtPersonName: TEdit
+    Left = 660
+    Top = 58
+    Width = 121
+    Height = 21
+    TabOrder = 9
+    Text = 'edtPersonName'
+  end
+  object edtPersonUserData: TEdit
+    Left = 660
+    Top = 85
+    Width = 121
+    Height = 21
+    TabOrder = 10
+    Text = 'edtPersonUserData'
+  end
+  object btnCreatePerson: TButton
+    Left = 440
+    Top = 56
+    Width = 123
+    Height = 25
+    Caption = 'Create New Person'
+    TabOrder = 11
+    OnClick = btnCreatePersonClick
   end
 end

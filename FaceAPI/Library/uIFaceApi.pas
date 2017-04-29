@@ -22,6 +22,8 @@ type
 
     function ListPersonsInPersonGroup(APersonGroup: String): String;
 
+    function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
+
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 

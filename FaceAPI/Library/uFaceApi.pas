@@ -32,6 +32,8 @@ type
 
     function ListPersonsInPersonGroup(APersonGroup: String): String;
 
+    function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
+
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
@@ -42,6 +44,43 @@ uses
   System.SysUtils,
   { StringHelper }
   uFunctions.StringHelper;
+
+function TFaceApi.CreatePerson(AGroupID, APersonName, APersonUserData: String): String;
+var
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LURL: String;
+  LHeaders: TNetHeaders;
+  LRequestContent: TBytesStream;
+begin
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+
+  LURL := Format(
+    '%s/persongroups/%s/persons',
+    [
+      ServerBaseUrl(AccessServer),
+      AGroupID
+    ]
+  );
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(
+        Format(
+          '{ "name":"%s", "userData":"%s" }',
+          [APersonName, APersonUserData]
+        )
+      )
+    );
+
+    LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
+  finally
+    LRequestContent.Free;
+  end;
+
+  Result := ProceedHttpClientData(LHTTPClient, LStream);
+end;
 
 function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
 var
