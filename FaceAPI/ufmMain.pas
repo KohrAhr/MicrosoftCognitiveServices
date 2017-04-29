@@ -14,10 +14,13 @@ type
     btnDetectInUrl: TButton;
     btnDetectInStream: TButton;
     btnListPersonGroups: TButton;
+    btnListPersonsInPersonGroup: TButton;
+    edtPersonGroup: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
     procedure btnListPersonGroupsClick(Sender: TObject);
+    procedure btnListPersonsInPersonGroupClick(Sender: TObject);
   private
   public
   end;
@@ -83,6 +86,23 @@ begin
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
     LResult := LFaceApi.ListPersonGroups;
+
+    memLog.Lines.Add(LResult);
+  finally
+    LFaceApi.Free;
+  end;
+end;
+
+procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
+var
+  LFaceApi: TFaceApi;
+  LResult: String;
+begin
+  memLog.Clear;
+
+  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  try
+    LResult := LFaceApi.ListPersonsInPersonGroup(edtPersonGroup.Text);
 
     memLog.Lines.Add(LResult);
   finally

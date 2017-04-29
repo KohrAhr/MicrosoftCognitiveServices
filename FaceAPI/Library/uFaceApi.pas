@@ -36,6 +36,8 @@ type
 
     function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
 
+    function ListPersonsInPersonGroup(APersonGroup: String): String;
+
     constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
@@ -168,6 +170,51 @@ begin
         CONST_FACE_API_SERVER_URL[AccessServer],
         AStart,
         ATop.ToString
+      ]
+    );
+
+    LHTTPClient.ContentType := CONST_CONTENT_TYPE[rtUrl];
+
+    LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
+
+    LResponse := TMemoryStream.Create;
+    try
+      LResponse.CopyFrom(LStream, LStream.Size);
+
+      Result := StringHelper.MemoryStreamToString(LResponse);
+    finally
+      LResponse.Free;
+    end;
+  finally
+    LRequestContent.Free;
+    LHTTPClient.Free;
+  end;
+end;
+
+function TFaceApi.ListPersonsInPersonGroup(APersonGroup: String): String;
+var
+  LNameValuePair: TNameValuePair;
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LURL: String;
+  LHeaders: TNetHeaders;
+	LResponse: TMemoryStream;
+  LRequestContent: TStringStream;
+begin
+  LRequestContent := nil;
+  LHTTPClient := THTTPClient.Create;
+  try
+    SetLength(LHeaders, 1);
+
+    LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
+    LNameValuePair.Value := AccessKey;
+    LHeaders[0] := LNameValuePair;
+
+    LURL := Format(
+      'https://%s/face/v1.0/persongroups/%s/persons',
+      [
+        CONST_FACE_API_SERVER_URL[AccessServer],
+        APersonGroup
       ]
     );
 

@@ -50,12 +50,29 @@ object fmMain: TfmMain
     OnClick = btnDetectInStreamClick
   end
   object btnListPersonGroups: TButton
-    Left = 8
-    Top = 72
+    Left = 352
+    Top = 8
     Width = 156
     Height = 25
     Caption = 'List Person Groups'
     TabOrder = 4
     OnClick = btnListPersonGroupsClick
+  end
+  object btnListPersonsInPersonGroup: TButton
+    Left = 8
+    Top = 56
+    Width = 156
+    Height = 25
+    Caption = 'List Persons In Person Group'
+    TabOrder = 5
+    OnClick = btnListPersonsInPersonGroupClick
+  end
+  object edtPersonGroup: TEdit
+    Left = 170
+    Top = 58
+    Width = 121
+    Height = 21
+    TabOrder = 6
+    Text = 'edtPersonGroup'
   end
 end
