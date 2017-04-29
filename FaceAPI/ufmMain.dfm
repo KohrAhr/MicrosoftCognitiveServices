@@ -3,7 +3,7 @@ object fmMain: TfmMain
   Top = 0
   Caption = 'Microsoft Cognitive Services demo'
   ClientHeight = 442
-  ClientWidth = 768
+  ClientWidth = 857
   Color = clBtnFace
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
@@ -14,7 +14,7 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    768
+    857
     442)
   PixelsPerInch = 96
   TextHeight = 13
@@ -39,7 +39,7 @@ object fmMain: TfmMain
     Height = 13
     Caption = 'Person user data'
   end
-  object Label1: TLabel
+  object Z: TLabel
     Left = 494
     Top = 111
     Width = 64
@@ -58,7 +58,7 @@ object fmMain: TfmMain
   object memLog: TMemo
     Left = 8
     Top = 232
-    Width = 753
+    Width = 842
     Height = 203
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
@@ -179,11 +179,20 @@ object fmMain: TfmMain
   end
   object btnCreatePersonGroup: TButton
     Left = 247
-    Top = 135
+    Top = 136
     Width = 202
     Height = 25
     Caption = 'Create Person Group'
     TabOrder = 14
     OnClick = btnCreatePersonGroupClick
+  end
+  object btnVerifyTwoFaces: TButton
+    Left = 656
+    Top = 8
+    Width = 122
+    Height = 25
+    Caption = 'Verify two faces'
+    TabOrder = 15
+    OnClick = btnVerifyTwoFacesClick
   end
 end

@@ -32,58 +32,63 @@ type
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.DetectBase">interface DetectBase</see>
     /// </summary>
-    function DetectBase(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
+    function DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
   public
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.DetectURL">interface DetectURL</see>
     /// </summary>
-    function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
+    function DetectURL(const AURL: String; const ADetectOptions: TDetectOptions): String;
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.DetectFile">interface DetectFile</see>
     /// </summary>
-    function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
+    function DetectFile(const AFileName: String; const ADetectOptions: TDetectOptions): String;
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.DetectStream">interface DetectStream</see>
     /// </summary>
-    function DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
+    function DetectStream(AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonGroups">interface ListPersonGroups</see>
     /// </summary>
-    function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
+    function ListPersonGroups(const AStart: String = ''; const ATop: Integer = 1000): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
     /// </summary>
-    function ListPersonsInPersonGroup(APersonGroup: String): String;
+    function ListPersonsInPersonGroup(const APersonGroup: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePerson">interface CreatePerson</see>
     /// </summary>
-    function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
+    function CreatePerson(const AGroupID: String; const APersonName: String; const APersonUserData: String = ''): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
     /// </summary>
-    function GetPersonGroupTrainingStatus(AGroupID: String): String;
+    function GetPersonGroupTrainingStatus(const AGroupID: String): String;
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.TrainPersonGroup">interface TrainPersonGroup</see>
     /// </summary>
-    function TrainPersonGroup(AGroupID: String): String;
+    function TrainPersonGroup(const AGroupID: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
-    function CreatePersonGroup(AGroupID: String): String;
+    function CreatePersonGroup(const AGroupID: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
     /// </summary>
-    function Verify(AFaceTempID1, AFaceTempID2: String): String; overload;
+    function Verify(const AFaceTempID1, AFaceTempID2: String): String; overload;
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
     /// </summary>
-    function Verify(AFaceTempID, APersonID, AGroupID: String): String; overload;
+    function Verify(const AFaceTempID, APersonID, AGroupID: String): String; overload;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface Identify</see>
+    /// </summary>
+    function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.SetAccessKey">interface SetAccessKey</see>
@@ -99,7 +104,7 @@ uses
   { StringHelper }
   uFunctions.StringHelper;
 
-function TFaceApi.CreatePerson(AGroupID, APersonName, APersonUserData: String): String;
+function TFaceApi.CreatePerson(const AGroupID, APersonName, APersonUserData: String): String;
 var
   LHTTPClient: THTTPClient;
 	LStream: TStream;
@@ -136,7 +141,7 @@ begin
   Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
-function TFaceApi.DetectBase(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
+function TFaceApi.DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
 var
   LHTTPClient: THTTPClient;
 	LStream: TStream;
@@ -184,22 +189,22 @@ begin
   end;
 end;
 
-function TFaceApi.DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
+function TFaceApi.DetectFile(const AFileName: String; const ADetectOptions: TDetectOptions): String;
 begin
   Result := DetectBase(rtFile, AFileName, nil, ADetectOptions);
 end;
 
-function TFaceApi.DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
+function TFaceApi.DetectStream(AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 begin
   Result := DetectBase(rtStream, '', AStream, ADetectOptions);
 end;
 
-function TFaceApi.DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
+function TFaceApi.DetectURL(const AURL: String; const ADetectOptions: TDetectOptions): String;
 begin
   Result := DetectBase(rtUrl, AURL, nil, ADetectOptions);
 end;
 
-function TFaceApi.ListPersonGroups(AStart: String; ATop: Integer): String;
+function TFaceApi.ListPersonGroups(const AStart: String; const ATop: Integer): String;
 var
   LHTTPClient: THTTPClient;
 	LStream: TStream;
@@ -222,7 +227,7 @@ begin
   Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
-function TFaceApi.ListPersonsInPersonGroup(APersonGroup: String): String;
+function TFaceApi.ListPersonsInPersonGroup(const APersonGroup: String): String;
 var
   LHTTPClient: THTTPClient;
 	LStream: TStream;
@@ -251,27 +256,32 @@ begin
   AccessServer := AAccessServer;
 end;
 
-function TFaceApi.GetPersonGroupTrainingStatus(AGroupID: String): String;
+function TFaceApi.GetPersonGroupTrainingStatus(const AGroupID: String): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.TrainPersonGroup(AGroupID: String): String;
+function TFaceApi.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.Verify(AFaceTempID1, AFaceTempID2: String): String;
+function TFaceApi.TrainPersonGroup(const AGroupID: String): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.Verify(AFaceTempID, APersonID, AGroupID: String): String;
+function TFaceApi.Verify(const AFaceTempID1, AFaceTempID2: String): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.CreatePersonGroup(AGroupID: String): String;
+function TFaceApi.Verify(const AFaceTempID, APersonID, AGroupID: String): String;
+begin
+  Result := '';
+end;
+
+function TFaceApi.CreatePersonGroup(const AGroupID: String): String;
 begin
   Result := '';
 end;

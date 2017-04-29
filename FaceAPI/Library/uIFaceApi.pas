@@ -56,7 +56,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code  Error Message Description
     /// </returns>
-    function DetectBase(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
+    function DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
 
     /// <summary>
     ///   Detect human faces in an image (internet url) and returns face locations, and optionally with faceIds, landmarks, and attributes.
@@ -71,7 +71,7 @@ type
     /// <returns>
     ///   <see cref="uIFaceApi|IFaceApi.DetectBase">See base Detect function</see>
     /// </returns>
-    function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
+    function DetectURL(const AURL: String; const ADetectOptions: TDetectOptions): String;
     /// <summary>
     ///   Detect human faces in an image (local file name) and returns face locations, and optionally with faceIds, landmarks, and attributes.
     ///   Wrapper for base Detect function
@@ -85,7 +85,7 @@ type
     /// <returns>
     ///   <see cref="uIFaceApi|IFaceApi.DetectBase">See base Detect function</see>
     /// </returns>
-    function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
+    function DetectFile(const AFileName: String; const ADetectOptions: TDetectOptions): String;
     /// <summary>
     ///   Detect human faces in an image (stream) and returns face locations, and optionally with faceIds, landmarks, and attributes.
     ///   Wrapper for base Detect function
@@ -99,7 +99,7 @@ type
     /// <returns>
     ///   <see cref="uIFaceApi|IFaceApi.DetectBase">See base Detect function</see>
     /// </returns>
-    function DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
+    function DetectStream(AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 
     /// <summary>
     ///   List person groups and their information.
@@ -127,7 +127,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code  Error Message Description
     /// </returns>
-    function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
+    function ListPersonGroups(const AStart: String = ''; const ATop: Integer = 1000): String;
 
     /// <summary>
     ///   List all persons in a person group, and retrieve person information (including personId, name, userData and persistedFaceIds of registered faces of the person).
@@ -151,7 +151,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function ListPersonsInPersonGroup(AGroupID: String): String;
+    function ListPersonsInPersonGroup(const AGroupID: String): String;
 
     /// <summary>
     ///   Create a new person in a specified person group. A newly created person have no registered face.
@@ -181,7 +181,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
+    function CreatePerson(const AGroupID: String; const APersonName: String; const APersonUserData: String = ''): String;
 
     /// <summary>
     ///   Retrieve the training status of a person group (completed or ongoing).
@@ -207,7 +207,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function GetPersonGroupTrainingStatus(AGroupID: String): String;
+    function GetPersonGroupTrainingStatus(const AGroupID: String): String;
     /// <summary>
     ///   Queue a person group training task, the training task may not be started immediately.
     ///   Any updates to person group will not take effect in Face - Identify until person group is successfully trained.
@@ -226,7 +226,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function TrainPersonGroup(AGroupID: String): String;
+    function TrainPersonGroup(const AGroupID: String): String;
 
     /// <summary>
     ///   Create a new person group with specified personGroupId, name and user-provided userData.
@@ -245,7 +245,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function CreatePersonGroup(AGroupID: String): String;
+    function CreatePersonGroup(const AGroupID: String): String;
 
     /// <summary>
     ///   Verify whether two faces belong to a same person
@@ -259,7 +259,7 @@ type
 		/// <param name="AFaceTempID2">
     ///     Temp Cace Id of another face, comes from Face - Detect.
 		/// </param>
-    function Verify(AFaceTempID1, AFaceTempID2: String): String; overload;
+    function Verify(const AFaceTempID1, AFaceTempID2: String): String; overload;
     /// <summary>
     ///   Verify whether one face belongs to a person
     /// </summary>
@@ -269,10 +269,54 @@ type
 		/// <param name="APersonID">
     ///   Specify a certain person in a person group. personId is created in <see cref="uIFaceApi|IFaceApi.CreatePerson">Person - Create a Person</see>.
     /// </param>
-		/// <param name="AGroupID">
+    /// <param name="AGroupID">
     ///   Using existing personGroupId
 		/// </param>
-    function Verify(AFaceTempID, APersonID, AGroupID: String): String; overload;
+    function Verify(const AFaceTempID, APersonID, AGroupID: String): String; overload;
+
+    /// <summary>
+    ///   Identify unknown faces from a person group.
+    ///   For each face in the faceIds array, Face Identify will compute similarities between the query face and all the faces in the person group (given by personGroupId), and returns candidate person(s) for that face ranked by similarity confidence.
+    ///   The person group should be trained to make it ready for identification.
+    ///   Remarks:
+    ///     The algorithm allows more than one face to be identified independently at the same request, but the no more than 10 faces.
+    ///     Each person in the person group could have more than one face, but no more than 248 faces.
+    ///     Identification works well for frontal faces and near-frontal faces.
+    ///     Number of candidates returned is restricted by maxNumOfCandidatesReturned and confidenceThreshold. If no person is identified, the candidate returned will be an empty array.
+    ///     Try Face - Find Similar when you need to identify similar faces from a face list instead of a person group.
+    /// </summary>
+    /// <param name="AFaceIDS">
+    ///   Array of query faces faceIds, created by the Face - Detect.
+    ///   Each of the faces are identified independently. The maximum number of faceIds is 10.
+    /// </param>
+    /// <param name="AGroupID">
+    ///   Id of the target person group, created by Person Group - Create a Person Group.
+    /// </param>
+    /// <param name="AMaxNumOfCandidatesReturned">
+    ///   Maximum number of returned candidates for each face is between 1 and 5 (default is 1).
+    /// </param>
+    /// <param name="AConfidenceThreshold">
+    ///   Optional parameter.
+    ///   Confidence threshold of identification, used to judge whether one face belong to one person.
+    ///   The range of confidenceThreshold is [0, 1] (default specified by algorithm or by developer :)).
+    /// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns the identified candidate person(s) for each query face.
+    ///   JSON fields in response body:
+    ///   Fields	    Type	  Description
+    ///   faceId	    String	faceId of the query face.
+    ///   candidates	Array	  Identified person candidates for that face (ranked by confidence). Array size should be no larger than input maxNumOfCandidatesReturned. If no person is identified, will return an empty array.
+    ///   personId	  String	personId of candidate person.
+    ///   confidence	Number	A float number between 0.0 and 1.0.
+    ///
+    ///   [ERROR]
+    ///   Response 400, 401, 403, 409, 415, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
     ///   Define your access key and define your server location

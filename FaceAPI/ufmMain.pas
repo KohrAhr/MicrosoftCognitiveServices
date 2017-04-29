@@ -24,10 +24,11 @@ type
     lblPersonUserData: TLabel;
     edtPersonUserData: TEdit;
     btnCreatePerson: TButton;
-    Label1: TLabel;
+    Z: TLabel;
     btnRunPersonGroupTraining: TButton;
     btnGetPersonGroupTrainingStatus: TButton;
     btnCreatePersonGroup: TButton;
+    btnVerifyTwoFaces: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -38,6 +39,7 @@ type
     procedure btnGetPersonGroupTrainingStatusClick(Sender: TObject);
     procedure btnRunPersonGroupTrainingClick(Sender: TObject);
     procedure btnCreatePersonGroupClick(Sender: TObject);
+    procedure btnVerifyTwoFacesClick(Sender: TObject);
   private
   public
   end;
@@ -205,6 +207,11 @@ begin
   LResult := LIFaceApi.CreatePersonGroup(edtPersonGroup.Text);
 
   memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnVerifyTwoFacesClick(Sender: TObject);
+begin
+  //
 end;
 
 end.
