@@ -6,10 +6,12 @@ uses
   { TStringStream }
   System.Classes,
   { TDetectOptions }
-  uFaceApi.FaceDetectOptions;
+  uFaceApi.FaceDetectOptions,
+  { TFaceApiServer }
+  uFaceApi.Servers.Types;
 
 type
-  IFaceApi = interface
+  IFaceApi = interface(IInterface)
     ['{904FC5EC-6ECC-49EB-A3B0-7D785A5D23D2}']
 
     function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
@@ -19,6 +21,8 @@ type
     function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
 
     function ListPersonsInPersonGroup(APersonGroup: String): String;
+
+    procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
 implementation

@@ -32,7 +32,9 @@ type
 
     function ListPersonsInPersonGroup(APersonGroup: String): String;
 
-    constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
+    procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
+
+//    constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
 implementation
@@ -43,14 +45,14 @@ uses
   { StringHelper }
   uFunctions.StringHelper;
 
-constructor TFaceApi.Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
-begin
-  inherited Create;
-
-  AccessKey := AAccessKey;
-
-  AccessServer := AAccessServer;
-end;
+//constructor TFaceApi.Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
+//begin
+//  inherited Create;
+//
+//  AccessKey := AAccessKey;
+//
+//  AccessServer := AAccessServer;
+//end;
 
 function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
 var
@@ -154,6 +156,13 @@ begin
   LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
 
   Result := ProceedHttpClientData(LHTTPClient, LStream);
+end;
+
+procedure TFaceApi.SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer);
+begin
+  AccessKey := AAccessKey;
+
+  AccessServer := AAccessServer;
 end;
 
 end.

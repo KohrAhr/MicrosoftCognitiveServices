@@ -13,7 +13,7 @@ uses
   System.Net.URLClient;
 
 type
-  TFaceApiBase = class(TInterfacedPersistent)
+  TFaceApiBase = class(TInterfacedObject)
   private
     const
       CONST_FACEAPI_ACCESS_KEY_NAME = 'Ocp-Apim-Subscription-Key';
