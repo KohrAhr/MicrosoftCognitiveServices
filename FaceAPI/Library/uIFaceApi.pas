@@ -24,6 +24,11 @@ type
 
     function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
 
+    function GetPersonGroupTrainingStatus(AGroupID: String): String;
+    function TrainPersonGroup(AGroupID: String): String;
+
+    function CreatePersonGroup(AGroupID: String): String;
+
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 

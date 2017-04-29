@@ -25,6 +25,9 @@ type
     edtPersonUserData: TEdit;
     btnCreatePerson: TButton;
     Label1: TLabel;
+    btnRunPersonGroupTraining: TButton;
+    btnGetPersonGroupTrainingStatus: TButton;
+    btnCreatePersonGroup: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -32,6 +35,9 @@ type
     procedure btnListPersonsInPersonGroupClick(Sender: TObject);
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreatePersonClick(Sender: TObject);
+    procedure btnGetPersonGroupTrainingStatusClick(Sender: TObject);
+    procedure btnRunPersonGroupTrainingClick(Sender: TObject);
+    procedure btnCreatePersonGroupClick(Sender: TObject);
   private
   public
   end;
@@ -155,6 +161,48 @@ begin
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
   LResult := LIFaceApi.ListPersonsInPersonGroup(edtPersonGroup.Text);
+
+  memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnRunPersonGroupTrainingClick(Sender: TObject);
+var
+  LIFaceApi: IFaceApi;
+  LResult: String;
+begin
+  LIFaceApi := TFaceApi.Create;
+
+  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
+
+  LResult := LIFaceApi.TrainPersonGroup(edtPersonGroup.Text);
+
+  memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnGetPersonGroupTrainingStatusClick(Sender: TObject);
+var
+  LIFaceApi: IFaceApi;
+  LResult: String;
+begin
+  LIFaceApi := TFaceApi.Create;
+
+  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
+
+  LResult := LIFaceApi.GetPersonGroupTrainingStatus(edtPersonGroup.Text);
+
+  memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
+var
+  LIFaceApi: IFaceApi;
+  LResult: String;
+begin
+  LIFaceApi := TFaceApi.Create;
+
+  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
+
+  LResult := LIFaceApi.CreatePersonGroup(edtPersonGroup.Text);
 
   memLog.Lines.Add(LResult);
 end;
