@@ -29,7 +29,7 @@ type
   /// </summary>
   TFaceApi = class(TFaceApiBase, IFaceApi)
   private
-    function Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
+    function DetectBase(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
   public
     function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
     function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
@@ -45,12 +45,33 @@ type
     /// </summary>
     function ListPersonsInPersonGroup(APersonGroup: String): String;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePerson">interface CreatePerson</see>
+    /// </summary>
     function CreatePerson(AGroupID: String; APersonName: String; APersonUserData: String = ''): String;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
+    /// </summary>
     function GetPersonGroupTrainingStatus(AGroupID: String): String;
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.TrainPersonGroup">interface TrainPersonGroup</see>
+    /// </summary>
     function TrainPersonGroup(AGroupID: String): String;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
+    /// </summary>
     function CreatePersonGroup(AGroupID: String): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    /// </summary>
+    function Verify(AFaceTempID1, AFaceTempID2: String): String; overload;
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    /// </summary>
+    function Verify(AFaceTempID, APersonID, AGroupID: String): String; overload;
 
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
@@ -100,7 +121,7 @@ begin
   Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
-function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
+function TFaceApi.DetectBase(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
 var
   LHTTPClient: THTTPClient;
 	LStream: TStream;
@@ -150,17 +171,17 @@ end;
 
 function TFaceApi.DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
 begin
-  Result := Detect(rtFile, AFileName, nil, ADetectOptions);
+  Result := DetectBase(rtFile, AFileName, nil, ADetectOptions);
 end;
 
 function TFaceApi.DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
 begin
-  Result := Detect(rtStream, '', AStream, ADetectOptions);
+  Result := DetectBase(rtStream, '', AStream, ADetectOptions);
 end;
 
 function TFaceApi.DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
 begin
-  Result := Detect(rtUrl, AURL, nil, ADetectOptions);
+  Result := DetectBase(rtUrl, AURL, nil, ADetectOptions);
 end;
 
 function TFaceApi.ListPersonGroups(AStart: String; ATop: Integer): String;
@@ -221,6 +242,16 @@ begin
 end;
 
 function TFaceApi.TrainPersonGroup(AGroupID: String): String;
+begin
+  Result := '';
+end;
+
+function TFaceApi.Verify(AFaceTempID1, AFaceTempID2: String): String;
+begin
+  Result := '';
+end;
+
+function TFaceApi.Verify(AFaceTempID, APersonID, AGroupID: String): String;
 begin
   Result := '';
 end;
