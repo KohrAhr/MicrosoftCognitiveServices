@@ -1,7 +1,9 @@
 object fmMain: TfmMain
   Left = 0
   Top = 0
-  Caption = 'Microsoft Cognitive Services demo'
+  Caption = 
+    'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
+    'V. Delphi DX10'
   ClientHeight = 442
   ClientWidth = 857
   Color = clBtnFace
@@ -122,7 +124,6 @@ object fmMain: TfmMain
     Width = 197
     Height = 21
     TabOrder = 7
-    Text = '4acb98b9002d4d87878b54bed21af7bc'
   end
   object btnClearLog: TButton
     Left = 8

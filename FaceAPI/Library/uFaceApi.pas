@@ -55,7 +55,7 @@ type
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
     /// </summary>
-    function ListPersonsInPersonGroup(const APersonGroup: String): String;
+    function ListPersonsInPersonGroup(const AGroupID: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePerson">interface CreatePerson</see>
@@ -206,13 +206,8 @@ end;
 
 function TFaceApi.ListPersonGroups(const AStart: String; const ATop: Integer): String;
 var
-  LHTTPClient: THTTPClient;
-	LStream: TStream;
   LURL: String;
-  LHeaders: TNetHeaders;
 begin
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
-
   LURL := Format(
     '%s/persongroups?start=%s&top=%s',
     [
@@ -222,31 +217,22 @@ begin
     ]
   );
 
-  LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
-
-  Result := ProceedHttpClientData(LHTTPClient, LStream);
+  Result := GetRequest(LURL);
 end;
 
-function TFaceApi.ListPersonsInPersonGroup(const APersonGroup: String): String;
+function TFaceApi.ListPersonsInPersonGroup(const AGroupID: String): String;
 var
-  LHTTPClient: THTTPClient;
-	LStream: TStream;
   LURL: String;
-  LHeaders: TNetHeaders;
 begin
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
-
   LURL := Format(
     '%s/persongroups/%s/persons',
     [
       ServerBaseUrl(AccessServer),
-      APersonGroup
+      AGroupID
     ]
   );
 
-  LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
-
-  Result := ProceedHttpClientData(LHTTPClient, LStream);
+  Result := GetRequest(LURL);
 end;
 
 procedure TFaceApi.SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer);
@@ -257,8 +243,18 @@ begin
 end;
 
 function TFaceApi.GetPersonGroupTrainingStatus(const AGroupID: String): String;
+var
+  LURL: String;
 begin
-  Result := '';
+  LURL := Format(
+    '%s/persongroups/%s/training',
+    [
+      ServerBaseUrl(AccessServer),
+      AGroupID
+    ]
+  );
+
+  Result := GetRequest(LURL);
 end;
 
 function TFaceApi.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
@@ -267,8 +263,33 @@ begin
 end;
 
 function TFaceApi.TrainPersonGroup(const AGroupID: String): String;
+var
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LURL: String;
+  LHeaders: TNetHeaders;
+  LRequestContent: TBytesStream;
 begin
-  Result := '';
+  LRequestContent := nil;
+
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+  try
+    LURL := Format(
+      '%s/persongroups/%s/train',
+      [
+        ServerBaseUrl(AccessServer),
+        AGroupID
+      ]
+    );
+
+    LRequestContent := TBytesStream.Create;
+
+    LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
+    LRequestContent.Free;
+  end;
 end;
 
 function TFaceApi.Verify(const AFaceTempID1, AFaceTempID2: String): String;

@@ -10,7 +10,9 @@ uses
   { THTTPClient }
   System.Net.HttpClient,
   { TNetHeaders }
-  System.Net.URLClient;
+  System.Net.URLClient,
+  { CONST_CONTENT_TYPE_JSON }
+  uFaceApi.Content.Types;
 
 type
   TFaceApiBase = class(TInterfacedObject)
@@ -22,9 +24,13 @@ type
       FAccessKey: String;
       FAccessServer: TFaceApiServer;
 
+  private
+
   protected
     function PrepareHttpClient(var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
     function ProceedHttpClientData(AClient: THTTPClient; AData: TStream): String;
+
+    function GetRequest(const AURL: String): String;
 
     function ServerBaseUrl(AServer: TFaceApiServer): String;
   public
@@ -40,6 +46,19 @@ uses
   { Format }
   System.SysUtils,
   System.NetConsts;
+
+function TFaceApiBase.GetRequest(const AURL: String): String;
+var
+  LHTTPClient: THTTPClient;
+  LStream: TStream;
+  LHeaders: TNetHeaders;
+begin
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+
+  LStream := LHTTPClient.Get(AURL, nil, LHeaders).ContentStream;
+
+  Result := ProceedHttpClientData(LHTTPClient, LStream);
+end;
 
 function TFaceApiBase.PrepareHttpClient(var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
 var

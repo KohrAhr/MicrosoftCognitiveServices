@@ -109,7 +109,7 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.DetectURL('http://1click.lv/index.jpg', Detect);
+  LResult := LIFaceApi.DetectURL('http://1click.lv/faceapi/sample1.jpg', Detect);
 
   memLog.Lines.Add(LResult);
 end;
@@ -177,6 +177,9 @@ begin
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
   LResult := LIFaceApi.TrainPersonGroup(edtPersonGroup.Text);
+
+  if LResult = '' then
+    LResult := 'Training for group was requested! Check your status now';
 
   memLog.Lines.Add(LResult);
 end;
