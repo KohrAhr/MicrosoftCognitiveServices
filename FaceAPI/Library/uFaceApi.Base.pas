@@ -100,6 +100,9 @@ var
 begin
   Result := THTTPClient.Create;
   try
+    if AccessKey = '' then
+      raise Exception.Create('License Key is required');
+
     SetLength(AHeaders, 1);
 
     LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;

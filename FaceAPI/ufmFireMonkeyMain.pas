@@ -13,7 +13,11 @@ type
     memLog: TMemo;
     edtAccessKey: TEdit;
     lblAccessKey: TLabel;
+    btnListPersonGroups: TButton;
+    btnClearLog: TButton;
     procedure btnDetectInUrlClick(Sender: TObject);
+    procedure btnListPersonGroupsClick(Sender: TObject);
+    procedure btnClearLogClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,6 +41,11 @@ uses
 
 {$R *.fmx}
 
+procedure TForm1.btnClearLogClick(Sender: TObject);
+begin
+  memLog.Lines.Clear;
+end;
+
 procedure TForm1.btnDetectInUrlClick(Sender: TObject);
 var
   LIFaceApi: IFaceApi;
@@ -46,7 +55,21 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.DetectURL('http://1click.lv/faceapi/sample1.jpg', Detect);
+  LResult := LIFaceApi.DetectURL('http://1click.lv/faceapi/sample1.jpg', Detect(True, True));
+
+  memLog.Lines.Add(LResult);
+end;
+
+procedure TForm1.btnListPersonGroupsClick(Sender: TObject);
+var
+  LIFaceApi: IFaceApi;
+  LResult: String;
+begin
+  LIFaceApi := TFaceApi.Create;
+
+  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
+
+  LResult := LIFaceApi.ListPersonGroups;
 
   memLog.Lines.Add(LResult);
 end;

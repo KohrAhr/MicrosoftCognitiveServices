@@ -21,28 +21,46 @@ object Form1: TForm1
   object memLog: TMemo
     Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
     DataDetectorTypes = []
+    TextSettings.WordWrap = True
     Anchors = [akLeft, akTop, akRight, akBottom]
     Position.X = 8.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.Y = 224.000000000000000000
     Size.Width = 625.000000000000000000
-    Size.Height = 321.000000000000000000
+    Size.Height = 249.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
     Viewport.Width = 621.000000000000000000
-    Viewport.Height = 317.000000000000000000
+    Viewport.Height = 245.000000000000000000
   end
   object edtAccessKey: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 2
     Position.X = 8.000000000000000000
-    Position.Y = 56.000000000000000000
+    Position.Y = 120.000000000000000000
     Size.Width = 209.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
   end
   object lblAccessKey: TLabel
     Position.X = 8.000000000000000000
-    Position.Y = 40.000000000000000000
+    Position.Y = 104.000000000000000000
     Text = 'Access Key'
+  end
+  object btnListPersonGroups: TButton
+    Position.X = 160.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 113.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'List Person Groups'
+    OnClick = btnListPersonGroupsClick
+  end
+  object btnClearLog: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 195.000000000000000000
+    TabOrder = 6
+    Text = 'Clear Log'
+    OnClick = btnClearLogClick
   end
 end
