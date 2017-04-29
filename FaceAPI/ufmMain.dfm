@@ -2,8 +2,8 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 'Microsoft Cognitive Services demo'
-  ClientHeight = 364
-  ClientWidth = 852
+  ClientHeight = 572
+  ClientWidth = 848
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,11 +11,14 @@ object fmMain: TfmMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  DesignSize = (
+    848
+    572)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
-    Left = 485
-    Top = 115
+    Left = 13
+    Top = 99
     Width = 53
     Height = 13
     Caption = 'Access key'
@@ -31,9 +34,18 @@ object fmMain: TfmMain
   end
   object memLog: TMemo
     Left = 8
-    Top = 139
-    Width = 817
-    Height = 217
+    Top = 160
+    Width = 833
+    Height = 405
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Color = clInfoBk
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Fixedsys'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 1
     WantTabs = True
@@ -50,7 +62,7 @@ object fmMain: TfmMain
   object btnDetectInStream: TButton
     Left = 170
     Top = 8
-    Width = 127
+    Width = 121
     Height = 25
     Caption = 'Detect in Stream'
     TabOrder = 3
@@ -83,10 +95,20 @@ object fmMain: TfmMain
     Text = 'edtPersonGroup'
   end
   object edtAccessKey: TEdit
-    Left = 544
-    Top = 112
-    Width = 281
+    Left = 72
+    Top = 96
+    Width = 219
     Height = 21
     TabOrder = 7
+    Text = '4acb98b9002d4d87878b54bed21af7bc'
+  end
+  object btnClearLog: TButton
+    Left = 8
+    Top = 129
+    Width = 75
+    Height = 25
+    Caption = 'Clear log'
+    TabOrder = 8
+    OnClick = btnClearLogClick
   end
 end

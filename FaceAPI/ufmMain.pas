@@ -18,11 +18,13 @@ type
     edtPersonGroup: TEdit;
     edtAccessKey: TEdit;
     lblAccessKey: TLabel;
+    btnClearLog: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
     procedure btnListPersonGroupsClick(Sender: TObject);
     procedure btnListPersonsInPersonGroupClick(Sender: TObject);
+    procedure btnClearLogClick(Sender: TObject);
   private
   public
   end;
@@ -44,16 +46,23 @@ uses
 
 {$R *.dfm}
 
+procedure TfmMain.btnClearLogClick(Sender: TObject);
+begin
+  memLog.Clear;
+end;
+
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);
 var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  memLog.Clear;
-
   LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
-    LResult := LFaceApi.DetectFile('C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]));
+    LResult := LFaceApi.DetectFile('C:\Temp\index.jpg',
+      Detect(True, True,
+        [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+      )
+    );
 
     memLog.Lines.Add(LResult);
   finally
@@ -66,8 +75,6 @@ var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  memLog.Clear;
-
   LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect);
@@ -86,8 +93,6 @@ var
 begin
   LRequestContent := nil;
 
-  memLog.Clear;
-
   LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LRequestContent := TStringStream.Create;
@@ -103,15 +108,11 @@ begin
 end;
 
 
-
-
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  memLog.Clear;
-
   LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.ListPersonGroups;
@@ -127,8 +128,6 @@ var
   LFaceApi: TFaceApi;
   LResult: String;
 begin
-  memLog.Clear;
-
   LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.ListPersonsInPersonGroup(edtPersonGroup.Text);
