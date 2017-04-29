@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B4EAF660-B6AF-4405-ADD1-E1729F08AC09}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="FaceAPI.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FireMonkeyFaceApi.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="FaceAPI">
+        <MSBuild Projects="FaceAPI.dproj"/>
+    </Target>
+    <Target Name="FaceAPI:Clean">
+        <MSBuild Projects="FaceAPI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FaceAPI:Make">
+        <MSBuild Projects="FaceAPI.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FireMonkeyFaceApi">
+        <MSBuild Projects="FireMonkeyFaceApi.dproj"/>
+    </Target>
+    <Target Name="FireMonkeyFaceApi:Clean">
+        <MSBuild Projects="FireMonkeyFaceApi.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FireMonkeyFaceApi:Make">
+        <MSBuild Projects="FireMonkeyFaceApi.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="FaceAPI;FireMonkeyFaceApi"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="FaceAPI:Clean;FireMonkeyFaceApi:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="FaceAPI:Make;FireMonkeyFaceApi:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
