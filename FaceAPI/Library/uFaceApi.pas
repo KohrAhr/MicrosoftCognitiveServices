@@ -33,8 +33,6 @@ type
     function ListPersonsInPersonGroup(APersonGroup: String): String;
 
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
-
-//    constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
 implementation
@@ -44,15 +42,6 @@ uses
   System.SysUtils,
   { StringHelper }
   uFunctions.StringHelper;
-
-//constructor TFaceApi.Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
-//begin
-//  inherited Create;
-//
-//  AccessKey := AAccessKey;
-//
-//  AccessServer := AAccessServer;
-//end;
 
 function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
 var
