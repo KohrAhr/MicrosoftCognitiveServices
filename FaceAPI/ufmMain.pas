@@ -71,13 +71,40 @@ begin
 
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
-    LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect(True));
+    LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect);
 
     memLog.Lines.Add(LResult);
   finally
     LFaceApi.Free;
   end;
 end;
+
+procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
+var
+  LFaceApi: TFaceApi;
+  LResult: String;
+  LRequestContent: TStringStream;
+begin
+  LRequestContent := nil;
+
+  memLog.Clear;
+
+  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  try
+    LRequestContent := TStringStream.Create;
+
+    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+
+    LResult := LFaceApi.DetectStream(LRequestContent, Detect(True, True));
+
+    memLog.Lines.Add(LResult);
+  finally
+    LFaceApi.Free;
+  end;
+end;
+
+
+
 
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 var
@@ -106,30 +133,6 @@ begin
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
     LResult := LFaceApi.ListPersonsInPersonGroup(edtPersonGroup.Text);
-
-    memLog.Lines.Add(LResult);
-  finally
-    LFaceApi.Free;
-  end;
-end;
-
-procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
-var
-  LFaceApi: TFaceApi;
-  LResult: String;
-  LRequestContent: TStringStream;
-begin
-  LRequestContent := nil;
-
-  memLog.Clear;
-
-  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
-  try
-    LRequestContent := TStringStream.Create;
-
-    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
-
-    LResult := LFaceApi.DetectStream(LRequestContent, Detect(True, True));
 
     memLog.Lines.Add(LResult);
   finally

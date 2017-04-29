@@ -11,6 +11,7 @@ uses
 type
 	StringHelper = class
 		class function MemoryStreamToString(const M: TMemoryStream): String;
+    class function StringToBytesArray(const AValue: String): TArray<System.Byte>;
 	end;
 
 implementation
@@ -29,6 +30,11 @@ begin
   finally
     LStringStream.Free;
   end;
+end;
+
+class function StringHelper.StringToBytesArray(const AValue: String): TArray<System.Byte>;
+begin
+  Result := TEncoding.UTF8.GetBytes(AValue);
 end;
 
 end.

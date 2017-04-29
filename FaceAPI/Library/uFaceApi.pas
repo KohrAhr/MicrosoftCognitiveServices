@@ -5,6 +5,10 @@ interface
 uses
   { TStream }
   System.Classes,
+  { THTTPClient }
+  System.Net.HttpClient,
+  { TNetHeaders }
+  System.Net.URLClient,
   { TFaceApiServer }
   uFaceApi.Servers.Types,
   { TContentType }
@@ -36,19 +40,12 @@ type
 implementation
 
 uses
-  { THTTPClient }
-  System.Net.HttpClient,
-  { TNetHeaders }
-  System.Net.URLClient,
   { ContentType }
   System.NetConsts,
   { Format }
   System.SysUtils,
   { StringHelper }
   uFunctions.StringHelper;
-
-const
-  CONST_FACEAPI_ACCESS_KEY_NAME = 'Ocp-Apim-Subscription-Key';
 
 constructor TFaceApi.Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
 begin
@@ -61,12 +58,10 @@ end;
 
 function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
 var
-  LNameValuePair: TNameValuePair;
   LHTTPClient: THTTPClient;
 	LStream: TStream;
   LURL: String;
   LHeaders: TNetHeaders;
-	LResponse: TMemoryStream;
   LRequestContent: TBytesStream;
 begin
   if ARequestType = rtFile then
@@ -74,14 +69,9 @@ begin
       Exit;
 
   LRequestContent := nil;
-  LHTTPClient := THTTPClient.Create;
+
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE[ARequestType]);
   try
-    SetLength(LHeaders, 1);
-
-    LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
-    LNameValuePair.Value := AccessKey;
-    LHeaders[0] := LNameValuePair;
-
     LURL := Format(
       'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
       [
@@ -92,8 +82,6 @@ begin
       ]
     );
 
-    LHTTPClient.ContentType := CONST_CONTENT_TYPE[ARequestType];
-
     if ARequestType = rtFile then
       LStream := LHTTPClient.Post(LURL, AData, nil, LHeaders).ContentStream
     else
@@ -101,22 +89,14 @@ begin
         if ARequestType = rtStream then
           LRequestContent := AStreamData
         else
-          LRequestContent := TBytesStream.Create(TEncoding.UTF8.GetBytes(Format('{ "url":"%s" }', [AData])));
+          LRequestContent := TBytesStream.Create(StringHelper.StringToBytesArray(Format('{ "url":"%s" }', [AData])));
 
         LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
       end;
 
-    LResponse := TMemoryStream.Create;
-    try
-      LResponse.CopyFrom(LStream, LStream.Size);
-
-      Result := StringHelper.MemoryStreamToString(LResponse);
-    finally
-      LResponse.Free;
-    end;
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
   finally
     LRequestContent.Free;
-    LHTTPClient.Free;
   end;
 end;
 
@@ -137,87 +117,47 @@ end;
 
 function TFaceApi.ListPersonGroups(AStart: String; ATop: Integer): String;
 var
-  LNameValuePair: TNameValuePair;
   LHTTPClient: THTTPClient;
 	LStream: TStream;
   LURL: String;
   LHeaders: TNetHeaders;
-	LResponse: TMemoryStream;
 begin
-  LHTTPClient := THTTPClient.Create;
-  try
-    SetLength(LHeaders, 1);
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
 
-    LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
-    LNameValuePair.Value := AccessKey;
-    LHeaders[0] := LNameValuePair;
+  LURL := Format(
+    'https://%s/face/v1.0/persongroups?start=%s&top=%s',
+    [
+      CONST_FACE_API_SERVER_URL[AccessServer],
+      AStart,
+      ATop.ToString
+    ]
+  );
 
-    LURL := Format(
-      'https://%s/face/v1.0/persongroups?start=%s&top=%s',
-      [
-        CONST_FACE_API_SERVER_URL[AccessServer],
-        AStart,
-        ATop.ToString
-      ]
-    );
+  LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
 
-    LHTTPClient.ContentType := CONST_CONTENT_TYPE_JSON;
-
-    LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
-
-    LResponse := TMemoryStream.Create;
-    try
-      LResponse.CopyFrom(LStream, LStream.Size);
-
-      Result := StringHelper.MemoryStreamToString(LResponse);
-    finally
-      LResponse.Free;
-    end;
-  finally
-    LHTTPClient.Free;
-  end;
+  Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
 function TFaceApi.ListPersonsInPersonGroup(APersonGroup: String): String;
 var
-  LNameValuePair: TNameValuePair;
   LHTTPClient: THTTPClient;
 	LStream: TStream;
   LURL: String;
   LHeaders: TNetHeaders;
-	LResponse: TMemoryStream;
 begin
-  LHTTPClient := THTTPClient.Create;
-  try
-    SetLength(LHeaders, 1);
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
 
-    LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
-    LNameValuePair.Value := AccessKey;
-    LHeaders[0] := LNameValuePair;
+  LURL := Format(
+    'https://%s/face/v1.0/persongroups/%s/persons',
+    [
+      CONST_FACE_API_SERVER_URL[AccessServer],
+      APersonGroup
+    ]
+  );
 
-    LURL := Format(
-      'https://%s/face/v1.0/persongroups/%s/persons',
-      [
-        CONST_FACE_API_SERVER_URL[AccessServer],
-        APersonGroup
-      ]
-    );
+  LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
 
-    LHTTPClient.ContentType := CONST_CONTENT_TYPE_JSON;
-
-    LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
-
-    LResponse := TMemoryStream.Create;
-    try
-      LResponse.CopyFrom(LStream, LStream.Size);
-
-      Result := StringHelper.MemoryStreamToString(LResponse);
-    finally
-      LResponse.Free;
-    end;
-  finally
-    LHTTPClient.Free;
-  end;
+  Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
 end.

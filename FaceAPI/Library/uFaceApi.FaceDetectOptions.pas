@@ -16,11 +16,11 @@ type
     constructor Create(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []);
   end;
 
-  function Detect(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
+  function Detect(AFaceId: Boolean = True; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
 
 implementation
 
-function Detect(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
+function Detect(AFaceId: Boolean = True; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
 begin
   Result := TDetectOptions.Create(AFaceId, AFaceLandmarks, AFaceAttributes);
 end;
