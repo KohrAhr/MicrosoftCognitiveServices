@@ -13,9 +13,11 @@ type
     memLog: TMemo;
     btnDetectInUrl: TButton;
     btnDetectInStream: TButton;
+    btnListPersonGroups: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
+    procedure btnListPersonGroupsClick(Sender: TObject);
   private
   public
   end;
@@ -28,6 +30,8 @@ implementation
 uses
   { TFaceApi }
   uFaceApi,
+  { TFaceAttributes }
+  uFaceApi.FaceAttributes,
   uFaceApi.Servers.Types;
 
 const
@@ -62,6 +66,23 @@ begin
   LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
   try
     LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect(True));
+
+    memLog.Lines.Add(LResult);
+  finally
+    LFaceApi.Free;
+  end;
+end;
+
+procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
+var
+  LFaceApi: TFaceApi;
+  LResult: String;
+begin
+  memLog.Clear;
+
+  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  try
+    LResult := LFaceApi.ListPersonGroups;
 
     memLog.Lines.Add(LResult);
   finally

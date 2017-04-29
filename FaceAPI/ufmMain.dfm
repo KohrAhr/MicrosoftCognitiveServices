@@ -2,7 +2,7 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 'Microsoft Cognitive Services demo'
-  ClientHeight = 300
+  ClientHeight = 364
   ClientWidth = 852
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object fmMain: TfmMain
   end
   object memLog: TMemo
     Left = 8
-    Top = 64
+    Top = 139
     Width = 817
     Height = 217
     ScrollBars = ssVertical
@@ -48,5 +48,14 @@ object fmMain: TfmMain
     Caption = 'Detect in Stream'
     TabOrder = 3
     OnClick = btnDetectInStreamClick
+  end
+  object btnListPersonGroups: TButton
+    Left = 8
+    Top = 72
+    Width = 156
+    Height = 25
+    Caption = 'List Person Groups'
+    TabOrder = 4
+    OnClick = btnListPersonGroupsClick
   end
 end

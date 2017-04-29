@@ -10,15 +10,9 @@ uses
   { TContentType }
   uFaceApi.Content.Types,
   { TFaceApiBase }
-  uFaceApi.Base;
-
-type
-  TFaceAttribute = (doAge = 1, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion);
-
-  TFaceAttributes = set of TFaceAttribute;
-
-const
-  CONST_FACE_ATTRIBUTES: array [TFaceAttribute] of String = ('age', 'gender', 'headPose', 'smile', 'facialHair', 'glasses', 'emotion');
+  uFaceApi.Base,
+  { TFaceAttributes }
+  uFaceApi.FaceAttributes;
 
 type
   TDetectOptions = record
@@ -40,6 +34,8 @@ type
     function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
     function DetectStream(AStream: TStringStream; ADetectOptions: TDetectOptions): String;
 
+    function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
+
     constructor Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
@@ -56,6 +52,9 @@ uses
   System.SysUtils,
   { StringHelper }
   uFunctions.StringHelper;
+
+const
+  CONST_FACEAPI_ACCESS_KEY_NAME = 'Ocp-Apim-Subscription-Key';
 
 { TFaceApi }
 
@@ -87,7 +86,7 @@ begin
   try
     SetLength(LHeaders, 1);
 
-    LNameValuePair.Name := 'Ocp-Apim-Subscription-Key';
+    LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
     LNameValuePair.Value := AccessKey;
     LHeaders[0] := LNameValuePair;
 
@@ -142,6 +141,52 @@ end;
 function TFaceApi.DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
 begin
   Result := Detect(rtUrl, AURL, nil, ADetectOptions);
+end;
+
+function TFaceApi.ListPersonGroups(AStart: String; ATop: Integer): String;
+var
+  LNameValuePair: TNameValuePair;
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LURL: String;
+  LHeaders: TNetHeaders;
+	LResponse: TMemoryStream;
+  LRequestContent: TStringStream;
+begin
+  LRequestContent := nil;
+  LHTTPClient := THTTPClient.Create;
+  try
+    SetLength(LHeaders, 1);
+
+    LNameValuePair.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
+    LNameValuePair.Value := AccessKey;
+    LHeaders[0] := LNameValuePair;
+
+    LURL := Format(
+      'https://%s/face/v1.0/persongroups?start=%s&top=%s',
+      [
+        CONST_FACE_API_SERVER_URL[AccessServer],
+        AStart,
+        ATop.ToString
+      ]
+    );
+
+    LHTTPClient.ContentType := CONST_CONTENT_TYPE[rtUrl];
+
+    LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
+
+    LResponse := TMemoryStream.Create;
+    try
+      LResponse.CopyFrom(LStream, LStream.Size);
+
+      Result := StringHelper.MemoryStreamToString(LResponse);
+    finally
+      LResponse.Free;
+    end;
+  finally
+    LRequestContent.Free;
+    LHTTPClient.Free;
+  end;
 end;
 
 { TDetectOptions }

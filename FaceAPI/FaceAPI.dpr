@@ -7,7 +7,8 @@ uses
   uFaceApi.Base in 'Library\uFaceApi.Base.pas',
   uFaceApi.Content.Types in 'Library\uFaceApi.Content.Types.pas',
   uFaceApi in 'Library\uFaceApi.pas',
-  uFaceApi.Servers.Types in 'Library\uFaceApi.Servers.Types.pas';
+  uFaceApi.Servers.Types in 'Library\uFaceApi.Servers.Types.pas',
+  uFaceApi.FaceAttributes in 'Library\uFaceApi.FaceAttributes.pas';
 
 {$R *.res}
 
