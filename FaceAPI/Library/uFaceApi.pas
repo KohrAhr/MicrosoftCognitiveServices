@@ -307,12 +307,12 @@ begin
     );
 
     LStream := LHTTPClient.Put(LURL, LRequestContent, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
   finally
     LRequestContent.Free;
     LHTTPClient.Free;
   end;
-
-  Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
 end.
