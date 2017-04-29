@@ -161,7 +161,7 @@ begin
       ]
     );
 
-    LHTTPClient.ContentType := CONST_CONTENT_TYPE[rtUrl];
+    LHTTPClient.ContentType := CONST_CONTENT_TYPE_JSON;
 
     LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
 
@@ -203,7 +203,7 @@ begin
       ]
     );
 
-    LHTTPClient.ContentType := CONST_CONTENT_TYPE[rtUrl];
+    LHTTPClient.ContentType := CONST_CONTENT_TYPE_JSON;
 
     LStream := LHTTPClient.Get(LURL, nil, LHeaders).ContentStream;
 
