@@ -1,5 +1,6 @@
 /// <summary>
 ///   Unit contain the Main Interface declaration for Face API Microsoft Cognitive Services 1.0
+///
 /// </summary>
 unit uIFaceApi;
 
@@ -30,6 +31,7 @@ type
     ///   A maximum of 64 faces could be returned for an image. The returned faces are ranked by face rectangle size in descending order.
     ///   Some faces may not be detected for technical challenges, e.g. very large face angles (head-pose) or large occlusion. Frontal and near-frontal faces have the best results.
     ///   Attributes (age, gender, headPose, smile, facialHair, glasses and emotion) are still experimental and may not be very accurate. HeadPose's pitch value is a reserved field and will always return 0.
+    ///   https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236
     /// </summary>
     /// <returns>
     ///   [OK]
@@ -272,6 +274,15 @@ type
 		/// </param>
     function Verify(AFaceTempID, APersonID, AGroupID: String): String; overload;
 
+    /// <summary>
+    ///   Define your access key and define your server location
+    /// </summary>
+		/// <param name="AAccessKey">
+    ///   Subscription key which provides access to this API. Found in your Cognitive Services accounts.
+		/// </param>
+		/// <param name="AAccessServer">
+    ///   Cognitive Api server location
+		/// </param>
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 

@@ -29,10 +29,22 @@ type
   /// </summary>
   TFaceApi = class(TFaceApiBase, IFaceApi)
   private
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.DetectBase">interface DetectBase</see>
+    /// </summary>
     function DetectBase(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
   public
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.DetectURL">interface DetectURL</see>
+    /// </summary>
     function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.DetectFile">interface DetectFile</see>
+    /// </summary>
     function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.DetectStream">interface DetectStream</see>
+    /// </summary>
     function DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
 
     /// <summary>
@@ -73,6 +85,9 @@ type
     /// </summary>
     function Verify(AFaceTempID, APersonID, AGroupID: String): String; overload;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.SetAccessKey">interface SetAccessKey</see>
+    /// </summary>
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
   end;
 
