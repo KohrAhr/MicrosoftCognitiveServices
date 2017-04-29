@@ -106,14 +106,9 @@ uses
 
 function TFaceApi.CreatePerson(const AGroupID, APersonName, APersonUserData: String): String;
 var
-  LHTTPClient: THTTPClient;
-	LStream: TStream;
   LURL: String;
-  LHeaders: TNetHeaders;
   LRequestContent: TBytesStream;
 begin
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
-
   LURL := Format(
     '%s/persongroups/%s/persons',
     [
@@ -133,57 +128,49 @@ begin
       )
     );
 
-    LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
-
-  Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
 function TFaceApi.DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
 var
-  LHTTPClient: THTTPClient;
-	LStream: TStream;
   LURL: String;
-  LHeaders: TNetHeaders;
   LRequestContent: TBytesStream;
 begin
   if ARequestType = rtFile then
     if not FileExists(AData) then
       Exit;
 
-  LRequestContent := nil;
+  LURL := Format(
+    '%s/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
+    [
+      ServerBaseUrl(AccessServer),
+      BoolToStr(ADetectOptions.FaceId, True).ToLower,
+      BoolToStr(ADetectOptions.FaceLandmarks, True).ToLower,
+      ADetectOptions.FaceAttributesToString
+    ]
+  );
 
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE[ARequestType]);
+  LRequestContent := nil;
   try
-    LURL := Format(
-      '%s/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
-      [
-        ServerBaseUrl(AccessServer),
-        BoolToStr(ADetectOptions.FaceId, True).ToLower,
-        BoolToStr(ADetectOptions.FaceLandmarks, True).ToLower,
-        ADetectOptions.FaceAttributesToString
-      ]
-    );
+    if ARequestType = rtStream then
+      LRequestContent := TBytesStream.Create(AStreamData.Bytes)
+    else
+    if ARequestType = rtUrl then
+      LRequestContent := TBytesStream.Create(
+        StringHelper.StringToBytesArray(
+          Format('{ "url":"%s" }', [AData])
+        )
+      );
 
     if ARequestType = rtFile then
-      LStream := LHTTPClient.Post(LURL, AData, nil, LHeaders).ContentStream
+      Result := PostRequest(LURL, AData, CONST_CONTENT_TYPE[ARequestType])
     else
-      begin
-        if ARequestType = rtStream then
-          LRequestContent := TBytesStream.Create(AStreamData.Bytes)
-        else
-          LRequestContent := TBytesStream.Create(
-            StringHelper.StringToBytesArray(
-              Format('{ "url":"%s" }', [AData])
-            )
-          );
+      Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE[ARequestType]);
 
-        LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
-      end;
 
-    Result := ProceedHttpClientData(LHTTPClient, LStream);
   finally
     LRequestContent.Free;
   end;
@@ -266,33 +253,18 @@ end;
 
 function TFaceApi.TrainPersonGroup(const AGroupID: String): String;
 var
-  LHTTPClient: THTTPClient;
-	LStream: TStream;
   LURL: String;
-  LHeaders: TNetHeaders;
-  LRequestContent: TBytesStream;
 begin
-  LRequestContent := nil;
+  { Looks like Train controller method }
+  LURL := Format(
+    '%s/persongroups/%s/train',
+    [
+      ServerBaseUrl(AccessServer),
+      AGroupID.ToLower
+    ]
+  );
 
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
-  try
-    { Looks like Train controller method }
-    LURL := Format(
-      '%s/persongroups/%s/train',
-      [
-        ServerBaseUrl(AccessServer),
-        AGroupID.ToLower
-      ]
-    );
-
-    LRequestContent := TBytesStream.Create;
-
-    LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
-
-    Result := ProceedHttpClientData(LHTTPClient, LStream);
-  finally
-    LRequestContent.Free;
-  end;
+  Result := PostRequest(LURL, nil, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApi.Verify(const AFaceTempID1, AFaceTempID2: String): String;
@@ -313,7 +285,7 @@ var
   LHeaders: TNetHeaders;
   LRequestContent: TBytesStream;
 begin
-  { Looks like Default controller method }
+  { Looks like Default method for controller }
   LURL := Format(
     '%s/persongroups/%s',
     [
@@ -322,10 +294,8 @@ begin
     ]
   );
 
-
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
-
   LRequestContent := nil;
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
   try
     LRequestContent := TBytesStream.Create(
       StringHelper.StringToBytesArray(
@@ -339,6 +309,7 @@ begin
     LStream := LHTTPClient.Put(LURL, LRequestContent, nil, LHeaders).ContentStream;
   finally
     LRequestContent.Free;
+    LHTTPClient.Free;
   end;
 
   Result := ProceedHttpClientData(LHTTPClient, LStream);

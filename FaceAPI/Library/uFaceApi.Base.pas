@@ -25,12 +25,14 @@ type
       FAccessServer: TFaceApiServer;
 
   private
-
+    function PostRequestBase(const AURL, AData: String; ARequestContent: TBytesStream; const AContentType: String): String;
   protected
     function PrepareHttpClient(var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
     function ProceedHttpClientData(AClient: THTTPClient; AData: TStream): String;
 
     function GetRequest(const AURL: String): String;
+    function PostRequest(const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String; overload;
+    function PostRequest(const AURL: String; const AData: string; const AContentType: String): String; overload;
 
     function ServerBaseUrl(AServer: TFaceApiServer): String;
   public
@@ -54,10 +56,42 @@ var
   LHeaders: TNetHeaders;
 begin
   LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+  try
+    LStream := LHTTPClient.Get(AURL, nil, LHeaders).ContentStream;
 
-  LStream := LHTTPClient.Get(AURL, nil, LHeaders).ContentStream;
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
+    LHTTPClient.Free;
+  end;
+end;
 
-  Result := ProceedHttpClientData(LHTTPClient, LStream);
+function TFaceApiBase.PostRequestBase(const AURL, AData: String; ARequestContent: TBytesStream; const AContentType: String): String;
+var
+  LHTTPClient: THTTPClient;
+	LStream: TStream;
+  LHeaders: TNetHeaders;
+begin
+  LHTTPClient := PrepareHTTPClient(LHeaders, AContentType);
+  try
+    if AData <> '' then
+      LStream := LHTTPClient.Post(AURL, AData, nil, LHeaders).ContentStream
+    else
+      LStream := LHTTPClient.Post(AURL, ARequestContent, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
+    LHTTPClient.Free;
+  end;
+end;
+
+function TFaceApiBase.PostRequest(const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String;
+begin
+  Result := PostRequestBase(AURL, '', ARequestContent, AContentType);
+end;
+
+function TFaceApiBase.PostRequest(const AURL, AData, AContentType: String): String;
+begin
+  Result := PostRequestBase(AURL, AData, nil, AContentType);
 end;
 
 function TFaceApiBase.PrepareHttpClient(var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
@@ -92,8 +126,6 @@ begin
   finally
     LResponse.Free;
   end;
-
-  AClient.Free;
 end;
 
 function TFaceApiBase.ServerBaseUrl(AServer: TFaceApiServer): String;
