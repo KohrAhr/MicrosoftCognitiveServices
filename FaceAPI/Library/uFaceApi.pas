@@ -15,8 +15,6 @@ uses
   uFaceApi.Content.Types,
   { TFaceApiBase }
   uFaceApi.Base,
-  { TFaceAttributes }
-  uFaceApi.FaceAttributes,
   { IFaceApi }
   uIFaceApi,
   { TDetectOptions }
@@ -40,8 +38,6 @@ type
 implementation
 
 uses
-  { ContentType }
-  System.NetConsts,
   { Format }
   System.SysUtils,
   { StringHelper }
@@ -73,9 +69,9 @@ begin
   LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE[ARequestType]);
   try
     LURL := Format(
-      'https://%s/face/v1.0/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
+      '%s/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
       [
-        CONST_FACE_API_SERVER_URL[AccessServer],
+        ServerBaseUrl(AccessServer),
         BoolToStr(ADetectOptions.FaceId, True).ToLower,
         BoolToStr(ADetectOptions.FaceLandmarks, True).ToLower,
         ADetectOptions.FaceAttributesToString
@@ -125,9 +121,9 @@ begin
   LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
 
   LURL := Format(
-    'https://%s/face/v1.0/persongroups?start=%s&top=%s',
+    '%s/persongroups?start=%s&top=%s',
     [
-      CONST_FACE_API_SERVER_URL[AccessServer],
+      ServerBaseUrl(AccessServer),
       AStart,
       ATop.ToString
     ]
@@ -148,9 +144,9 @@ begin
   LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
 
   LURL := Format(
-    'https://%s/face/v1.0/persongroups/%s/persons',
+    '%s/persongroups/%s/persons',
     [
-      CONST_FACE_API_SERVER_URL[AccessServer],
+      ServerBaseUrl(AccessServer),
       APersonGroup
     ]
   );

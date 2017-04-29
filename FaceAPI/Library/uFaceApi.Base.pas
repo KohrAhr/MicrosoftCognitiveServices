@@ -25,6 +25,8 @@ type
   protected
     function PrepareHttpClient(var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
     function ProceedHttpClientData(AClient: THTTPClient; AData: TStream): String;
+
+    function ServerBaseUrl(AServer: TFaceApiServer): String;
   public
     property AccessKey: String read FAccessKey write FAccessKey;
     property AccessServer: TFaceApiServer read FAccessServer write FAccessServer;
@@ -34,7 +36,10 @@ implementation
 
 uses
   { StringHelper }
-  uFunctions.StringHelper;
+  uFunctions.StringHelper,
+  { Format }
+  System.SysUtils,
+  System.NetConsts;
 
 function TFaceApiBase.PrepareHttpClient(var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
 var
@@ -70,6 +75,11 @@ begin
   end;
 
   AClient.Free;
+end;
+
+function TFaceApiBase.ServerBaseUrl(AServer: TFaceApiServer): String;
+begin
+  Result := Format('https://%s/face/v1.0', [CONST_FACE_API_SERVER_URL[AServer]]);
 end;
 
 end.
