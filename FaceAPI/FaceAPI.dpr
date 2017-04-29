@@ -10,7 +10,8 @@ uses
   uFaceApi.Servers.Types in 'Library\uFaceApi.Servers.Types.pas',
   uFaceApi.FaceAttributes in 'Library\uFaceApi.FaceAttributes.pas',
   uIFaceApi in 'Library\uIFaceApi.pas',
-  uFaceApi.FaceDetectOptions in 'Library\uFaceApi.FaceDetectOptions.pas';
+  uFaceApi.FaceDetectOptions in 'Library\uFaceApi.FaceDetectOptions.pas',
+  uFunctions.InetHelper in 'Functions\uFunctions.InetHelper.pas';
 
 {$R *.res}
 

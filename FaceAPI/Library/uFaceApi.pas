@@ -99,6 +99,7 @@ type
     ///   Implements <see cref="uIFaceApi|IFaceApi.SetAccessKey">interface SetAccessKey</see>
     /// </summary>
     procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
+
   end;
 
 implementation
@@ -107,7 +108,9 @@ uses
   { Format }
   System.SysUtils,
   { StringHelper }
-  uFunctions.StringHelper;
+  uFunctions.StringHelper,
+  { InetHelper }
+  uFunctions.InetHelper;
 
 function TFaceApi.CreatePerson(const AGroupID, APersonName, APersonUserData: String): String;
 var
@@ -133,7 +136,7 @@ begin
       )
     );
 
-    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -171,11 +174,9 @@ begin
       );
 
     if ARequestType = rtFile then
-      Result := PostRequest(LURL, AData, CONST_CONTENT_TYPE[ARequestType])
+      Result := InetHelper.PostRequest(GetAccessKey, LURL, AData, CONST_CONTENT_TYPE[ARequestType])
     else
-      Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE[ARequestType]);
-
-
+      Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE[ARequestType]);
   finally
     LRequestContent.Free;
   end;
@@ -209,7 +210,7 @@ begin
     ]
   );
 
-  Result := GetRequest(LURL);
+  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApi.ListPersonsInPersonGroup(const AGroupID: String): String;
@@ -225,7 +226,7 @@ begin
     ]
   );
 
-  Result := GetRequest(LURL);
+  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 procedure TFaceApi.SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer);
@@ -248,7 +249,7 @@ begin
     ]
   );
 
-  Result := GetRequest(LURL);
+  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApi.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
@@ -269,7 +270,7 @@ begin
     ]
   );
 
-  Result := PostRequest(LURL, nil, CONST_CONTENT_TYPE_JSON);
+  Result := InetHelper.PostRequest(GetAccessKey, LURL, nil, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApi.Verify(const AFaceTempID1, AFaceTempID2: String): String;
@@ -300,7 +301,7 @@ begin
   );
 
   LRequestContent := nil;
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
   try
     LRequestContent := TBytesStream.Create(
       StringHelper.StringToBytesArray(
@@ -313,7 +314,7 @@ begin
 
     LStream := LHTTPClient.Put(LURL, LRequestContent, nil, LHeaders).ContentStream;
 
-    Result := ProceedHttpClientData(LHTTPClient, LStream);
+    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
   finally
     LRequestContent.Free;
     LHTTPClient.Free;
@@ -336,11 +337,11 @@ begin
     ]
   );
 
-  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
   try
     LStream := LHTTPClient.Delete(LURL, nil, LHeaders).ContentStream;
 
-    Result := ProceedHttpClientData(LHTTPClient, LStream);
+    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
   finally
     LHTTPClient.Free;
   end;
