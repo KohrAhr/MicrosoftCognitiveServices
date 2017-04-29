@@ -29,8 +29,6 @@ implementation
 uses
   { StringHelper }
   uFunctions.StringHelper,
-  { CONST_CONTENT_TYPE_JSON }
-  uFaceApi.Content.Types,
   { Exception }
   System.SysUtils,
   { SetContentType }
