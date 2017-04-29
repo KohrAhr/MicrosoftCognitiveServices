@@ -13,6 +13,13 @@ object fmMain: TfmMain
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object lblAccessKey: TLabel
+    Left = 485
+    Top = 115
+    Width = 53
+    Height = 13
+    Caption = 'Access key'
+  end
   object btnDetectInFile: TButton
     Left = 8
     Top = 8
@@ -74,5 +81,12 @@ object fmMain: TfmMain
     Height = 21
     TabOrder = 6
     Text = 'edtPersonGroup'
+  end
+  object edtAccessKey: TEdit
+    Left = 544
+    Top = 112
+    Width = 281
+    Height = 21
+    TabOrder = 7
   end
 end

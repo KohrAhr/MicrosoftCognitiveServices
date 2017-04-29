@@ -16,6 +16,8 @@ type
     btnListPersonGroups: TButton;
     btnListPersonsInPersonGroup: TButton;
     edtPersonGroup: TEdit;
+    edtAccessKey: TEdit;
+    lblAccessKey: TLabel;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -40,9 +42,6 @@ uses
   { Detect }
   uFaceApi.FaceDetectOptions;
 
-const
-  CONST_ACCESS_KEY = '4acb98b9002d4d87878b54bed21af7bc';
-
 {$R *.dfm}
 
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);
@@ -52,7 +51,7 @@ var
 begin
   memLog.Clear;
 
-  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.DetectFile('C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]));
 
@@ -69,7 +68,7 @@ var
 begin
   memLog.Clear;
 
-  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.DetectURL('http://1click.lv/index.jpg', Detect);
 
@@ -89,7 +88,7 @@ begin
 
   memLog.Clear;
 
-  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LRequestContent := TStringStream.Create;
 
@@ -113,7 +112,7 @@ var
 begin
   memLog.Clear;
 
-  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.ListPersonGroups;
 
@@ -130,7 +129,7 @@ var
 begin
   memLog.Clear;
 
-  LFaceApi := TFaceApi.Create(CONST_ACCESS_KEY, fasWestUS);
+  LFaceApi := TFaceApi.Create(edtAccessKey.Text, fasWestUS);
   try
     LResult := LFaceApi.ListPersonsInPersonGroup(edtPersonGroup.Text);
 
