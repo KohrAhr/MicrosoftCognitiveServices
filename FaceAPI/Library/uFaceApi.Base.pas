@@ -79,7 +79,7 @@ end;
 
 function TFaceApiBase.ServerBaseUrl(AServer: TFaceApiServer): String;
 begin
-  Result := Format('https://%s/face/v1.0', [CONST_FACE_API_SERVER_URL[AServer]]);
+  Result := Format('https://%s/face/v1.0', [CONST_FACE_API_SERVER_URLS[AServer]]);
 end;
 
 end.

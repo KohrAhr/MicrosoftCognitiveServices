@@ -13,13 +13,15 @@ type
   );
 
 const
-  CONST_FACE_API_SERVER_URL: array [TFaceApiServer] of string = (
-    'api.cognitive.microsoft.com',
-    'westus.api.cognitive.microsoft.com',
-    'eastus2.api.cognitive.microsoft.com',
-    'westcentralus.api.cognitive.microsoft.com',
-    'westeurope.api.cognitive.microsoft.com',
-    'southeastasia.api.cognitive.microsoft.com'
+  CONST_FACE_API_MAIN_SERVER = 'api.cognitive.microsoft.com';
+
+  CONST_FACE_API_SERVER_URLS: array [TFaceApiServer] of string = (
+    CONST_FACE_API_MAIN_SERVER,
+    'westus.' + CONST_FACE_API_MAIN_SERVER,
+    'eastus2.' + CONST_FACE_API_MAIN_SERVER,
+    'westcentralus.' + CONST_FACE_API_MAIN_SERVER,
+    'westeurope.' + CONST_FACE_API_MAIN_SERVER,
+    'southeastasia.' + CONST_FACE_API_MAIN_SERVER
   );
 
 implementation
