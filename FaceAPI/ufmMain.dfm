@@ -4,8 +4,8 @@ object fmMain: TfmMain
   Caption = 
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
-  ClientHeight = 442
-  ClientWidth = 816
+  ClientHeight = 521
+  ClientWidth = 830
   Color = clBtnFace
   Constraints.MinHeight = 480
   Constraints.MinWidth = 780
@@ -16,8 +16,8 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    816
-    442)
+    830
+    521)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
@@ -73,8 +73,8 @@ object fmMain: TfmMain
   object memLog: TMemo
     Left = 8
     Top = 232
-    Width = 801
-    Height = 203
+    Width = 815
+    Height = 282
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
     Font.Charset = RUSSIAN_CHARSET
@@ -218,5 +218,14 @@ object fmMain: TfmMain
     Hint = '(16 KByte text)'
     TabOrder = 16
     Text = 'edtPersonGroupUserData'
+  end
+  object btnDeletePersonGroup: TButton
+    Left = 247
+    Top = 168
+    Width = 202
+    Height = 25
+    Caption = 'Delete Person Group'
+    TabOrder = 17
+    OnClick = btnDeletePersonGroupClick
   end
 end

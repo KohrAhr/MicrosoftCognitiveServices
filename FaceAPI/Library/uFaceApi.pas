@@ -77,6 +77,11 @@ type
     function CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
 
     /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.DeletePersonGroup">interface DeletePersonGroup</see>
+    /// </summary>
+    function DeletePersonGroup(const AGroupID: String): String;
+
+    /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
     /// </summary>
     function Verify(const AFaceTempID1, AFaceTempID2: String): String; overload;
@@ -311,6 +316,32 @@ begin
     Result := ProceedHttpClientData(LHTTPClient, LStream);
   finally
     LRequestContent.Free;
+    LHTTPClient.Free;
+  end;
+end;
+
+function TFaceApi.DeletePersonGroup(const AGroupID: String): String;
+var
+  LURL: String;
+  LHTTPClient: THTTPClient;
+  LStream: TStream;
+  LHeaders: TNetHeaders;
+begin
+  { Looks like Default method for controller }
+  LURL := Format(
+    '%s/persongroups/%s',
+    [
+      ServerBaseUrl(AccessServer),
+      AGroupID.ToLower
+    ]
+  );
+
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+  try
+    LStream := LHTTPClient.Delete(LURL, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
     LHTTPClient.Free;
   end;
 end;

@@ -251,6 +251,24 @@ type
     function CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
 
     /// <summary>
+    ///   Delete an existing person group. Persisted face images of all people in the person group will also be deleted.
+    /// </summary>
+		/// <param name="AGroupID">
+    ///  The personGroupId of the person group to be deleted.
+		/// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns an empty response body.
+    ///
+    ///   [ERROR]
+    ///   Response 400, 401, 403, 404, 409, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function DeletePersonGroup(const AGroupID: String): String;
+
+    /// <summary>
     ///   Verify whether two faces belong to a same person
     ///   Remarks:
     ///     This API works well for frontal and near-frontal faces.

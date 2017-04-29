@@ -31,6 +31,7 @@ type
     btnVerifyTwoFaces: TButton;
     Label1: TLabel;
     edtPersonGroupUserData: TEdit;
+    btnDeletePersonGroup: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure btnRunPersonGroupTrainingClick(Sender: TObject);
     procedure btnCreatePersonGroupClick(Sender: TObject);
     procedure btnVerifyTwoFacesClick(Sender: TObject);
+    procedure btnDeletePersonGroupClick(Sender: TObject);
   private
   public
   end;
@@ -216,6 +218,24 @@ begin
 
   memLog.Lines.Add(LResult);
 end;
+
+procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
+var
+  LIFaceApi: IFaceApi;
+  LResult: String;
+begin
+  LIFaceApi := TFaceApi.Create;
+
+  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
+
+  LResult := LIFaceApi.DeletePersonGroup(edtPersonGroupID.Text);
+
+  if LResult = '' then
+    LResult := 'Group was deleted';
+
+  memLog.Lines.Add(LResult);
+end;
+
 
 procedure TfmMain.btnVerifyTwoFacesClick(Sender: TObject);
 begin
