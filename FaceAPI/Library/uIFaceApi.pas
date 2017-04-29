@@ -232,8 +232,11 @@ type
     ///   Create a new person group with specified personGroupId, name and user-provided userData.
     ///   A person group is one of the most important parameters for the Face - Identify API.
     /// </summary>
-		/// <param name="AGroupID">
-    ///   User-provided personGroupId as a string. The valid characters include numbers, English letters in lower case, '-' and '_'. The maximum length of the personGroupId is 64.
+    /// <param name="AGroupID">
+    ///   User-provided personGroupId as a string. The valid characters include numbers, English letters in lower case, '-' and '_'. The size limit is 64.
+		/// </param>
+    /// <param name="AGroupUserData">
+    ///   User-provided data attached to the person group. The size limit is 16KB.
 		/// </param>
     /// <returns>
     ///   [OK]
@@ -245,7 +248,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function CreatePersonGroup(const AGroupID: String): String;
+    function CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
 
     /// <summary>
     ///   Verify whether two faces belong to a same person

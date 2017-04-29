@@ -15,7 +15,7 @@ type
     btnDetectInStream: TButton;
     btnListPersonGroups: TButton;
     btnListPersonsInPersonGroup: TButton;
-    edtPersonGroup: TEdit;
+    edtPersonGroupID: TEdit;
     edtAccessKey: TEdit;
     lblAccessKey: TLabel;
     btnClearLog: TButton;
@@ -24,11 +24,13 @@ type
     lblPersonUserData: TLabel;
     edtPersonUserData: TEdit;
     btnCreatePerson: TButton;
-    Z: TLabel;
+    lvlPersonGroupId: TLabel;
     btnRunPersonGroupTraining: TButton;
     btnGetPersonGroupTrainingStatus: TButton;
     btnCreatePersonGroup: TButton;
     btnVerifyTwoFaces: TButton;
+    Label1: TLabel;
+    edtPersonGroupUserData: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -77,7 +79,7 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.CreatePerson(edtPersonGroup.Text, edtPersonName.Text, edtPersonUserData.Text);
+  LResult := LIFaceApi.CreatePerson(edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text);
 
   memLog.Lines.Add(LResult);
 end;
@@ -162,7 +164,7 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.ListPersonsInPersonGroup(edtPersonGroup.Text);
+  LResult := LIFaceApi.ListPersonsInPersonGroup(edtPersonGroupID.Text);
 
   memLog.Lines.Add(LResult);
 end;
@@ -176,7 +178,7 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.TrainPersonGroup(edtPersonGroup.Text);
+  LResult := LIFaceApi.TrainPersonGroup(edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Training for group was requested! Check your status now';
@@ -193,7 +195,7 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.GetPersonGroupTrainingStatus(edtPersonGroup.Text);
+  LResult := LIFaceApi.GetPersonGroupTrainingStatus(edtPersonGroupID.Text);
 
   memLog.Lines.Add(LResult);
 end;
@@ -207,7 +209,10 @@ begin
 
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
-  LResult := LIFaceApi.CreatePersonGroup(edtPersonGroup.Text);
+  LResult := LIFaceApi.CreatePersonGroup(edtPersonGroupID.Text, edtPersonGroupUserData.Text);
+
+  if LResult = '' then
+    LResult := 'Group was created';
 
   memLog.Lines.Add(LResult);
 end;

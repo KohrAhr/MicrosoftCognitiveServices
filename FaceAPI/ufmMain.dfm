@@ -5,10 +5,10 @@ object fmMain: TfmMain
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
   ClientHeight = 442
-  ClientWidth = 857
+  ClientWidth = 816
   Color = clBtnFace
   Constraints.MinHeight = 480
-  Constraints.MinWidth = 640
+  Constraints.MinWidth = 780
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -16,37 +16,50 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    857
+    816
     442)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
-    Left = 505
-    Top = 192
-    Width = 53
+    Left = 527
+    Top = 207
+    Width = 63
     Height = 13
     Caption = 'Access key'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblPersonName: TLabel
-    Left = 496
+    Left = 528
     Top = 138
     Width = 62
     Height = 13
     Caption = 'Person name'
   end
   object lblPersonUserData: TLabel
-    Left = 476
+    Left = 508
     Top = 165
     Width = 82
     Height = 13
     Caption = 'Person user data'
   end
-  object Z: TLabel
-    Left = 494
-    Top = 111
-    Width = 64
+  object lvlPersonGroupId: TLabel
+    Left = 511
+    Top = 75
+    Width = 79
     Height = 13
-    Caption = 'Person group'
+    Caption = 'Person Group ID'
+  end
+  object Label1: TLabel
+    Left = 476
+    Top = 102
+    Width = 114
+    Height = 13
+    Caption = 'Person Group user data'
   end
   object btnDetectInFile: TButton
     Left = 8
@@ -60,7 +73,7 @@ object fmMain: TfmMain
   object memLog: TMemo
     Left = 8
     Top = 232
-    Width = 842
+    Width = 801
     Height = 203
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
@@ -110,17 +123,17 @@ object fmMain: TfmMain
     TabOrder = 5
     OnClick = btnListPersonsInPersonGroupClick
   end
-  object edtPersonGroup: TEdit
-    Left = 564
-    Top = 108
+  object edtPersonGroupID: TEdit
+    Left = 596
+    Top = 72
     Width = 121
     Height = 21
     TabOrder = 6
-    Text = 'edtPersonGroup'
+    Text = 'edtPersonGroupID'
   end
   object edtAccessKey: TEdit
-    Left = 564
-    Top = 189
+    Left = 596
+    Top = 205
     Width = 197
     Height = 21
     TabOrder = 7
@@ -135,7 +148,7 @@ object fmMain: TfmMain
     OnClick = btnClearLogClick
   end
   object edtPersonName: TEdit
-    Left = 564
+    Left = 596
     Top = 135
     Width = 121
     Height = 21
@@ -143,9 +156,9 @@ object fmMain: TfmMain
     Text = 'edtPersonName'
   end
   object edtPersonUserData: TEdit
-    Left = 564
+    Left = 596
     Top = 162
-    Width = 197
+    Width = 121
     Height = 21
     Hint = '(16 KByte text)'
     TabOrder = 10
@@ -193,7 +206,17 @@ object fmMain: TfmMain
     Width = 122
     Height = 25
     Caption = 'Verify two faces'
+    Enabled = False
     TabOrder = 15
     OnClick = btnVerifyTwoFacesClick
+  end
+  object edtPersonGroupUserData: TEdit
+    Left = 596
+    Top = 99
+    Width = 121
+    Height = 21
+    Hint = '(16 KByte text)'
+    TabOrder = 16
+    Text = 'edtPersonGroupUserData'
   end
 end

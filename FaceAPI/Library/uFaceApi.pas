@@ -74,7 +74,7 @@ type
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
-    function CreatePersonGroup(const AGroupID: String): String;
+    function CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
@@ -118,7 +118,7 @@ begin
     '%s/persongroups/%s/persons',
     [
       ServerBaseUrl(AccessServer),
-      AGroupID
+      AGroupID.ToLower
     ]
   );
 
@@ -224,11 +224,12 @@ function TFaceApi.ListPersonsInPersonGroup(const AGroupID: String): String;
 var
   LURL: String;
 begin
+  { Looks like Persons controller method }
   LURL := Format(
     '%s/persongroups/%s/persons',
     [
       ServerBaseUrl(AccessServer),
-      AGroupID
+      AGroupID.ToLower
     ]
   );
 
@@ -246,11 +247,12 @@ function TFaceApi.GetPersonGroupTrainingStatus(const AGroupID: String): String;
 var
   LURL: String;
 begin
+  { Looks like Training controller method }
   LURL := Format(
     '%s/persongroups/%s/training',
     [
       ServerBaseUrl(AccessServer),
-      AGroupID
+      AGroupID.ToLower
     ]
   );
 
@@ -274,11 +276,12 @@ begin
 
   LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
   try
+    { Looks like Train controller method }
     LURL := Format(
       '%s/persongroups/%s/train',
       [
         ServerBaseUrl(AccessServer),
-        AGroupID
+        AGroupID.ToLower
       ]
     );
 
@@ -302,9 +305,43 @@ begin
   Result := '';
 end;
 
-function TFaceApi.CreatePersonGroup(const AGroupID: String): String;
+function TFaceApi.CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
+var
+  LURL: String;
+  LHTTPClient: THTTPClient;
+  LStream: TStream;
+  LHeaders: TNetHeaders;
+  LRequestContent: TBytesStream;
 begin
-  Result := '';
+  { Looks like Default controller method }
+  LURL := Format(
+    '%s/persongroups/%s',
+    [
+      ServerBaseUrl(AccessServer),
+      AGroupID.ToLower
+    ]
+  );
+
+
+  LHTTPClient := PrepareHTTPClient(LHeaders, CONST_CONTENT_TYPE_JSON);
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(
+        Format(
+          '{ "name":"%s", "userData":"%s" }',
+          [AGroupID, AGroupUserData]
+        )
+      )
+    );
+
+    LStream := LHTTPClient.Put(LURL, LRequestContent, nil, LHeaders).ContentStream;
+  finally
+    LRequestContent.Free;
+  end;
+
+  Result := ProceedHttpClientData(LHTTPClient, LStream);
 end;
 
 end.
