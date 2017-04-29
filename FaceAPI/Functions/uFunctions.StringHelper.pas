@@ -5,8 +5,8 @@ interface
 uses
   { TEncoding }
   System.SysUtils,
-	{ TMemoryStream }
-	System.Classes;
+  { TMemoryStream }
+  System.Classes;
 
 type
 	StringHelper = class
@@ -20,7 +20,7 @@ class function StringHelper.MemoryStreamToString(const M: TMemoryStream): String
 var
 	LStringStream: TStringStream;
 begin
-	Result := '';
+  Result := '';
 
   LStringStream := TStringStream.Create('', TEncoding.UTF8);
   try
