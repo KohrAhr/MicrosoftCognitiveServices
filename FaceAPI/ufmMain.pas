@@ -98,12 +98,15 @@ begin
   LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
 
   LRequestContent := TStringStream.Create;
+  try
+    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
-  LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+    LResult := LIFaceApi.DetectStream(LRequestContent, Detect(True, True));
 
-  LResult := LIFaceApi.DetectStream(LRequestContent, Detect(True, True));
-
-  memLog.Lines.Add(LResult);
+    memLog.Lines.Add(LResult);
+  finally
+    LRequestContent.Free;
+  end;
 end;
 
 

@@ -74,7 +74,7 @@ begin
     else
       begin
         if ARequestType = rtStream then
-          LRequestContent := AStreamData
+          LRequestContent := TBytesStream.Create(AStreamData.Bytes)
         else
           LRequestContent := TBytesStream.Create(StringHelper.StringToBytesArray(Format('{ "url":"%s" }', [AData])));
 
