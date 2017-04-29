@@ -4,10 +4,12 @@ interface
 
 uses
   { TFaceApiServer }
-  uFaceApi.Servers.Types;
+  uFaceApi.Servers.Types,
+  { TInterfacedPersistent }
+  System.Classes;
 
 type
-  TFaceApiBase = class
+  TFaceApiBase = class(TInterfacedPersistent)
   private
     FAccessKey: String;
     FAccessServer: TFaceApiServer;

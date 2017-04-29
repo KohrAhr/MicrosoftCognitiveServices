@@ -35,7 +35,10 @@ uses
   uFaceApi,
   { TFaceAttributes }
   uFaceApi.FaceAttributes,
-  uFaceApi.Servers.Types;
+  { doAge }
+  uFaceApi.Servers.Types,
+  { Detect }
+  uFaceApi.FaceDetectOptions;
 
 const
   CONST_ACCESS_KEY = '4acb98b9002d4d87878b54bed21af7bc';

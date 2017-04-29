@@ -12,27 +12,19 @@ uses
   { TFaceApiBase }
   uFaceApi.Base,
   { TFaceAttributes }
-  uFaceApi.FaceAttributes;
+  uFaceApi.FaceAttributes,
+  { IFaceApi }
+  uIFaceApi,
+  { TDetectOptions }
+  uFaceApi.FaceDetectOptions;
 
 type
-  TDetectOptions = record
-    FaceId: Boolean;
-    FaceLandmarks: Boolean;
-    FaceAttributes: TFaceAttributes;
-
-    function FaceAttributesToString: String;
-    constructor Create(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []);
-  end;
-
-  function Detect(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
-
-type
-  TFaceApi = class(TFaceApiBase)
-    function Detect(ARequestType: TContentType; AData: String; AStreamData: TStringStream; ADetectOptions: TDetectOptions): String;
+  TFaceApi = class(TFaceApiBase, IFaceApi)
+    function Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
   public
     function DetectURL(AURL: String; ADetectOptions: TDetectOptions): String;
     function DetectFile(AFileName: String; ADetectOptions: TDetectOptions): String;
-    function DetectStream(AStream: TStringStream; ADetectOptions: TDetectOptions): String;
+    function DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
 
     function ListPersonGroups(AStart: String = ''; ATop: Integer = 1000): String;
 
@@ -58,8 +50,6 @@ uses
 const
   CONST_FACEAPI_ACCESS_KEY_NAME = 'Ocp-Apim-Subscription-Key';
 
-{ TFaceApi }
-
 constructor TFaceApi.Create(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
 begin
   inherited Create;
@@ -69,7 +59,7 @@ begin
   AccessServer := AAccessServer;
 end;
 
-function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TStringStream; ADetectOptions: TDetectOptions): String;
+function TFaceApi.Detect(ARequestType: TContentType; AData: String; AStreamData: TBytesStream; ADetectOptions: TDetectOptions): String;
 var
   LNameValuePair: TNameValuePair;
   LHTTPClient: THTTPClient;
@@ -77,7 +67,7 @@ var
   LURL: String;
   LHeaders: TNetHeaders;
 	LResponse: TMemoryStream;
-  LRequestContent: TStringStream;
+  LRequestContent: TBytesStream;
 begin
   if ARequestType = rtFile then
     if not FileExists(AData) then
@@ -111,7 +101,7 @@ begin
         if ARequestType = rtStream then
           LRequestContent := AStreamData
         else
-          LRequestContent := TStringStream.Create(Format('{ "url":"%s" }', [AData]));
+          LRequestContent := TBytesStream.Create(TEncoding.UTF8.GetBytes(Format('{ "url":"%s" }', [AData])));
 
         LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
       end;
@@ -135,7 +125,7 @@ begin
   Result := Detect(rtFile, AFileName, nil, ADetectOptions);
 end;
 
-function TFaceApi.DetectStream(AStream: TStringStream; ADetectOptions: TDetectOptions): String;
+function TFaceApi.DetectStream(AStream: TBytesStream; ADetectOptions: TDetectOptions): String;
 begin
   Result := Detect(rtStream, '', AStream, ADetectOptions);
 end;
@@ -153,9 +143,7 @@ var
   LURL: String;
   LHeaders: TNetHeaders;
 	LResponse: TMemoryStream;
-  LRequestContent: TStringStream;
 begin
-  LRequestContent := nil;
   LHTTPClient := THTTPClient.Create;
   try
     SetLength(LHeaders, 1);
@@ -186,7 +174,6 @@ begin
       LResponse.Free;
     end;
   finally
-    LRequestContent.Free;
     LHTTPClient.Free;
   end;
 end;
@@ -199,9 +186,7 @@ var
   LURL: String;
   LHeaders: TNetHeaders;
 	LResponse: TMemoryStream;
-  LRequestContent: TStringStream;
 begin
-  LRequestContent := nil;
   LHTTPClient := THTTPClient.Create;
   try
     SetLength(LHeaders, 1);
@@ -231,41 +216,8 @@ begin
       LResponse.Free;
     end;
   finally
-    LRequestContent.Free;
     LHTTPClient.Free;
   end;
-end;
-
-{ TDetectOptions }
-
-function Detect(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []): TDetectOptions;
-begin
-  Result := TDetectOptions.Create(AFaceId, AFaceLandmarks, AFaceAttributes);
-end;
-
-constructor TDetectOptions.Create(AFaceId: Boolean; AFaceLandmarks: Boolean = False; AFaceAttributes: TFaceAttributes = []);
-begin
-  FaceId := AFaceId;
-  FaceLandmarks := AFaceLandmarks;
-  FaceAttributes := AFaceAttributes;
-end;
-
-function TDetectOptions.FaceAttributesToString: String;
-var
-  LFaceAttribute: TFaceAttribute;
-begin
-  Result := '';
-
-  for LFaceAttribute := Low(CONST_FACE_ATTRIBUTES) to High(CONST_FACE_ATTRIBUTES) do
-    if LFaceAttribute in FaceAttributes then
-      begin
-        if Result <> '' then
-          Result := Result + ',';
-        Result := Result + CONST_FACE_ATTRIBUTES[LFaceAttribute];
-      end;
-
-//  if Result <> '' then
-//    Result := 'faceAttributes=' + Result;
 end;
 
 end.
