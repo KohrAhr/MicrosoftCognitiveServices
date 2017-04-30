@@ -3,8 +3,6 @@ unit uFaceApi.Base;
 interface
 
 uses
-  { TFaceApiServer }
-  uFaceApi.Servers.Types,
   { TInterfacedPersistent }
   System.Classes,
   { TNetHeader }
@@ -33,6 +31,8 @@ type
 implementation
 
 uses
+  { TFaceApiServer }
+  uFaceApi.Servers.Types,
   { Format }
   System.SysUtils;
 

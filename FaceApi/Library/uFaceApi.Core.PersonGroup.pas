@@ -17,11 +17,7 @@ uses
   { TFaceApiBase }
   uFaceApi.Base,
   { IFaceApiPersonGroup }
-  uIFaceApi.PersonGroup,
-  { TDetectOptions }
-  uFaceApi.FaceDetectOptions,
-  { TAccess }
-  uFaceApi.ServersAccess.Types;
+  uIFaceApi.PersonGroup;
 
 type
   /// <summary>

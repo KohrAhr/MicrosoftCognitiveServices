@@ -6,12 +6,6 @@ unit uIFaceApi.PersonGroup;
 interface
 
 uses
-  { TStringStream }
-  System.Classes,
-  { TDetectOptions }
-  uFaceApi.FaceDetectOptions,
-  { TContentType }
-  uFaceApi.Content.Types,
   { TAccess }
   uFaceApi.ServersAccess.Types;
 

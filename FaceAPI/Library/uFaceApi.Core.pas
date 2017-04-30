@@ -19,9 +19,7 @@ uses
   { IFaceApi }
   uIFaceApi,
   { TDetectOptions }
-  uFaceApi.FaceDetectOptions,
-  { TAccess }
-  uFaceApi.ServersAccess.Types;
+  uFaceApi.FaceDetectOptions;
 
 type
   /// <summary>
