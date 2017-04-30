@@ -49,7 +49,7 @@ object fmMain: TfmMain
   end
   object lvlPersonGroupId: TLabel
     Left = 511
-    Top = 75
+    Top = 47
     Width = 79
     Height = 13
     Caption = 'Person Group ID'
@@ -117,6 +117,13 @@ object fmMain: TfmMain
     Height = 13
     Caption = 'Enter "Face Temp ID 2" optionally'
   end
+  object Label10: TLabel
+    Left = 495
+    Top = 75
+    Width = 95
+    Height = 13
+    Caption = 'Person Group Name'
+  end
   object btnDetectInFile: TButton
     Left = 8
     Top = 8
@@ -181,7 +188,7 @@ object fmMain: TfmMain
   end
   object edtPersonGroupID: TEdit
     Left = 596
-    Top = 72
+    Top = 44
     Width = 121
     Height = 21
     TabOrder = 6
@@ -332,5 +339,13 @@ object fmMain: TfmMain
     Caption = 'Identify'
     TabOrder = 23
     OnClick = btnIdentifyClick
+  end
+  object edtPersonGroupName: TEdit
+    Left = 596
+    Top = 72
+    Width = 121
+    Height = 21
+    TabOrder = 24
+    Text = 'edtPersonGroupName'
   end
 end

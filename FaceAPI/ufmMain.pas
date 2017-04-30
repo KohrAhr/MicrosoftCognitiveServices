@@ -46,6 +46,8 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    Label10: TLabel;
+    edtPersonGroupName: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -174,7 +176,9 @@ procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
 var
   LResult: String;
 begin
-  LResult := FaceApiHelper.CreatePersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupUserData.Text);
+  LResult := FaceApiHelper.CreatePersonGroup(
+    Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupName.Text, edtPersonGroupUserData.Text
+  );
 
   if LResult = '' then
     LResult := 'Group was created';

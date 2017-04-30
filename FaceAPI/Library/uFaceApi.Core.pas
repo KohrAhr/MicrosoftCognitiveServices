@@ -74,7 +74,7 @@ type
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
-    function CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
+    function CreatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.DeletePersonGroup">interface DeletePersonGroup</see>
@@ -265,7 +265,7 @@ begin
   Result := InetHelper.PostRequest(GetAccessKey, LURL, nil, CONST_CONTENT_TYPE_JSON);
 end;
 
-function TFaceApiCore.CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
+function TFaceApiCore.CreatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 var
   LURL: String;
   LHTTPClient: THTTPClient;
@@ -289,7 +289,7 @@ begin
       StringHelper.StringToBytesArray(
         Format(
           '{ "name":"%s", "userData":"%s" }',
-          [AGroupID.ToLower, AGroupUserData]
+          [AGroupName.ToLower, AGroupUserData]
         )
       )
     );

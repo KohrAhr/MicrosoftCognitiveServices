@@ -234,6 +234,9 @@ type
     /// <param name="AGroupID">
     ///   User-provided personGroupId as a string. The valid characters include numbers, English letters in lower case, '-' and '_'. The size limit is 64.
 		/// </param>
+    /// <param name="AGroupName">
+    ///   Person group display name. The maximum length is 128.
+		/// </param>
     /// <param name="AGroupUserData">
     ///   User-provided data attached to the person group. The size limit is 16KB.
 		/// </param>
@@ -247,7 +250,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
+    function CreatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
     ///   Delete an existing person group. Persisted face images of all people in the person group will also be deleted.
@@ -337,6 +340,8 @@ type
     ///   Error Code	Error Message Description
     /// </returns>
     function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
+
+//    function UpdatePersonGroup(const AGroupID: String; );
 
     /// <summary>
     ///   Define your access key and define your server location

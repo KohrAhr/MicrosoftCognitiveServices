@@ -52,7 +52,7 @@ type
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
-    class function CreatePersonGroup(AAccess: TAccess; const AGroupID: String; const AGroupUserData: String): String;
+    class function CreatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.DeletePersonGroup">interface DeletePersonGroup</see>
@@ -94,7 +94,7 @@ begin
   Result := LIFaceApi.CreatePerson(AGroupID, APersonName, APersonUserData);
 end;
 
-class function FaceApiHelper.CreatePersonGroup(AAccess: TAccess; const AGroupID, AGroupUserData: String): String;
+class function FaceApiHelper.CreatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
 var
   LIFaceApi: IFaceApi;
 begin
@@ -102,7 +102,7 @@ begin
 
   LIFaceApi.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.CreatePersonGroup(AGroupID, AGroupUserData);
+  Result := LIFaceApi.CreatePersonGroup(AGroupID, AGroupName, AGroupUserData);
 end;
 
 class function FaceApiHelper.DeletePersonGroup(AAccess: TAccess; const AGroupID: String): String;
