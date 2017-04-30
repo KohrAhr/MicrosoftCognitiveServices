@@ -101,6 +101,11 @@ type
     function UpdatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface GetPersonGroup</see>
+    /// </summary>
+    function GetPersonGroup(const AGroupID: String): String;
+
+    /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.SetAccessKey">interface SetAccessKey</see>
     /// </summary>
     procedure SetAccessKey(const AAccess: TAccess);
@@ -435,6 +440,21 @@ begin
     LRequestContent.Free;
     LHTTPClient.Free;
   end;
+end;
+
+function TFaceApiCore.GetPersonGroup(const AGroupID: String): String;
+var
+  LURL: String;
+begin
+  LURL := Format(
+    '%s/persongroups/%s',
+    [
+      ServerBaseUrl,
+      AGroupID.ToLower
+    ]
+  );
+
+  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 end.

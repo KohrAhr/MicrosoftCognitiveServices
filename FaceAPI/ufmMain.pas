@@ -5,16 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls;
 
 type
   TfmMain = class(TForm)
-    btnDetectInFile: TButton;
     memLog: TMemo;
-    btnDetectInUrl: TButton;
-    btnDetectInStream: TButton;
-    btnListPersonGroups: TButton;
-    btnListPersonsInPersonGroup: TButton;
     edtPersonGroupID: TEdit;
     edtAccessKey: TEdit;
     lblAccessKey: TLabel;
@@ -23,32 +18,49 @@ type
     edtPersonName: TEdit;
     lblPersonUserData: TLabel;
     edtPersonUserData: TEdit;
-    btnCreatePerson: TButton;
-    lvlPersonGroupId: TLabel;
+    lblPersonGroupId: TLabel;
+    lblPersonGroupUserData: TLabel;
+    edtPersonGroupUserData: TEdit;
+    edtFaceTempID1: TEdit;
+    lblFaceTempId1: TLabel;
+    lblFaceTempId2: TLabel;
+    edtFaceTempID2: TEdit;
+    lblPersonId: TLabel;
+    edtPersonID: TEdit;
+    lblPersonGroupName: TLabel;
+    edtPersonGroupName: TEdit;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    btnListPersonGroups: TButton;
     btnRunPersonGroupTraining: TButton;
     btnGetPersonGroupTrainingStatus: TButton;
     btnCreatePersonGroup: TButton;
-    btnVerifyTwoFacesWay1: TButton;
-    Label1: TLabel;
-    edtPersonGroupUserData: TEdit;
     btnDeletePersonGroup: TButton;
-    edtFaceTempID1: TEdit;
+    btnUpdatePersonGroup: TButton;
+    btnGetPersonGroup: TButton;
+    btnDetectInFile: TButton;
+    btnDetectInUrl: TButton;
+    btnDetectInStream: TButton;
+    btnIdentify: TButton;
+    Label7: TLabel;
+    btnVerifyTwoFacesWay1: TButton;
+    btnVerifyTwoFacesWay2: TButton;
+    edtUrl: TEdit;
+    TabSheet4: TTabSheet;
+    btnCreatePerson: TButton;
+    btnListPersonsInPersonGroup: TButton;
+    lblUrl: TLabel;
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    edtFaceTempID2: TEdit;
-    btnVerifyTwoFacesWay2: TButton;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
-    edtPersonID: TEdit;
-    edtUrl: TEdit;
-    btnIdentify: TButton;
-    Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
-    edtPersonGroupName: TEdit;
-    btnUpdatePersonGroup: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -64,6 +76,7 @@ type
     procedure btnVerifyTwoFacesWay2Click(Sender: TObject);
     procedure btnIdentifyClick(Sender: TObject);
     procedure btnUpdatePersonGroupClick(Sender: TObject);
+    procedure btnGetPersonGroupClick(Sender: TObject);
   private
   public
   end;
@@ -257,5 +270,11 @@ begin
   memLog.Lines.Add(LResult);
 end;
 
+procedure TfmMain.btnGetPersonGroupClick(Sender: TObject);
+begin
+  memLog.Lines.Add(
+    FaceApiHelper.GetPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
+  );
+end;
 
 end.

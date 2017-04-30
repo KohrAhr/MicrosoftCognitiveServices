@@ -366,6 +366,29 @@ type
     function UpdatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
+    ///   Retrieve the information of a person group, including its name and userData. This API returns person group information only, use Person - List Persons in a Person Group instead to retrieve person information under the person group.
+    /// </summary>
+    /// <param name="AGroupID">
+    ///   Id of the target person group
+		/// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns the person group's information.
+    ///   JSON fields in response body:
+    ///   Fields	      Type	  Description
+    ///   personGroupId	String	Target personGroupId provided in request parameter.
+    ///   name	        String	Person group's display name.
+    ///   userData	    String	User-provided data attached to this person group.
+    ///
+    ///   [ERROR]
+    ///   Response 401, 403, 404, 409, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function GetPersonGroup(const AGroupID: String): String;
+
+    /// <summary>
     ///   Define your access key and define your server location
     /// </summary>
 		/// <param name="AAccess">

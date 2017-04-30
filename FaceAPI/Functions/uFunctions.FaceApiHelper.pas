@@ -60,23 +60,28 @@ type
     class function DeletePersonGroup(AAccess: TAccess; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
     /// </summary>
     class function Verify(AAccess: TAccess; const AFaceTempID1, AFaceTempID2: String): String; overload;
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
     /// </summary>
     class function Verify(AAccess: TAccess; const AFaceTempID, APersonID, AGroupID: String): String; overload;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface Identify</see>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Identify">interface Identify</see>
     /// </summary>
     class function Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
     /// </summary>
     class function UpdatePersonGroup(AAccess: TAccess; const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
+
+    /// <summary>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    /// </summary>
+    class function GetPersonGroup(AAccess: TAccess; const AGroupID: String): String;
   end;
 
 implementation
@@ -243,6 +248,17 @@ begin
   LIFaceApi.SetAccessKey(AAccess);
 
   Result := LIFaceApi.UpdatePersonGroup(AGroupID, AGroupName, AGroupUserData);
+end;
+
+class function FaceApiHelper.GetPersonGroup(AAccess: TAccess; const AGroupID: String): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.GetPersonGroup(AGroupID);
 end;
 
 end.

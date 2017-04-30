@@ -4,11 +4,11 @@ object fmMain: TfmMain
   Caption = 
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
-  ClientHeight = 613
-  ClientWidth = 1106
+  ClientHeight = 442
+  ClientWidth = 874
   Color = clBtnFace
   Constraints.MinHeight = 480
-  Constraints.MinWidth = 1024
+  Constraints.MinWidth = 890
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -16,13 +16,13 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    1106
-    613)
+    874
+    442)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
-    Left = 135
-    Top = 295
+    Left = 594
+    Top = 235
     Width = 63
     Height = 13
     Caption = 'Access key'
@@ -34,110 +34,73 @@ object fmMain: TfmMain
     ParentFont = False
   end
   object lblPersonName: TLabel
-    Left = 528
-    Top = 138
+    Left = 595
+    Top = 91
     Width = 62
     Height = 13
     Caption = 'Person name'
   end
   object lblPersonUserData: TLabel
-    Left = 508
-    Top = 165
+    Left = 575
+    Top = 117
     Width = 82
     Height = 13
     Caption = 'Person user data'
   end
-  object lvlPersonGroupId: TLabel
-    Left = 511
-    Top = 47
+  object lblPersonGroupId: TLabel
+    Left = 578
+    Top = 19
     Width = 79
     Height = 13
     Caption = 'Person Group ID'
   end
-  object Label1: TLabel
-    Left = 476
-    Top = 102
+  object lblPersonGroupUserData: TLabel
+    Left = 543
+    Top = 67
     Width = 114
     Height = 13
     Caption = 'Person Group user data'
   end
-  object Label2: TLabel
-    Left = 792
-    Top = 42
+  object lblFaceTempId1: TLabel
+    Left = 582
+    Top = 163
     Width = 75
     Height = 13
     Caption = 'Face Temp ID 1'
   end
-  object Label3: TLabel
-    Left = 792
-    Top = 69
+  object lblFaceTempId2: TLabel
+    Left = 582
+    Top = 187
     Width = 75
     Height = 13
     Caption = 'Face Temp ID 2'
   end
-  object Label4: TLabel
-    Left = 792
-    Top = 119
-    Width = 116
-    Height = 13
-    Caption = 'Enter "Person Group ID"'
-  end
-  object Label5: TLabel
-    Left = 941
-    Top = 119
-    Width = 112
-    Height = 13
-    Caption = 'Enter "Face Temp ID 1"'
-  end
-  object Label6: TLabel
-    Left = 792
-    Top = 141
+  object lblPersonId: TLabel
+    Left = 610
+    Top = 139
     Width = 47
     Height = 13
     Caption = 'Person ID'
   end
-  object Label7: TLabel
-    Left = 792
-    Top = 194
-    Width = 116
-    Height = 13
-    Caption = 'Enter "Person Group ID"'
-  end
-  object Label8: TLabel
-    Left = 792
-    Top = 213
-    Width = 112
-    Height = 13
-    Caption = 'Enter "Face Temp ID 1"'
-  end
-  object Label9: TLabel
-    Left = 910
-    Top = 213
-    Width = 161
-    Height = 13
-    Caption = 'Enter "Face Temp ID 2" optionally'
-  end
-  object Label10: TLabel
-    Left = 495
-    Top = 75
+  object lblPersonGroupName: TLabel
+    Left = 562
+    Top = 43
     Width = 95
     Height = 13
     Caption = 'Person Group Name'
   end
-  object btnDetectInFile: TButton
-    Left = 8
-    Top = 8
-    Width = 202
-    Height = 25
-    Caption = 'Detect in File'
-    TabOrder = 0
-    OnClick = btnDetectInFileClick
+  object lblUrl: TLabel
+    Left = 638
+    Top = 211
+    Width = 19
+    Height = 13
+    Caption = 'URL'
   end
   object memLog: TMemo
-    Left = 8
-    Top = 328
-    Width = 1091
-    Height = 278
+    Left = 7
+    Top = 295
+    Width = 859
+    Height = 139
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
     Font.Charset = RUSSIAN_CHARSET
@@ -147,214 +110,331 @@ object fmMain: TfmMain
     Font.Style = []
     ParentFont = False
     ScrollBars = ssVertical
-    TabOrder = 1
+    TabOrder = 0
     WantTabs = True
   end
-  object btnDetectInUrl: TButton
-    Left = 8
-    Top = 72
-    Width = 202
-    Height = 25
-    Caption = 'Detect in URL'
-    TabOrder = 2
-    OnClick = btnDetectInUrlClick
-  end
-  object btnDetectInStream: TButton
-    Left = 8
-    Top = 104
-    Width = 202
-    Height = 25
-    Caption = 'Detect in Stream'
-    TabOrder = 3
-    OnClick = btnDetectInStreamClick
-  end
-  object btnListPersonGroups: TButton
-    Left = 247
-    Top = 8
-    Width = 202
-    Height = 25
-    Caption = 'List Person Groups'
-    TabOrder = 4
-    OnClick = btnListPersonGroupsClick
-  end
-  object btnListPersonsInPersonGroup: TButton
-    Left = 247
-    Top = 104
-    Width = 202
-    Height = 25
-    Caption = 'List Persons In Person Group'
-    TabOrder = 5
-    OnClick = btnListPersonsInPersonGroupClick
-  end
   object edtPersonGroupID: TEdit
-    Left = 596
-    Top = 44
-    Width = 121
+    Left = 663
+    Top = 16
+    Width = 202
     Height = 21
-    TabOrder = 6
+    TabOrder = 1
     Text = 'edtPersonGroupID'
   end
   object edtAccessKey: TEdit
-    Left = 204
-    Top = 293
-    Width = 197
+    Left = 663
+    Top = 232
+    Width = 202
     Height = 21
-    TabOrder = 7
+    TabOrder = 2
   end
   object btnClearLog: TButton
     Left = 8
-    Top = 288
+    Top = 264
     Width = 75
     Height = 25
     Caption = 'Clear log'
-    TabOrder = 8
+    TabOrder = 3
     OnClick = btnClearLogClick
   end
   object edtPersonName: TEdit
-    Left = 596
-    Top = 135
-    Width = 121
+    Left = 663
+    Top = 88
+    Width = 202
     Height = 21
-    TabOrder = 9
+    TabOrder = 4
     Text = 'edtPersonName'
   end
   object edtPersonUserData: TEdit
-    Left = 596
-    Top = 162
-    Width = 121
+    Left = 663
+    Top = 112
+    Width = 202
     Height = 21
     Hint = '(16 KByte text)'
-    TabOrder = 10
+    TabOrder = 5
     Text = 'edtPersonUserData'
   end
-  object btnCreatePerson: TButton
-    Left = 495
-    Top = 8
-    Width = 123
-    Height = 25
-    Caption = 'Create Person'
-    TabOrder = 11
-    OnClick = btnCreatePersonClick
-  end
-  object btnRunPersonGroupTraining: TButton
-    Left = 247
-    Top = 72
-    Width = 202
-    Height = 25
-    Caption = 'Run Person Group training'
-    TabOrder = 12
-    OnClick = btnRunPersonGroupTrainingClick
-  end
-  object btnGetPersonGroupTrainingStatus: TButton
-    Left = 247
-    Top = 40
-    Width = 202
-    Height = 25
-    Caption = 'Get Person Group training status'
-    TabOrder = 13
-    OnClick = btnGetPersonGroupTrainingStatusClick
-  end
-  object btnCreatePersonGroup: TButton
-    Left = 247
-    Top = 136
-    Width = 202
-    Height = 25
-    Caption = 'Create Person Group'
-    TabOrder = 14
-    OnClick = btnCreatePersonGroupClick
-  end
-  object btnVerifyTwoFacesWay1: TButton
-    Left = 792
-    Top = 8
-    Width = 145
-    Height = 25
-    Caption = 'Verify two faces - Way 1'
-    TabOrder = 15
-    OnClick = btnVerifyTwoFacesWay1Click
-  end
   object edtPersonGroupUserData: TEdit
-    Left = 596
-    Top = 99
-    Width = 121
+    Left = 663
+    Top = 64
+    Width = 202
     Height = 21
     Hint = '(16 KByte text)'
-    TabOrder = 16
+    TabOrder = 6
     Text = 'edtPersonGroupUserData'
   end
-  object btnDeletePersonGroup: TButton
-    Left = 247
-    Top = 168
-    Width = 202
-    Height = 25
-    Caption = 'Delete Person Group'
-    TabOrder = 17
-    OnClick = btnDeletePersonGroupClick
-  end
   object edtFaceTempID1: TEdit
-    Left = 873
-    Top = 39
-    Width = 225
+    Left = 663
+    Top = 160
+    Width = 202
     Height = 21
-    TabOrder = 18
+    TabOrder = 7
     Text = 'edtFaceTempID1'
   end
   object edtFaceTempID2: TEdit
-    Left = 873
-    Top = 66
-    Width = 225
+    Left = 663
+    Top = 184
+    Width = 202
     Height = 21
-    TabOrder = 19
+    TabOrder = 8
     Text = 'edtFaceTempID2'
   end
-  object btnVerifyTwoFacesWay2: TButton
-    Left = 792
-    Top = 88
-    Width = 145
-    Height = 25
-    Caption = 'Verify two faces - Way 2'
-    TabOrder = 20
-    OnClick = btnVerifyTwoFacesWay2Click
-  end
   object edtPersonID: TEdit
-    Left = 845
-    Top = 138
-    Width = 212
+    Left = 663
+    Top = 136
+    Width = 202
     Height = 21
-    TabOrder = 21
+    TabOrder = 9
     Text = 'edtPersonID'
   end
-  object edtUrl: TEdit
-    Left = 8
-    Top = 44
+  object edtPersonGroupName: TEdit
+    Left = 663
+    Top = 40
     Width = 202
     Height = 21
-    TabOrder = 22
-    Text = 'http://1click.lv/FaceApi/sample1.jpg'
-  end
-  object btnIdentify: TButton
-    Left = 792
-    Top = 168
-    Width = 145
-    Height = 25
-    Caption = 'Identify'
-    TabOrder = 23
-    OnClick = btnIdentifyClick
-  end
-  object edtPersonGroupName: TEdit
-    Left = 596
-    Top = 72
-    Width = 121
-    Height = 21
-    TabOrder = 24
+    TabOrder = 10
     Text = 'edtPersonGroupName'
   end
-  object btnUpdatePersonGroup: TButton
-    Left = 247
-    Top = 200
+  object PageControl1: TPageControl
+    Left = 8
+    Top = 8
+    Width = 509
+    Height = 249
+    ActivePage = TabSheet1
+    TabOrder = 11
+    object TabSheet1: TTabSheet
+      Caption = 'Person Group'
+      object Label4: TLabel
+        Left = 211
+        Top = 3
+        Width = 250
+        Height = 26
+        Caption = 
+          'Enter "Person Group ID", "Person Group Name" and '#13#10'optionally "P' +
+          'erson Group User Data"'
+      end
+      object Label5: TLabel
+        Left = 211
+        Top = 39
+        Width = 116
+        Height = 13
+        Caption = 'Enter "Person Group ID"'
+      end
+      object Label6: TLabel
+        Left = 211
+        Top = 72
+        Width = 116
+        Height = 13
+        Caption = 'Enter "Person Group ID"'
+      end
+      object Label8: TLabel
+        Left = 211
+        Top = 103
+        Width = 116
+        Height = 13
+        Caption = 'Enter "Person Group ID"'
+      end
+      object Label9: TLabel
+        Left = 211
+        Top = 165
+        Width = 116
+        Height = 13
+        Caption = 'Enter "Person Group ID"'
+      end
+      object Label10: TLabel
+        Left = 211
+        Top = 191
+        Width = 250
+        Height = 26
+        Caption = 
+          'Enter "Person Group ID", "Person Group Name" and '#13#10'optionally "P' +
+          'erson Group User Data"'
+      end
+      object btnListPersonGroups: TButton
+        Left = 3
+        Top = 129
+        Width = 202
+        Height = 25
+        Caption = 'List Person Groups'
+        TabOrder = 0
+        OnClick = btnListPersonGroupsClick
+      end
+      object btnRunPersonGroupTraining: TButton
+        Left = 3
+        Top = 160
+        Width = 202
+        Height = 25
+        Caption = 'Run Person Group training'
+        TabOrder = 1
+        OnClick = btnRunPersonGroupTrainingClick
+      end
+      object btnGetPersonGroupTrainingStatus: TButton
+        Left = 3
+        Top = 98
+        Width = 202
+        Height = 25
+        Caption = 'Get Person Group training status'
+        TabOrder = 2
+        OnClick = btnGetPersonGroupTrainingStatusClick
+      end
+      object btnCreatePersonGroup: TButton
+        Left = 3
+        Top = 3
+        Width = 202
+        Height = 25
+        Caption = 'Create Person Group'
+        TabOrder = 3
+        OnClick = btnCreatePersonGroupClick
+      end
+      object btnDeletePersonGroup: TButton
+        Left = 3
+        Top = 34
+        Width = 202
+        Height = 25
+        Caption = 'Delete Person Group'
+        TabOrder = 4
+        OnClick = btnDeletePersonGroupClick
+      end
+      object btnUpdatePersonGroup: TButton
+        Left = 3
+        Top = 191
+        Width = 202
+        Height = 25
+        Caption = 'Update Person Group'
+        TabOrder = 5
+        OnClick = btnUpdatePersonGroupClick
+      end
+      object btnGetPersonGroup: TButton
+        Left = 3
+        Top = 67
+        Width = 202
+        Height = 25
+        Caption = 'Get Person Group'
+        TabOrder = 6
+        OnClick = btnGetPersonGroupClick
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Face'
+      ImageIndex = 1
+      object Label7: TLabel
+        Left = 211
+        Top = 95
+        Width = 278
+        Height = 26
+        Caption = 
+          'Enter "Person Group ID"'#13#10'Enter "Face Temp ID 1" and optionally "' +
+          'Face Temp ID 2"'
+      end
+      object Label1: TLabel
+        Left = 211
+        Top = 39
+        Width = 56
+        Height = 13
+        Caption = 'Enter "URL"'
+      end
+      object Label2: TLabel
+        Left = 211
+        Top = 132
+        Width = 219
+        Height = 13
+        Caption = 'Enter "Face Temp ID 1" and "Face Temp ID 2"'
+      end
+      object Label3: TLabel
+        Left = 211
+        Top = 163
+        Width = 285
+        Height = 13
+        Caption = 'Enter "Face Temp ID 1", "Person ID" and "Person Group ID"'
+      end
+      object btnDetectInFile: TButton
+        Left = 3
+        Top = 3
+        Width = 202
+        Height = 25
+        Caption = 'Detect in File'
+        TabOrder = 0
+        OnClick = btnDetectInFileClick
+      end
+      object btnDetectInUrl: TButton
+        Left = 3
+        Top = 34
+        Width = 202
+        Height = 25
+        Caption = 'Detect in URL'
+        TabOrder = 1
+        OnClick = btnDetectInUrlClick
+      end
+      object btnDetectInStream: TButton
+        Left = 3
+        Top = 65
+        Width = 202
+        Height = 25
+        Caption = 'Detect in Stream'
+        TabOrder = 2
+        OnClick = btnDetectInStreamClick
+      end
+      object btnIdentify: TButton
+        Left = 3
+        Top = 96
+        Width = 202
+        Height = 25
+        Caption = 'Identify'
+        TabOrder = 3
+        OnClick = btnIdentifyClick
+      end
+      object btnVerifyTwoFacesWay1: TButton
+        Left = 3
+        Top = 127
+        Width = 202
+        Height = 25
+        Caption = 'Verify two faces - Way 1'
+        TabOrder = 4
+        OnClick = btnVerifyTwoFacesWay1Click
+      end
+      object btnVerifyTwoFacesWay2: TButton
+        Left = 3
+        Top = 158
+        Width = 202
+        Height = 25
+        Caption = 'Verify two faces - Way 2'
+        TabOrder = 5
+        OnClick = btnVerifyTwoFacesWay2Click
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Face List'
+      ImageIndex = 2
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'Person'
+      ImageIndex = 3
+      object btnCreatePerson: TButton
+        Left = 3
+        Top = 3
+        Width = 202
+        Height = 25
+        Caption = 'Create Person'
+        TabOrder = 0
+        OnClick = btnCreatePersonClick
+      end
+      object btnListPersonsInPersonGroup: TButton
+        Left = 3
+        Top = 34
+        Width = 202
+        Height = 25
+        Caption = 'List Persons In Person Group'
+        TabOrder = 1
+        OnClick = btnListPersonsInPersonGroupClick
+      end
+    end
+  end
+  object edtUrl: TEdit
+    Left = 663
+    Top = 208
     Width = 202
-    Height = 25
-    Caption = 'Update Person Group'
-    TabOrder = 25
-    OnClick = btnUpdatePersonGroupClick
+    Height = 21
+    TabOrder = 12
+    Text = 'http://1click.lv/FaceApi/sample1.jpg'
   end
 end
