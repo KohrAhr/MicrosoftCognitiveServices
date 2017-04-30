@@ -1,6 +1,5 @@
 /// <summary>
 ///   Unit contain the Main Interface declaration for Face API Microsoft Cognitive Services 1.0
-///
 /// </summary>
 unit uIFaceApi;
 
@@ -11,10 +10,10 @@ uses
   System.Classes,
   { TDetectOptions }
   uFaceApi.FaceDetectOptions,
-  { TFaceApiServer }
-  uFaceApi.Servers.Types,
   { TContentType }
-  uFaceApi.Content.Types;
+  uFaceApi.Content.Types,
+  { TAccess }
+  uFaceApi.ServersAccess.Types;
 
 type
   /// <summary>
@@ -342,13 +341,11 @@ type
     /// <summary>
     ///   Define your access key and define your server location
     /// </summary>
-		/// <param name="AAccessKey">
-    ///   Subscription key which provides access to this API. Found in your Cognitive Services accounts.
+		/// <param name="AAccess">
+    ///   - Subscription key which provides access to this API. Found in your Cognitive Services accounts.
+    ///   - Cognitive Api server location
 		/// </param>
-		/// <param name="AAccessServer">
-    ///   Cognitive Api server location
-		/// </param>
-    procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
+    procedure SetAccessKey(const AAccess: TAccess);
   end;
 
 implementation

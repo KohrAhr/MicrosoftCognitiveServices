@@ -12,8 +12,6 @@ uses
   System.Net.HttpClient,
   { TNetHeaders }
   System.Net.URLClient,
-  { TFaceApiServer }
-  uFaceApi.Servers.Types,
   { TContentType }
   uFaceApi.Content.Types,
   { TFaceApiBase }
@@ -21,7 +19,9 @@ uses
   { IFaceApi }
   uIFaceApi,
   { TDetectOptions }
-  uFaceApi.FaceDetectOptions;
+  uFaceApi.FaceDetectOptions,
+  { TAccess }
+  uFaceApi.ServersAccess.Types;
 
 type
   /// <summary>
@@ -98,8 +98,7 @@ type
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.SetAccessKey">interface SetAccessKey</see>
     /// </summary>
-    procedure SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer = fasGeneral);
-
+    procedure SetAccessKey(const AAccess: TAccess);
   end;
 
 implementation
@@ -120,7 +119,7 @@ begin
   LURL := Format(
     '%s/persongroups/%s/persons',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
@@ -154,7 +153,7 @@ begin
   LURL := Format(
     '%s/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       BoolToStr(ADetectOptions.FaceId, True).ToLower,
       BoolToStr(ADetectOptions.FaceLandmarks, True).ToLower,
       ADetectOptions.FaceAttributesToString
@@ -204,7 +203,7 @@ begin
   LURL := Format(
     '%s/persongroups?start=%s&top=%s',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AStart,
       ATop.ToString
     ]
@@ -221,7 +220,7 @@ begin
   LURL := Format(
     '%s/persongroups/%s/persons',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
@@ -229,11 +228,9 @@ begin
   Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
-procedure TFaceApi.SetAccessKey(const AAccessKey: String; const AAccessServer: TFaceApiServer);
+procedure TFaceApi.SetAccessKey(const AAccess: TAccess);
 begin
-  AccessKey := AAccessKey;
-
-  AccessServer := AAccessServer;
+  Access := AAccess;
 end;
 
 function TFaceApi.GetPersonGroupTrainingStatus(const AGroupID: String): String;
@@ -244,7 +241,7 @@ begin
   LURL := Format(
     '%s/persongroups/%s/training',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
@@ -265,7 +262,7 @@ begin
   LURL := Format(
     '%s/persongroups/%s/train',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
@@ -295,7 +292,7 @@ begin
   LURL := Format(
     '%s/persongroups/%s',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
@@ -332,7 +329,7 @@ begin
   LURL := Format(
     '%s/persongroups/%s',
     [
-      ServerBaseUrl(AccessServer),
+      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );

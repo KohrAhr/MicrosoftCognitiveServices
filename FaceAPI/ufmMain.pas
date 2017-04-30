@@ -60,8 +60,10 @@ uses
   uFaceApi.Servers.Types,
   { Detect }
   uFaceApi.FaceDetectOptions,
-  { }
-  uFunctions.FaceApiHelper;
+  { FaceApiHelper }
+  uFunctions.FaceApiHelper,
+  { Access }
+  uFaceApi.ServersAccess.Types;
 
 {$R *.dfm}
 
@@ -73,21 +75,29 @@ end;
 procedure TfmMain.btnCreatePersonClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.CreateNewPerson(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
+    FaceApiHelper.CreateNewPerson(
+      Access(edtAccessKey.Text, fasWestUS),
+      edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
   );
 end;
 
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.DetectFile(edtAccessKey.Text, fasWestUS, 'C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]))
+    FaceApiHelper.DetectFile(
+      Access(edtAccessKey.Text, fasWestUS),
+      'C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
+    )
   );
 end;
 
 procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-     FaceApiHelper.DetectURL(edtAccessKey.Text, fasWestUS, 'http://1click.lv/faceapi/sample1.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]))
+    FaceApiHelper.DetectURL(
+      Access(edtAccessKey.Text, fasWestUS),
+      'http://1click.lv/faceapi/sample1.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
+    )
   );
 end;
 
@@ -100,7 +110,10 @@ begin
     LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
     memLog.Lines.Add(
-       FaceApiHelper.DetectStream(edtAccessKey.Text, fasWestUS, LRequestContent, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]))
+      FaceApiHelper.DetectStream(
+        Access(edtAccessKey.Text, fasWestUS),
+        LRequestContent, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
+      )
     );
   finally
     LRequestContent.Free;
@@ -111,14 +124,14 @@ end;
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.ListPersonGroups(edtAccessKey.Text, fasWestUS)
+    FaceApiHelper.ListPersonGroups(Access(edtAccessKey.Text, fasWestUS))
   );
 end;
 
 procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.ListPersonsInPersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text)
+    FaceApiHelper.ListPersonsInPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
 end;
 
@@ -126,7 +139,7 @@ procedure TfmMain.btnRunPersonGroupTrainingClick(Sender: TObject);
 var
   LResult: String;
 begin
-  LResult := FaceApiHelper.TrainPersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text);
+  LResult := FaceApiHelper.TrainPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Training for group was requested! Check your status now';
@@ -137,7 +150,7 @@ end;
 procedure TfmMain.btnGetPersonGroupTrainingStatusClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.GetPersonGroupTrainingStatus(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text)
+    FaceApiHelper.GetPersonGroupTrainingStatus(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
 end;
 
@@ -145,7 +158,7 @@ procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
 var
   LResult: String;
 begin
-  LResult := FaceApiHelper.CreatePersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text, edtPersonGroupUserData.Text);
+  LResult := FaceApiHelper.CreatePersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupUserData.Text);
 
   if LResult = '' then
     LResult := 'Group was created';
@@ -157,7 +170,7 @@ procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
 var
   LResult: String;
 begin
-  LResult := FaceApiHelper.DeletePersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text);
+  LResult := FaceApiHelper.DeletePersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Group was deleted';

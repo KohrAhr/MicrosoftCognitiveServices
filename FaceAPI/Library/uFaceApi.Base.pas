@@ -8,7 +8,9 @@ uses
   { TInterfacedPersistent }
   System.Classes,
   { TNetHeader }
-  System.Net.URLClient;
+  System.Net.URLClient,
+  { TAccess }
+  uFaceApi.ServersAccess.Types;
 
 type
   TFaceApiBase = class(TInterfacedObject)
@@ -17,13 +19,11 @@ type
       CONST_FACEAPI_ACCESS_KEY_NAME = 'Ocp-Apim-Subscription-Key';
 
     var
-      FAccessKey: String;
-      FAccessServer: TFaceApiServer;
+      FAccess: TAccess;
   protected
-    function ServerBaseUrl(AServer: TFaceApiServer): String;
+    function ServerBaseUrl: String;
   public
-    property AccessKey: String read FAccessKey write FAccessKey;
-    property AccessServer: TFaceApiServer read FAccessServer write FAccessServer;
+    property Access: TAccess write FAccess;
 
     function GetAccessKey: TNetHeader;
   end;
@@ -34,15 +34,15 @@ uses
   { Format }
   System.SysUtils;
 
-function TFaceApiBase.ServerBaseUrl(AServer: TFaceApiServer): String;
+function TFaceApiBase.ServerBaseUrl: String;
 begin
-  Result := Format('https://%s/face/v1.0', [CONST_FACE_API_SERVER_URLS[AServer]]);
+  Result := Format('https://%s/face/v1.0', [CONST_FACE_API_SERVER_URLS[FAccess.AccessServer]]);
 end;
 
 function TFaceApiBase.GetAccessKey: TNetHeader;
 begin
   Result.Name := CONST_FACEAPI_ACCESS_KEY_NAME;
-  Result.Value := AccessKey;
+  Result.Value := FAccess.AccessKey;
 end;
 
 end.
