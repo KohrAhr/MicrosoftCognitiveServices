@@ -158,7 +158,7 @@ type
     ///   Subscription level limit is 1000 for free tier subscription and can be greater in paid tier subscriptions.
     /// </summary>
 		/// <param name="AGroupID">
-    ///   Target person group to be trained.
+    ///   Specifying the target person group to create the person.
 		/// </param>
 		/// <param name="APersonName">
     ///   Display name of the target person. The maximum length is 128.

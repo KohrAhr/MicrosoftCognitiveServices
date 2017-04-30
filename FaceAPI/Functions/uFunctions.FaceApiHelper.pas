@@ -58,6 +58,21 @@ type
     ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.DeletePersonGroup">interface DeletePersonGroup</see>
     /// </summary>
     class function DeletePersonGroup(AAccess: TAccess; const AGroupID: String): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    /// </summary>
+    class function Verify(AAccess: TAccess; const AFaceTempID1, AFaceTempID2: String): String; overload;
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    /// </summary>
+    class function Verify(AAccess: TAccess; const AFaceTempID, APersonID, AGroupID: String): String; overload;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface Identify</see>
+    /// </summary>
+    class function Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
+
   end;
 
 implementation
@@ -180,5 +195,40 @@ begin
 
   Result := LIFaceApi.TrainPersonGroup(AGroupID);
 end;
+
+class function FaceApiHelper.Verify(AAccess: TAccess; const AFaceTempID1, AFaceTempID2: String): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.Verify(AFaceTempID1, AFaceTempID2);
+end;
+
+class function FaceApiHelper.Verify(AAccess: TAccess; const AFaceTempID, APersonID, AGroupID: String): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.Verify(AFaceTempID, APersonID, AGroupID);
+end;
+
+class function FaceApiHelper.Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String;
+  const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.Identify(AFaceIDS, AGroupID, AMaxNumOfCandidatesReturned, AConfidenceThreshold);
+end;
+
 
 end.

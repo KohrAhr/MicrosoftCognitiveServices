@@ -28,10 +28,14 @@ type
     btnRunPersonGroupTraining: TButton;
     btnGetPersonGroupTrainingStatus: TButton;
     btnCreatePersonGroup: TButton;
-    btnVerifyTwoFaces: TButton;
+    btnVerifyTwoFacesWay1: TButton;
     Label1: TLabel;
     edtPersonGroupUserData: TEdit;
     btnDeletePersonGroup: TButton;
+    Edit1: TEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    Edit2: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -42,7 +46,7 @@ type
     procedure btnGetPersonGroupTrainingStatusClick(Sender: TObject);
     procedure btnRunPersonGroupTrainingClick(Sender: TObject);
     procedure btnCreatePersonGroupClick(Sender: TObject);
-    procedure btnVerifyTwoFacesClick(Sender: TObject);
+    procedure btnVerifyTwoFacesWay1Click(Sender: TObject);
     procedure btnDeletePersonGroupClick(Sender: TObject);
   private
   public
@@ -179,9 +183,14 @@ begin
 end;
 
 
-procedure TfmMain.btnVerifyTwoFacesClick(Sender: TObject);
+procedure TfmMain.btnVerifyTwoFacesWay1Click(Sender: TObject);
 begin
-  //
+  memLog.Lines.Add(
+    FaceApiHelper.Verify(
+      Access(edtAccessKey.Text, fasWestUS),
+      Edit1.Text, Edit2.Text
+    )
+  );
 end;
 
 end.
