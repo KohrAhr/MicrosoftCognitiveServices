@@ -21,7 +21,7 @@ object fmMain: TfmMain
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
-    Left = 527
+    Left = 135
     Top = 207
     Width = 63
     Height = 13
@@ -77,24 +77,45 @@ object fmMain: TfmMain
   end
   object Label4: TLabel
     Left = 792
-    Top = 143
+    Top = 119
     Width = 116
     Height = 13
     Caption = 'Enter "Person Group ID"'
   end
   object Label5: TLabel
     Left = 941
-    Top = 143
+    Top = 119
     Width = 112
     Height = 13
     Caption = 'Enter "Face Temp ID 1"'
   end
   object Label6: TLabel
     Left = 792
-    Top = 165
+    Top = 141
     Width = 47
     Height = 13
     Caption = 'Person ID'
+  end
+  object Label7: TLabel
+    Left = 792
+    Top = 194
+    Width = 116
+    Height = 13
+    Caption = 'Enter "Person Group ID"'
+  end
+  object Label8: TLabel
+    Left = 792
+    Top = 213
+    Width = 112
+    Height = 13
+    Caption = 'Enter "Face Temp ID 1"'
+  end
+  object Label9: TLabel
+    Left = 910
+    Top = 213
+    Width = 161
+    Height = 13
+    Caption = 'Enter "Face Temp ID 2" optionally'
   end
   object btnDetectInFile: TButton
     Left = 8
@@ -167,7 +188,7 @@ object fmMain: TfmMain
     Text = 'edtPersonGroupID'
   end
   object edtAccessKey: TEdit
-    Left = 596
+    Left = 204
     Top = 205
     Width = 197
     Height = 21
@@ -280,7 +301,7 @@ object fmMain: TfmMain
   end
   object btnVerifyTwoFacesWay2: TButton
     Left = 792
-    Top = 112
+    Top = 88
     Width = 145
     Height = 25
     Caption = 'Verify two faces - Way 2'
@@ -289,7 +310,7 @@ object fmMain: TfmMain
   end
   object edtPersonID: TEdit
     Left = 845
-    Top = 162
+    Top = 138
     Width = 212
     Height = 21
     TabOrder = 21
@@ -302,5 +323,14 @@ object fmMain: TfmMain
     Height = 21
     TabOrder = 22
     Text = 'http://1click.lv/FaceApi/sample1.jpg'
+  end
+  object btnIdentify: TButton
+    Left = 792
+    Top = 168
+    Width = 145
+    Height = 25
+    Caption = 'Identify'
+    TabOrder = 23
+    OnClick = btnIdentifyClick
   end
 end

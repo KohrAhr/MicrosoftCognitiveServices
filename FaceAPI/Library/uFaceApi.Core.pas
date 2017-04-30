@@ -380,33 +380,23 @@ end;
 function TFaceApiCore.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
 var
   LURL: String;
-  LHTTPClient: THTTPClient;
-  LStream: TStream;
-  LHeaders: TNetHeaders;
   LRequestContent: TBytesStream;
 begin
   LURL := Format('%s/identify', [ServerBaseUrl]);
 
-  { this function not completed and not tested }
-
   LRequestContent := nil;
-  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
   try
     LRequestContent := TBytesStream.Create(
-      StringHelper.StringToBytesArray(
-        Format(
-          '{ "personGroupId":"%s", "faceIds":["%s"], "maxNumOfCandidatesReturned":%s,"confidenceThreshold":%d }',
-          [AGroupID.ToLower, AFaceIDS.Text, AMaxNumOfCandidatesReturned.ToString, AConfidenceThreshold.ToString]  // Need new function TStringList.Text to "GUID" list with comma. For faceIds
+      StringHelper.StringToBytesArray(Format(
+          '{ "personGroupId":"%s", "faceIds":[%s], "maxNumOfCandidatesReturned":%s,"confidenceThreshold":%s }',
+          [AGroupID.ToLower, StringHelper.StringListToGuidsString(AFaceIDS, '"', ','), AMaxNumOfCandidatesReturned.ToString, AConfidenceThreshold.ToString]
         )
       )
     );
 
-    LStream := LHTTPClient.Post(LURL, LRequestContent, nil, LHeaders).ContentStream;
-
-    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
-    LHTTPClient.Free;
   end;
 end;
 

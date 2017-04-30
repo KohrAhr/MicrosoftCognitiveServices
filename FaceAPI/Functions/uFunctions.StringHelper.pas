@@ -12,6 +12,7 @@ type
 	StringHelper = class
 		class function MemoryStreamToString(const M: TMemoryStream): String;
     class function StringToBytesArray(const AValue: String): TArray<System.Byte>;
+    class function StringListToGuidsString(AStringList: TStringList; const ATextWrapper: String = ''; const AItemSeperator: String = ''): String;
 	end;
 
 implementation
@@ -36,5 +37,20 @@ class function StringHelper.StringToBytesArray(const AValue: String): TArray<Sys
 begin
   Result := TEncoding.UTF8.GetBytes(AValue);
 end;
+
+class function StringHelper.StringListToGuidsString(AStringList: TStringList; const ATextWrapper: String = ''; const AItemSeperator: String = ''): String;
+var
+  LValue: String;
+begin
+  for LValue in AStringList do
+    if Trim(LValue) <> '' then
+      begin
+        if (AItemSeperator <> '') and (Result <> '') then
+          Result := Result + AItemSeperator;
+
+        Result := Result + ATextWrapper + Trim(LValue) + ATextWrapper;
+      end;
+end;
+
 
 end.

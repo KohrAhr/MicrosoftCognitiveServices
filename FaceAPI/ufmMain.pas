@@ -42,6 +42,10 @@ type
     Label6: TLabel;
     edtPersonID: TEdit;
     edtUrl: TEdit;
+    btnIdentify: TButton;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -55,6 +59,7 @@ type
     procedure btnVerifyTwoFacesWay1Click(Sender: TObject);
     procedure btnDeletePersonGroupClick(Sender: TObject);
     procedure btnVerifyTwoFacesWay2Click(Sender: TObject);
+    procedure btnIdentifyClick(Sender: TObject);
   private
   public
   end;
@@ -208,6 +213,28 @@ begin
       edtFaceTempID1.Text, edtPersonID.Text, edtPersonGroupID.Text
     )
   );
+end;
+
+procedure TfmMain.btnIdentifyClick(Sender: TObject);
+var
+  LStringList: TStringList;
+begin
+  LStringList := TStringList.Create;
+  try
+    if edtFaceTempID1.Text <> '' then
+      LStringList.Add(edtFaceTempID1.Text);
+    if edtFaceTempID2.Text <> '' then
+      LStringList.Add(edtFaceTempID2.Text);
+
+    memLog.Lines.Add(
+      FaceApiHelper.Identify(
+        Access(edtAccessKey.Text, fasWestUS),
+        LStringList, edtPersonGroupID.Text
+      )
+    );
+  finally
+    LStringList.Free;
+  end;
 end;
 
 end.
