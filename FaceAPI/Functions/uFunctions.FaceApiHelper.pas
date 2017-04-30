@@ -143,10 +143,7 @@ end;
 class function FaceApiHelper.DetectStream(AAccess: TAccess; AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 var
   LIFaceApi: IFaceApi;
-  LRequestContent: TStringStream;
 begin
-  LRequestContent := nil;
-
   LIFaceApi := TFaceApiCore.Create;
 
   LIFaceApi.SetAccessKey(AAccess);
