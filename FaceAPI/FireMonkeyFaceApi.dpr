@@ -8,7 +8,7 @@ uses
   uFaceApi.Content.Types in 'Library\uFaceApi.Content.Types.pas',
   uFaceApi.FaceAttributes in 'Library\uFaceApi.FaceAttributes.pas',
   uFaceApi.FaceDetectOptions in 'Library\uFaceApi.FaceDetectOptions.pas',
-  uFaceApi in 'Library\uFaceApi.pas',
+  uFaceApi.Core in 'Library\uFaceApi.Core.pas',
   uFaceApi.Servers.Types in 'Library\uFaceApi.Servers.Types.pas',
   uIFaceApi in 'Library\uIFaceApi.pas',
   uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas';

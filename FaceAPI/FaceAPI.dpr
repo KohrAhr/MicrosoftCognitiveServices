@@ -6,7 +6,7 @@ uses
   uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas',
   uFaceApi.Base in 'Library\uFaceApi.Base.pas',
   uFaceApi.Content.Types in 'Library\uFaceApi.Content.Types.pas',
-  uFaceApi in 'Library\uFaceApi.pas',
+  uFaceApi.Core in 'Library\uFaceApi.Core.pas',
   uFaceApi.Servers.Types in 'Library\uFaceApi.Servers.Types.pas',
   uFaceApi.FaceAttributes in 'Library\uFaceApi.FaceAttributes.pas',
   uIFaceApi in 'Library\uIFaceApi.pas',

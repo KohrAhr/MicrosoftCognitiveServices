@@ -1,7 +1,7 @@
 /// <summary>
 ///   Main Class implementation for Face API Microsoft Cognitive Services 1.0
 /// </summary>
-unit uFaceApi;
+unit uFaceApi.Core;
 
 interface
 
@@ -27,7 +27,7 @@ type
   /// <summary>
   ///   Main Class implementation for Face API Microsoft Cognitive Services 1.0
   /// </summary>
-  TFaceApi = class(TFaceApiBase, IFaceApi)
+  TFaceApiCore = class(TFaceApiBase, IFaceApi)
   private
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.DetectBase">interface DetectBase</see>
@@ -111,7 +111,7 @@ uses
   { InetHelper }
   uFunctions.InetHelper;
 
-function TFaceApi.CreatePerson(const AGroupID, APersonName, APersonUserData: String): String;
+function TFaceApiCore.CreatePerson(const AGroupID, APersonName, APersonUserData: String): String;
 var
   LURL: String;
   LRequestContent: TBytesStream;
@@ -141,7 +141,7 @@ begin
   end;
 end;
 
-function TFaceApi.DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
+function TFaceApiCore.DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
 var
   LURL: String;
   LRequestContent: TBytesStream;
@@ -181,22 +181,22 @@ begin
   end;
 end;
 
-function TFaceApi.DetectFile(const AFileName: String; const ADetectOptions: TDetectOptions): String;
+function TFaceApiCore.DetectFile(const AFileName: String; const ADetectOptions: TDetectOptions): String;
 begin
   Result := DetectBase(rtFile, AFileName, nil, ADetectOptions);
 end;
 
-function TFaceApi.DetectStream(AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
+function TFaceApiCore.DetectStream(AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 begin
   Result := DetectBase(rtStream, '', AStream, ADetectOptions);
 end;
 
-function TFaceApi.DetectURL(const AURL: String; const ADetectOptions: TDetectOptions): String;
+function TFaceApiCore.DetectURL(const AURL: String; const ADetectOptions: TDetectOptions): String;
 begin
   Result := DetectBase(rtUrl, AURL, nil, ADetectOptions);
 end;
 
-function TFaceApi.ListPersonGroups(const AStart: String; const ATop: Integer): String;
+function TFaceApiCore.ListPersonGroups(const AStart: String; const ATop: Integer): String;
 var
   LURL: String;
 begin
@@ -212,7 +212,7 @@ begin
   Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
-function TFaceApi.ListPersonsInPersonGroup(const AGroupID: String): String;
+function TFaceApiCore.ListPersonsInPersonGroup(const AGroupID: String): String;
 var
   LURL: String;
 begin
@@ -228,12 +228,12 @@ begin
   Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
-procedure TFaceApi.SetAccessKey(const AAccess: TAccess);
+procedure TFaceApiCore.SetAccessKey(const AAccess: TAccess);
 begin
   Access := AAccess;
 end;
 
-function TFaceApi.GetPersonGroupTrainingStatus(const AGroupID: String): String;
+function TFaceApiCore.GetPersonGroupTrainingStatus(const AGroupID: String): String;
 var
   LURL: String;
 begin
@@ -249,12 +249,12 @@ begin
   Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
-function TFaceApi.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
+function TFaceApiCore.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.TrainPersonGroup(const AGroupID: String): String;
+function TFaceApiCore.TrainPersonGroup(const AGroupID: String): String;
 var
   LURL: String;
 begin
@@ -270,17 +270,17 @@ begin
   Result := InetHelper.PostRequest(GetAccessKey, LURL, nil, CONST_CONTENT_TYPE_JSON);
 end;
 
-function TFaceApi.Verify(const AFaceTempID1, AFaceTempID2: String): String;
+function TFaceApiCore.Verify(const AFaceTempID1, AFaceTempID2: String): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.Verify(const AFaceTempID, APersonID, AGroupID: String): String;
+function TFaceApiCore.Verify(const AFaceTempID, APersonID, AGroupID: String): String;
 begin
   Result := '';
 end;
 
-function TFaceApi.CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
+function TFaceApiCore.CreatePersonGroup(const AGroupID: String; const AGroupUserData: String): String;
 var
   LURL: String;
   LHTTPClient: THTTPClient;
@@ -318,7 +318,7 @@ begin
   end;
 end;
 
-function TFaceApi.DeletePersonGroup(const AGroupID: String): String;
+function TFaceApiCore.DeletePersonGroup(const AGroupID: String): String;
 var
   LURL: String;
   LHTTPClient: THTTPClient;
