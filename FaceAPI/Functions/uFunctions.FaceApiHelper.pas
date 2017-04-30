@@ -26,7 +26,7 @@ type
     class function DetectStream(AAccess: TAccess; AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.ListPersonGroups">interface ListPersonGroups</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonGroups">interface ListPersonGroups</see>
     /// </summary>
     class function ListPersonGroups(AAccess: TAccess; const AStart: String = ''; const ATop: Integer = 1000): String;
 
@@ -41,21 +41,21 @@ type
     class function CreateNewPerson(AAccess: TAccess; AGroupID: String; APersonName: String; APersonUserData: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
     /// </summary>
     class function GetPersonGroupTrainingStatus(AAccess: TAccess; const AGroupID: String): String;
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.TrainPersonGroup">interface TrainPersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.TrainPersonGroup">interface TrainPersonGroup</see>
     /// </summary>
     class function TrainPersonGroup(AAccess: TAccess; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
     class function CreatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.DeletePersonGroup">interface DeletePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.DeletePersonGroup">interface DeletePersonGroup</see>
     /// </summary>
     class function DeletePersonGroup(AAccess: TAccess; const AGroupID: String): String;
 
@@ -74,12 +74,12 @@ type
     class function Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApi.Identify">interface UpdatePersonGroup</see>
     /// </summary>
     class function UpdatePersonGroup(AAccess: TAccess; const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.Identify">interface UpdatePersonGroup</see>
     /// </summary>
     class function GetPersonGroup(AAccess: TAccess; const AGroupID: String): String;
   end;
@@ -90,7 +90,11 @@ uses
   { IFaceApi }
   uIFaceApi,
   { TFaceApiCore }
-  uFaceApi.Core;
+  uFaceApi.Core,
+  { IFaceApiPersonGroup }
+  uIFaceApi.PersonGroup,
+  { TFaceApiCorePersonGroup }
+  uFaceApi.Core.PersonGroup;
 
 class function FaceApiHelper.CreateNewPerson(AAccess: TAccess; AGroupID: String; APersonName: String; APersonUserData: String): String;
 var
@@ -105,24 +109,24 @@ end;
 
 class function FaceApiHelper.CreatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.CreatePersonGroup(AGroupID, AGroupName, AGroupUserData);
+  Result := LIFaceApiPersonGroup.CreatePersonGroup(AGroupID, AGroupName, AGroupUserData);
 end;
 
 class function FaceApiHelper.DeletePersonGroup(AAccess: TAccess; const AGroupID: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.DeletePersonGroup(AGroupID);
+  Result := LIFaceApiPersonGroup.DeletePersonGroup(AGroupID);
 end;
 
 class function FaceApiHelper.DetectFile(AAccess: TAccess; const AFileName: String; const ADetectOptions: TDetectOptions): String;
@@ -163,24 +167,24 @@ end;
 
 class function FaceApiHelper.GetPersonGroupTrainingStatus(AAccess: TAccess; const AGroupID: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.GetPersonGroupTrainingStatus(AGroupID);
+  Result := LIFaceApiPersonGroup.GetPersonGroupTrainingStatus(AGroupID);
 end;
 
 class function FaceApiHelper.ListPersonGroups(AAccess: TAccess; const AStart: String = ''; const ATop: Integer = 1000): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.ListPersonGroups(AStart, ATop);
+  Result := LIFaceApiPersonGroup.ListPersonGroups(AStart, ATop);
 end;
 
 class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccess; const AGroupID: String): String;
@@ -196,13 +200,13 @@ end;
 
 class function FaceApiHelper.TrainPersonGroup(AAccess: TAccess; const AGroupID: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.TrainPersonGroup(AGroupID);
+  Result := LIFaceApiPersonGroup.TrainPersonGroup(AGroupID);
 end;
 
 class function FaceApiHelper.Verify(AAccess: TAccess; const AFaceTempID1, AFaceTempID2: String): String;
@@ -241,24 +245,24 @@ end;
 
 class function FaceApiHelper.UpdatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.UpdatePersonGroup(AGroupID, AGroupName, AGroupUserData);
+  Result := LIFaceApiPersonGroup.UpdatePersonGroup(AGroupID, AGroupName, AGroupUserData);
 end;
 
 class function FaceApiHelper.GetPersonGroup(AAccess: TAccess; const AGroupID: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.GetPersonGroup(AGroupID);
+  Result := LIFaceApiPersonGroup.GetPersonGroup(AGroupID);
 end;
 
 end.

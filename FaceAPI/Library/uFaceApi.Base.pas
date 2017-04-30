@@ -26,6 +26,8 @@ type
     property Access: TAccess write FAccess;
 
     function GetAccessKey: TNetHeader;
+
+    procedure SetAccessKey(const AAccess: TAccess);
   end;
 
 implementation
@@ -33,6 +35,11 @@ implementation
 uses
   { Format }
   System.SysUtils;
+
+procedure TFaceApiBase.SetAccessKey(const AAccess: TAccess);
+begin
+  Access := AAccess;
+end;
 
 function TFaceApiBase.ServerBaseUrl: String;
 begin

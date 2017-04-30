@@ -13,7 +13,9 @@ uses
   uFaceApi.FaceDetectOptions in 'Library\uFaceApi.FaceDetectOptions.pas',
   uFunctions.InetHelper in 'Functions\uFunctions.InetHelper.pas',
   uFunctions.FaceApiHelper in 'Functions\uFunctions.FaceApiHelper.pas',
-  uFaceApi.ServersAccess.Types in 'Library\uFaceApi.ServersAccess.Types.pas';
+  uFaceApi.ServersAccess.Types in 'Library\uFaceApi.ServersAccess.Types.pas',
+  uFaceApi.Core.PersonGroup in 'Library\uFaceApi.Core.PersonGroup.pas',
+  uIFaceApi.PersonGroup in 'Library\uIFaceApi.PersonGroup.pas';
 
 {$R *.res}
 
