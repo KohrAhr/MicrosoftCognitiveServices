@@ -14,7 +14,9 @@ uses
   uFunctions.FaceApiHelper in 'Functions\uFunctions.FaceApiHelper.pas',
   uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas',
   uFunctions.InetHelper in 'Functions\uFunctions.InetHelper.pas',
-  uFaceApi.ServersAccess.Types in 'Library\uFaceApi.ServersAccess.Types.pas';
+  uFaceApi.ServersAccess.Types in 'Library\uFaceApi.ServersAccess.Types.pas',
+  uFaceApi.Core.PersonGroup in 'Library\uFaceApi.Core.PersonGroup.pas',
+  uIFaceApi.PersonGroup in 'Library\uIFaceApi.PersonGroup.pas';
 
 {$R *.res}
 
