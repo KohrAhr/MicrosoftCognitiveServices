@@ -54,16 +54,14 @@ var
 implementation
 
 uses
-  { TFaceApi }
-  uFaceApi,
   { TFaceAttributes }
   uFaceApi.FaceAttributes,
-  { doAge }
+  { TFaceApiServer }
   uFaceApi.Servers.Types,
   { Detect }
   uFaceApi.FaceDetectOptions,
-  { IFaceApi }
-  uIFaceApi;
+  { }
+  uFunctions.FaceApiHelper;
 
 {$R *.dfm}
 
@@ -73,70 +71,37 @@ begin
 end;
 
 procedure TfmMain.btnCreatePersonClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.CreatePerson(edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text);
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+    FaceApiHelper.CreateNewPerson(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
+  );
 end;
 
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.DetectFile('C:\Temp\index.jpg',
-    Detect(True, True,
-      [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-    )
+  memLog.Lines.Add(
+    FaceApiHelper.DetectFile(edtAccessKey.Text, fasWestUS, 'C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]))
   );
-
-  memLog.Lines.Add(LResult);
 end;
 
 procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.DetectURL('http://1click.lv/faceapi/sample1.jpg', Detect);
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+     FaceApiHelper.DetectURL(edtAccessKey.Text, fasWestUS, 'http://1click.lv/faceapi/sample1.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]))
+  );
 end;
 
 procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
 var
-  LIFaceApi: IFaceApi;
-  LResult: String;
   LRequestContent: TStringStream;
 begin
-  LRequestContent := nil;
-
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
   LRequestContent := TStringStream.Create;
   try
     LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
-    LResult := LIFaceApi.DetectStream(LRequestContent, Detect(True, True));
-
-    memLog.Lines.Add(LResult);
+    memLog.Lines.Add(
+       FaceApiHelper.DetectStream(edtAccessKey.Text, fasWestUS, LRequestContent, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]))
+    );
   finally
     LRequestContent.Free;
   end;
@@ -144,43 +109,24 @@ end;
 
 
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.ListPersonGroups;
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+    FaceApiHelper.ListPersonGroups(edtAccessKey.Text, fasWestUS)
+  );
 end;
 
 procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.ListPersonsInPersonGroup(edtPersonGroupID.Text);
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+    FaceApiHelper.ListPersonsInPersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text)
+  );
 end;
 
 procedure TfmMain.btnRunPersonGroupTrainingClick(Sender: TObject);
 var
-  LIFaceApi: IFaceApi;
   LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.TrainPersonGroup(edtPersonGroupID.Text);
+  LResult := FaceApiHelper.TrainPersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Training for group was requested! Check your status now';
@@ -189,29 +135,17 @@ begin
 end;
 
 procedure TfmMain.btnGetPersonGroupTrainingStatusClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.GetPersonGroupTrainingStatus(edtPersonGroupID.Text);
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+    FaceApiHelper.GetPersonGroupTrainingStatus(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text)
+  );
 end;
 
 procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
 var
-  LIFaceApi: IFaceApi;
   LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.CreatePersonGroup(edtPersonGroupID.Text, edtPersonGroupUserData.Text);
+  LResult := FaceApiHelper.CreatePersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text, edtPersonGroupUserData.Text);
 
   if LResult = '' then
     LResult := 'Group was created';
@@ -221,14 +155,9 @@ end;
 
 procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
 var
-  LIFaceApi: IFaceApi;
   LResult: String;
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.DeletePersonGroup(edtPersonGroupID.Text);
+  LResult := FaceApiHelper.DeletePersonGroup(edtAccessKey.Text, fasWestUS, edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Group was deleted';
