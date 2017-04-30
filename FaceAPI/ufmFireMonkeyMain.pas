@@ -8,7 +8,7 @@ uses
   FMX.Controls.Presentation;
 
 type
-  TForm1 = class(TForm)
+  TfmMain = class(TForm)
     btnDetectInUrl: TButton;
     memLog: TMemo;
     edtAccessKey: TEdit;
@@ -19,59 +19,49 @@ type
     procedure btnListPersonGroupsClick(Sender: TObject);
     procedure btnClearLogClick(Sender: TObject);
   private
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var
-  Form1: TForm1;
+  fmMain: TfmMain;
 
 implementation
 
 uses
-  { IFaceApi }
-  uIFaceApi,
-  { TFaceApi }
-  uFaceApi,
   { fasWestUS }
   uFaceApi.Servers.Types,
   { Detect }
-  uFaceApi.FaceDetectOptions;
+  uFaceApi.FaceDetectOptions,
+  { FaceApiHelper }
+  uFunctions.FaceApiHelper,
+  { Access }
+  uFaceApi.ServersAccess.Types,
+  { doAge }
+  uFaceApi.FaceAttributes;
 
 {$R *.fmx}
 
-procedure TForm1.btnClearLogClick(Sender: TObject);
+procedure TfmMain.btnClearLogClick(Sender: TObject);
 begin
   memLog.Lines.Clear;
 end;
 
-procedure TForm1.btnDetectInUrlClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
+procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.DetectURL('http://1click.lv/faceapi/sample1.jpg', Detect(True, True));
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+    FaceApiHelper.DetectURL(
+      Access(edtAccessKey.Text, fasWestUS),
+      'http://1click.lv/faceapi/sample1.jpg',
+      Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
+    )
+  );
 end;
 
-procedure TForm1.btnListPersonGroupsClick(Sender: TObject);
-var
-  LIFaceApi: IFaceApi;
-  LResult: String;
+procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 begin
-  LIFaceApi := TFaceApi.Create;
-
-  LIFaceApi.SetAccessKey(edtAccessKey.Text, fasWestUS);
-
-  LResult := LIFaceApi.ListPersonGroups;
-
-  memLog.Lines.Add(LResult);
+  memLog.Lines.Add(
+    FaceApiHelper.ListPersonGroups(Access(edtAccessKey.Text, fasWestUS))
+  );
 end;
 
 end.

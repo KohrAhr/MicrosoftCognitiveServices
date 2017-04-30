@@ -1,7 +1,9 @@
-object Form1: TForm1
+object fmMain: TfmMain
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 
+    '(C) 2017 by ZAM@1CLICK.LV. DELPHI DX10 FireMonkey. Microsoft Cog' +
+    'nitive services FaceAPI demo.'
   ClientHeight = 482
   ClientWidth = 641
   FormFactor.Width = 320
