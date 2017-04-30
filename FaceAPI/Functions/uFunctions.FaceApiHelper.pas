@@ -73,6 +73,10 @@ type
     /// </summary>
     class function Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    /// </summary>
+    class function UpdatePersonGroup(AAccess: TAccess; const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
   end;
 
 implementation
@@ -230,5 +234,15 @@ begin
   Result := LIFaceApi.Identify(AFaceIDS, AGroupID, AMaxNumOfCandidatesReturned, AConfidenceThreshold);
 end;
 
+class function FaceApiHelper.UpdatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.UpdatePersonGroup(AGroupID, AGroupName, AGroupUserData);
+end;
 
 end.

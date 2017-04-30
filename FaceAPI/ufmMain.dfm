@@ -4,7 +4,7 @@ object fmMain: TfmMain
   Caption = 
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
-  ClientHeight = 521
+  ClientHeight = 613
   ClientWidth = 1106
   Color = clBtnFace
   Constraints.MinHeight = 480
@@ -17,12 +17,12 @@ object fmMain: TfmMain
   OldCreateOrder = False
   DesignSize = (
     1106
-    521)
+    613)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
     Left = 135
-    Top = 207
+    Top = 295
     Width = 63
     Height = 13
     Caption = 'Access key'
@@ -135,9 +135,9 @@ object fmMain: TfmMain
   end
   object memLog: TMemo
     Left = 8
-    Top = 232
+    Top = 328
     Width = 1091
-    Height = 282
+    Height = 278
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
     Font.Charset = RUSSIAN_CHARSET
@@ -196,14 +196,14 @@ object fmMain: TfmMain
   end
   object edtAccessKey: TEdit
     Left = 204
-    Top = 205
+    Top = 293
     Width = 197
     Height = 21
     TabOrder = 7
   end
   object btnClearLog: TButton
     Left = 8
-    Top = 200
+    Top = 288
     Width = 75
     Height = 25
     Caption = 'Clear log'
@@ -347,5 +347,14 @@ object fmMain: TfmMain
     Height = 21
     TabOrder = 24
     Text = 'edtPersonGroupName'
+  end
+  object btnUpdatePersonGroup: TButton
+    Left = 247
+    Top = 200
+    Width = 202
+    Height = 25
+    Caption = 'Update Person Group'
+    TabOrder = 25
+    OnClick = btnUpdatePersonGroupClick
   end
 end

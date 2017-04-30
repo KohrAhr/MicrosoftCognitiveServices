@@ -341,7 +341,29 @@ type
     /// </returns>
     function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
-//    function UpdatePersonGroup(const AGroupID: String; );
+    /// <summary>
+    ///   Update an existing person group's display name and userData.
+    /// </summary>
+    /// <param name="AGroupID">
+    ///   Id of the person group to be updated
+		/// </param>
+    /// <param name="AGroupName">
+    ///   Person group display name. The maximum length is 128.
+		/// </param>
+    /// <param name="AGroupUserData">
+    ///   User-provided data attached to the person group. The size limit is 16KB.
+		/// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns an empty response body.
+    ///
+    ///   [ERROR]
+    ///   Response 400, 401, 403, 409, 415, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function UpdatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
     ///   Define your access key and define your server location

@@ -48,6 +48,7 @@ type
     Label9: TLabel;
     Label10: TLabel;
     edtPersonGroupName: TEdit;
+    btnUpdatePersonGroup: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -62,6 +63,7 @@ type
     procedure btnDeletePersonGroupClick(Sender: TObject);
     procedure btnVerifyTwoFacesWay2Click(Sender: TObject);
     procedure btnIdentifyClick(Sender: TObject);
+    procedure btnUpdatePersonGroupClick(Sender: TObject);
   private
   public
   end;
@@ -240,5 +242,20 @@ begin
     LStringList.Free;
   end;
 end;
+
+procedure TfmMain.btnUpdatePersonGroupClick(Sender: TObject);
+var
+  LResult: String;
+begin
+  LResult := FaceApiHelper.UpdatePersonGroup(
+    Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupName.Text, edtPersonGroupUserData.Text
+  );
+
+  if LResult = '' then
+    LResult := 'Group was updated';
+
+  memLog.Lines.Add(LResult);
+end;
+
 
 end.
