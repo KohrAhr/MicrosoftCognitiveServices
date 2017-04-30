@@ -5,10 +5,10 @@ object fmMain: TfmMain
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
   ClientHeight = 521
-  ClientWidth = 830
+  ClientWidth = 1106
   Color = clBtnFace
   Constraints.MinHeight = 480
-  Constraints.MinWidth = 780
+  Constraints.MinWidth = 1024
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -16,7 +16,7 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    830
+    1106
     521)
   PixelsPerInch = 96
   TextHeight = 13
@@ -61,6 +61,41 @@ object fmMain: TfmMain
     Height = 13
     Caption = 'Person Group user data'
   end
+  object Label2: TLabel
+    Left = 792
+    Top = 42
+    Width = 75
+    Height = 13
+    Caption = 'Face Temp ID 1'
+  end
+  object Label3: TLabel
+    Left = 792
+    Top = 69
+    Width = 75
+    Height = 13
+    Caption = 'Face Temp ID 2'
+  end
+  object Label4: TLabel
+    Left = 792
+    Top = 143
+    Width = 116
+    Height = 13
+    Caption = 'Enter "Person Group ID"'
+  end
+  object Label5: TLabel
+    Left = 941
+    Top = 143
+    Width = 112
+    Height = 13
+    Caption = 'Enter "Face Temp ID 1"'
+  end
+  object Label6: TLabel
+    Left = 792
+    Top = 165
+    Width = 47
+    Height = 13
+    Caption = 'Person ID'
+  end
   object btnDetectInFile: TButton
     Left = 8
     Top = 8
@@ -73,7 +108,7 @@ object fmMain: TfmMain
   object memLog: TMemo
     Left = 8
     Top = 232
-    Width = 815
+    Width = 1091
     Height = 282
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
@@ -89,7 +124,7 @@ object fmMain: TfmMain
   end
   object btnDetectInUrl: TButton
     Left = 8
-    Top = 40
+    Top = 72
     Width = 202
     Height = 25
     Caption = 'Detect in URL'
@@ -98,7 +133,7 @@ object fmMain: TfmMain
   end
   object btnDetectInStream: TButton
     Left = 8
-    Top = 72
+    Top = 104
     Width = 202
     Height = 25
     Caption = 'Detect in Stream'
@@ -200,15 +235,14 @@ object fmMain: TfmMain
     TabOrder = 14
     OnClick = btnCreatePersonGroupClick
   end
-  object btnVerifyTwoFaces: TButton
-    Left = 656
+  object btnVerifyTwoFacesWay1: TButton
+    Left = 792
     Top = 8
-    Width = 122
+    Width = 145
     Height = 25
-    Caption = 'Verify two faces'
-    Enabled = False
+    Caption = 'Verify two faces - Way 1'
     TabOrder = 15
-    OnClick = btnVerifyTwoFacesClick
+    OnClick = btnVerifyTwoFacesWay1Click
   end
   object edtPersonGroupUserData: TEdit
     Left = 596
@@ -227,5 +261,46 @@ object fmMain: TfmMain
     Caption = 'Delete Person Group'
     TabOrder = 17
     OnClick = btnDeletePersonGroupClick
+  end
+  object edtFaceTempID1: TEdit
+    Left = 873
+    Top = 39
+    Width = 225
+    Height = 21
+    TabOrder = 18
+    Text = 'edtFaceTempID1'
+  end
+  object edtFaceTempID2: TEdit
+    Left = 873
+    Top = 66
+    Width = 225
+    Height = 21
+    TabOrder = 19
+    Text = 'edtFaceTempID2'
+  end
+  object btnVerifyTwoFacesWay2: TButton
+    Left = 792
+    Top = 112
+    Width = 145
+    Height = 25
+    Caption = 'Verify two faces - Way 2'
+    TabOrder = 20
+    OnClick = btnVerifyTwoFacesWay2Click
+  end
+  object edtPersonID: TEdit
+    Left = 845
+    Top = 162
+    Width = 212
+    Height = 21
+    TabOrder = 21
+    Text = 'edtPersonID'
+  end
+  object edtUrl: TEdit
+    Left = 8
+    Top = 44
+    Width = 202
+    Height = 21
+    TabOrder = 22
+    Text = 'http://1click.lv/FaceApi/sample1.jpg'
   end
 end

@@ -32,10 +32,16 @@ type
     Label1: TLabel;
     edtPersonGroupUserData: TEdit;
     btnDeletePersonGroup: TButton;
-    Edit1: TEdit;
+    edtFaceTempID1: TEdit;
     Label2: TLabel;
     Label3: TLabel;
-    Edit2: TEdit;
+    edtFaceTempID2: TEdit;
+    btnVerifyTwoFacesWay2: TButton;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    edtPersonID: TEdit;
+    edtUrl: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -48,6 +54,7 @@ type
     procedure btnCreatePersonGroupClick(Sender: TObject);
     procedure btnVerifyTwoFacesWay1Click(Sender: TObject);
     procedure btnDeletePersonGroupClick(Sender: TObject);
+    procedure btnVerifyTwoFacesWay2Click(Sender: TObject);
   private
   public
   end;
@@ -100,7 +107,7 @@ begin
   memLog.Lines.Add(
     FaceApiHelper.DetectURL(
       Access(edtAccessKey.Text, fasWestUS),
-      'http://1click.lv/faceapi/sample1.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
+      edtUrl.Text, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
     )
   );
 end;
@@ -188,7 +195,17 @@ begin
   memLog.Lines.Add(
     FaceApiHelper.Verify(
       Access(edtAccessKey.Text, fasWestUS),
-      Edit1.Text, Edit2.Text
+      edtFaceTempID1.Text, edtFaceTempID2.Text
+    )
+  );
+end;
+
+procedure TfmMain.btnVerifyTwoFacesWay2Click(Sender: TObject);
+begin
+  memLog.Lines.Add(
+    FaceApiHelper.Verify(
+      Access(edtAccessKey.Text, fasWestUS),
+      edtFaceTempID1.Text, edtPersonID.Text, edtPersonGroupID.Text
     )
   );
 end;

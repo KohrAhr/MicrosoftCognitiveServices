@@ -330,13 +330,51 @@ begin
 end;
 
 function TFaceApiCore.Verify(const AFaceTempID1, AFaceTempID2: String): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
 begin
-  Result := '';
+  LURL := Format('%s/verify', [ServerBaseUrl]);
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(
+        Format(
+          '{ "faceId1":"%s", "faceId2":"%s" }',
+          [AFaceTempID1, AFaceTempID2]
+        )
+      )
+    );
+
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
 end;
 
 function TFaceApiCore.Verify(const AFaceTempID, APersonID, AGroupID: String): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
 begin
-  Result := '';
+  LURL := Format('%s/verify', [ServerBaseUrl]);
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(
+        Format(
+          '{ "faceId":"%s", "personGroupId":"%s", "personId":"%s" }',
+          [AFaceTempID, AGroupID.ToLower, APersonID]
+        )
+      )
+    );
+
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
 end;
 
 function TFaceApiCore.Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
