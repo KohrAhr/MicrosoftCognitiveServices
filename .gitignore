@@ -9,3 +9,8 @@ Win32
 Win64
 __recovery
 OSX32
+*.TemplateOSX32.xml
+*.dproj
+*.tvsconfig
+*.deployproj
+*.dproj
