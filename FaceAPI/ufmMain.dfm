@@ -4,7 +4,7 @@ object fmMain: TfmMain
   Caption = 
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
-  ClientHeight = 442
+  ClientHeight = 494
   ClientWidth = 874
   Color = clBtnFace
   Constraints.MinHeight = 480
@@ -17,7 +17,7 @@ object fmMain: TfmMain
   OldCreateOrder = False
   DesignSize = (
     874
-    442)
+    494)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
@@ -98,9 +98,9 @@ object fmMain: TfmMain
   end
   object memLog: TMemo
     Left = 7
-    Top = 295
+    Top = 327
     Width = 859
-    Height = 139
+    Height = 159
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
     Font.Charset = RUSSIAN_CHARSET
@@ -130,7 +130,7 @@ object fmMain: TfmMain
   end
   object btnClearLog: TButton
     Left = 8
-    Top = 264
+    Top = 296
     Width = 75
     Height = 25
     Caption = 'Clear log'
@@ -199,7 +199,7 @@ object fmMain: TfmMain
     Left = 8
     Top = 8
     Width = 509
-    Height = 249
+    Height = 281
     ActivePage = TabSheet2
     TabOrder = 11
     object TabSheet1: TTabSheet
@@ -416,6 +416,15 @@ object fmMain: TfmMain
         Caption = 'Group'
         TabOrder = 6
         OnClick = btnGroupClick
+      end
+      object btnFindSimilar: TButton
+        Left = 3
+        Top = 220
+        Width = 202
+        Height = 25
+        Caption = 'Find Similar'
+        TabOrder = 7
+        OnClick = btnFindSimilarClick
       end
     end
     object TabSheet3: TTabSheet

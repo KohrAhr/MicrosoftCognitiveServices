@@ -63,6 +63,7 @@ type
     Label10: TLabel;
     btnGroup: TButton;
     Label11: TLabel;
+    btnFindSimilar: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -80,6 +81,7 @@ type
     procedure btnUpdatePersonGroupClick(Sender: TObject);
     procedure btnGetPersonGroupClick(Sender: TObject);
     procedure btnGroupClick(Sender: TObject);
+    procedure btnFindSimilarClick(Sender: TObject);
   private
   public
   end;
@@ -297,6 +299,11 @@ begin
   memLog.Lines.Add(
     FaceApiHelper.GetPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
+end;
+
+procedure TfmMain.btnFindSimilarClick(Sender: TObject);
+begin
+  //
 end;
 
 end.

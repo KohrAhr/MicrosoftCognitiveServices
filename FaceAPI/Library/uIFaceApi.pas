@@ -252,6 +252,50 @@ type
     function Group(AFaceIDS: TStringList): String;
 
     /// <summary>
+    ///   Given query face's faceId, to search the similar-looking faces from a faceId array or a faceListId.
+    ///   faceId array contains the faces created by Face - Detect, which will expire 24 hours after creation.
+    ///   While "faceListId" is created by Face List - Create a Face List containing persistedFaceIds that will not expire.
+    ///   Depending on the input the returned similar faces list contains faceIds or persistedFaceIds ranked by similarity.
+    /// </summary>
+    /// <param name="AFaceID">
+    ///   faceId of the query face. User needs to call Face - Detect first to get a valid faceId.
+    ///   Note that this faceId is not persisted and will expire 24 hours after the detection call.
+    /// </param>
+    /// <param name="AListID">
+    ///   An existing user-specified unique candidate face list, created in Face List - Create a Face List.
+    ///   Face list contains a set of persistedFaceIds which are persisted and will never expire.
+    ///   Parameter faceListId and faceIds should not be provided at the same time.
+    /// </param>
+    /// <param name="AFaceIDS">
+    ///   An array of candidate faceIds. All of them are created by Face - Detect and the faceIds will expire 24 hours after the detection call.
+    ///   The number of faceIds is limited to 1000. Parameter faceListId and faceIds should not be provided at the same time.
+    /// </param>
+    /// <param name="AMaxNumOfCandidatesReturned">
+    ///   Optional parameter.
+    ///   The number of top similar faces returned. The valid range is [1, 1000].It defaults to 20.
+    /// </param>
+    /// <param name="AFindMode">
+    ///   Optional parameter.
+    ///   Similar face searching mode. It can be "matchPerson" or "matchFace". It defaults to "matchPerson".
+    /// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns an array of the most similar faces represented in faceId if the input parameter is faceIds or persistedFaceId if the input parameter is faceListId.
+    ///   JSON fields in response body:
+    ///   Fields	        Type	  Description
+    ///   persistedFaceId	String	persistedFaceId of candidate face when find by faceListId. persistedFaceId in face list is persisted and will not expire. As showed in below response.
+    ///   faceId	        String	faceId of candidate face when find by faceIds. faceId is created by Face - Detect and will expire 24 hours after the detection call.
+    ///   confidence	    Number	Similarity confidence of the candidate face. The higher confidence, the more similar. Range between [0,1].
+    ///
+    ///   [ERROR]
+    ///   Response 400, 401, 403, 415, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function FindSimilar(const AFaceID: String; const AListID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String;
+
+    /// <summary>
     ///   Define your access key and define your server location
     /// </summary>
 		/// <param name="AAccess">

@@ -84,7 +84,12 @@ type
     class function GetPersonGroup(AAccess: TAccess; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
+    /// </summary>
+    class function FindSimilar(const AFaceID: String; const AListID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String;
+
+    /// <summary>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
     /// </summary>
     class function Group(AAccess: TAccess; AFaceIDS: TStringList): String;
   end;
@@ -276,6 +281,12 @@ begin
   LIFaceApi.SetAccessKey(AAccess);
 
   Result := LIFaceApi.Group(AFaceIDS);
+end;
+
+class function FaceApiHelper.FindSimilar(const AFaceID, AListID: String; AFaceIDS: TStringList;
+  const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+begin
+
 end;
 
 end.

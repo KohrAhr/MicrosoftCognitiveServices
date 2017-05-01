@@ -70,6 +70,11 @@ type
     function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
+    /// </summary>
+    function FindSimilar(const AFaceID: String; const AListID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String;
+
+    /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
     /// </summary>
     function Group(AFaceIDS: TStringList): String;
@@ -279,4 +284,9 @@ begin
   end;
 end;
 
+function TFaceApiCore.FindSimilar(const AFaceID, AListID: String; AFaceIDS: TStringList;
+  const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+begin
+
+end;
 end.
