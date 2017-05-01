@@ -11,7 +11,7 @@ uses
 
 type
   /// <summary>
-  ///   Main Interface for Face API Microsoft Cognitive Services 1.0
+  ///   Main Interface for "Person Group" functionality for Face API Microsoft Cognitive Services 1.0
   /// </summary>
   IFaceApiPersonGroup = interface(IInterface)
     ['{4837303E-2840-4C74-B3FA-E468F6564D36}']

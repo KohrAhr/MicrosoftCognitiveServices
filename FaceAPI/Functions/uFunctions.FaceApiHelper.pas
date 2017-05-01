@@ -106,6 +106,10 @@ uses
   uIFaceApi,
   { TFaceApiCore }
   uFaceApi.Core,
+  { IFaceApiFace }
+  uIFaceApi.Face,
+  { TFaceApiCoreFace }
+  uFaceApi.Core.Face,
   { IFaceApiPersonGroup }
   uIFaceApi.PersonGroup,
   { TFaceApiCorePersonGroup }
@@ -146,35 +150,35 @@ end;
 
 class function FaceApiHelper.DetectFile(AAccess: TAccess; const AFileName: String; const ADetectOptions: TDetectOptions): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.DetectFile(AFileName, ADetectOptions);
+  Result := LIFaceApiFace.DetectFile(AFileName, ADetectOptions);
 end;
 
 class function FaceApiHelper.DetectStream(AAccess: TAccess; AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.DetectStream(AStream, ADetectOptions);
+  Result := LIFaceApiFace.DetectStream(AStream, ADetectOptions);
 end;
 
 class function FaceApiHelper.DetectURL(AAccess: TAccess; const AURL: String; const ADetectOptions: TDetectOptions): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.DetectURL(AURL, ADetectOptions);
+  Result := LIFaceApiFace.DetectURL(AURL, ADetectOptions);
 end;
 
 class function FaceApiHelper.GetPersonGroupTrainingStatus(AAccess: TAccess; const AGroupID: String): String;
@@ -223,36 +227,35 @@ end;
 
 class function FaceApiHelper.Verify(AAccess: TAccess; const AFaceTempID1, AFaceTempID2: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.Verify(AFaceTempID1, AFaceTempID2);
+  Result := LIFaceApiFace.Verify(AFaceTempID1, AFaceTempID2);
 end;
 
 class function FaceApiHelper.Verify(AAccess: TAccess; const AFaceTempID, APersonID, AGroupID: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.Verify(AFaceTempID, APersonID, AGroupID);
+  Result := LIFaceApiFace.Verify(AFaceTempID, APersonID, AGroupID);
 end;
 
-class function FaceApiHelper.Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String;
-  const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
+class function FaceApiHelper.Identify(AAccess: TAccess; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer; const AConfidenceThreshold: Double): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.Identify(AFaceIDS, AGroupID, AMaxNumOfCandidatesReturned, AConfidenceThreshold);
+  Result := LIFaceApiFace.Identify(AFaceIDS, AGroupID, AMaxNumOfCandidatesReturned, AConfidenceThreshold);
 end;
 
 class function FaceApiHelper.UpdatePersonGroup(AAccess: TAccess; const AGroupID, AGroupName, AGroupUserData: String): String;
@@ -279,35 +282,35 @@ end;
 
 class function FaceApiHelper.Group(AAccess: TAccess; AFaceIDS: TStringList): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.Group(AFaceIDS);
+  Result := LIFaceApiFace.Group(AFaceIDS);
 end;
 
 class function FaceApiHelper.FindSimilar(AAccess: TAccess; const AFaceID, AListID: String; const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.FindSimilar(AFaceID, AListID, AMaxNumOfCandidatesReturned, AFindMode);
+  Result := LIFaceApiFace.FindSimilar(AFaceID, AListID, AMaxNumOfCandidatesReturned, AFindMode);
 end;
 
 class function FaceApiHelper.FindSimilar(AAccess: TAccess; const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiFace: IFaceApiFace;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiFace := TFaceApiCoreFace.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiFace.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.FindSimilar(AFaceID, AFaceIDS, AMaxNumOfCandidatesReturned, AFindMode);
+  Result := LIFaceApiFace.FindSimilar(AFaceID, AFaceIDS, AMaxNumOfCandidatesReturned, AFindMode);
 end;
 
 end.

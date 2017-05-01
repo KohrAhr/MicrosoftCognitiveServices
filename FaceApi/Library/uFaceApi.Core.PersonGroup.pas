@@ -21,42 +21,42 @@ uses
 
 type
   /// <summary>
-  ///   Main Class implementation for Face API Microsoft Cognitive Services 1.0
+  ///   Main Class implementation "Person Group" functionality for Face API Microsoft Cognitive Services 1.0
   /// </summary>
   TFaceApiCorePersonGroup = class(TFaceApiBase, IFaceApiPersonGroup)
   public
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePersonGroup">interface CreatePersonGroup</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
     function CreatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.DeletePersonGroup">interface DeletePersonGroup</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.DeletePersonGroup">interface DeletePersonGroup</see>
     /// </summary>
     function DeletePersonGroup(const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface GetPersonGroup</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.Identify">interface GetPersonGroup</see>
     /// </summary>
     function GetPersonGroup(const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
     /// </summary>
     function GetPersonGroupTrainingStatus(const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonGroups">interface ListPersonGroups</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonGroups">interface ListPersonGroups</see>
     /// </summary>
     function ListPersonGroups(const AStart: String = ''; const ATop: Integer = 1000): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.TrainPersonGroup">interface TrainPersonGroup</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.TrainPersonGroup">interface TrainPersonGroup</see>
     /// </summary>
     function TrainPersonGroup(const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    ///   Implements <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.Identify">interface UpdatePersonGroup</see>
     /// </summary>
     function UpdatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
   end;
