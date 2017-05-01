@@ -16,7 +16,9 @@ uses
   uFunctions.InetHelper in 'Functions\uFunctions.InetHelper.pas',
   uFaceApi.ServersAccess.Types in 'Library\uFaceApi.ServersAccess.Types.pas',
   uFaceApi.Core.PersonGroup in 'Library\uFaceApi.Core.PersonGroup.pas',
-  uIFaceApi.PersonGroup in 'Library\uIFaceApi.PersonGroup.pas';
+  uIFaceApi.PersonGroup in 'Library\uIFaceApi.PersonGroup.pas',
+  uFaceApi.Core.Face in 'Library\uFaceApi.Core.Face.pas',
+  uIFaceApi.Face in 'Library\uIFaceApi.Face.pas';
 
 {$R *.res}
 
