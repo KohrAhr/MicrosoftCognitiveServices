@@ -86,7 +86,12 @@ type
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
     /// </summary>
-    class function FindSimilar(const AFaceID: String; const AListID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String;
+    class function FindSimilar(AAccess: TAccess; const AFaceID: String; const AListID: String; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
+
+    /// <summary>
+    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
+    /// </summary>
+    class function FindSimilar(AAccess: TAccess; const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
@@ -283,10 +288,26 @@ begin
   Result := LIFaceApi.Group(AFaceIDS);
 end;
 
-class function FaceApiHelper.FindSimilar(const AFaceID, AListID: String; AFaceIDS: TStringList;
-  const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+class function FaceApiHelper.FindSimilar(AAccess: TAccess; const AFaceID, AListID: String; const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+var
+  LIFaceApi: IFaceApi;
 begin
+  LIFaceApi := TFaceApiCore.Create;
 
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.FindSimilar(AFaceID, AListID, AMaxNumOfCandidatesReturned, AFindMode);
+end;
+
+class function FaceApiHelper.FindSimilar(AAccess: TAccess; const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.FindSimilar(AFaceID, AFaceIDS, AMaxNumOfCandidatesReturned, AFindMode);
 end;
 
 end.

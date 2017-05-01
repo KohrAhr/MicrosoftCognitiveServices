@@ -63,7 +63,14 @@ type
     Label10: TLabel;
     btnGroup: TButton;
     Label11: TLabel;
-    btnFindSimilar: TButton;
+    btnFindSimilarWay1: TButton;
+    btnFindSimilarWay2: TButton;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    memFaceTempIDs: TMemo;
+    Label15: TLabel;
+    edtFaceListID: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -81,7 +88,8 @@ type
     procedure btnUpdatePersonGroupClick(Sender: TObject);
     procedure btnGetPersonGroupClick(Sender: TObject);
     procedure btnGroupClick(Sender: TObject);
-    procedure btnFindSimilarClick(Sender: TObject);
+    procedure btnFindSimilarWay1Click(Sender: TObject);
+    procedure btnFindSimilarWay2Click(Sender: TObject);
   private
   public
   end;
@@ -198,10 +206,7 @@ var
 begin
   LStringList := TStringList.Create;
   try
-    if edtFaceTempID1.Text <> '' then
-      LStringList.Add(edtFaceTempID1.Text);
-    if edtFaceTempID2.Text <> '' then
-      LStringList.Add(edtFaceTempID2.Text);
+    LStringList.Text := memLog.Text;
 
     memLog.Lines.Add(
       FaceApiHelper.Group(Access(edtAccessKey.Text, fasWestUS), LStringList)
@@ -264,10 +269,7 @@ var
 begin
   LStringList := TStringList.Create;
   try
-    if edtFaceTempID1.Text <> '' then
-      LStringList.Add(edtFaceTempID1.Text);
-    if edtFaceTempID2.Text <> '' then
-      LStringList.Add(edtFaceTempID2.Text);
+    LStringList.Text := memLog.Text;
 
     memLog.Lines.Add(
       FaceApiHelper.Identify(
@@ -301,9 +303,27 @@ begin
   );
 end;
 
-procedure TfmMain.btnFindSimilarClick(Sender: TObject);
+procedure TfmMain.btnFindSimilarWay1Click(Sender: TObject);
 begin
-  //
+  memLog.Lines.Add(
+    FaceApiHelper.FindSimilar(Access(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, '')
+  );
+end;
+
+procedure TfmMain.btnFindSimilarWay2Click(Sender: TObject);
+var
+  LStringList: TStringList;
+begin
+  LStringList := TStringList.Create;
+  try
+    LStringList.Text := memFaceTempIDs.Text;
+
+    memLog.Lines.Add(
+      FaceApiHelper.FindSimilar(Access(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, edtFaceListID.Text)
+    );
+  finally
+    LStringList.Free;
+  end;
 end;
 
 end.

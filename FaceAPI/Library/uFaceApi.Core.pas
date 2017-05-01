@@ -72,7 +72,11 @@ type
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
     /// </summary>
-    function FindSimilar(const AFaceID: String; const AListID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String;
+    function FindSimilar(const AFaceID: String; const AListID: String; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
+    /// </summary>
+    function FindSimilar(const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
@@ -284,9 +288,51 @@ begin
   end;
 end;
 
-function TFaceApiCore.FindSimilar(const AFaceID, AListID: String; AFaceIDS: TStringList;
-  const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+function TFaceApiCore.FindSimilar(const AFaceID, AListID: String; const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
 begin
+  LURL := Format('%s/findsimilars', [ServerBaseUrl]);
 
+  LRequestContent := nil;
+  try
+
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(Format(
+          '{ "faceId":[%s], "faceListId":"%s", "maxNumOfCandidatesReturned":%s, "mode":"%s" }',
+          [AFaceID, AListID, AMaxNumOfCandidatesReturned.ToString, AFindMode]
+        )
+      )
+    );
+
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
 end;
+
+function TFaceApiCore.FindSimilar(const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer; AFindMode: String): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
+begin
+  LURL := Format('%s/findsimilars', [ServerBaseUrl]);
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(Format(
+          '{ "faceId":[%s], "faceIds":["%s"], "maxNumOfCandidatesReturned":%s, "mode":"%s" }',
+          [AFaceID, StringHelper.StringListToGuidsString(AFaceIDS, '"', ','), AMaxNumOfCandidatesReturned.ToString, AFindMode]
+        )
+      )
+    );
+
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
+end;
+
 end.

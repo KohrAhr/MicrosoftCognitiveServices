@@ -4,7 +4,7 @@ object fmMain: TfmMain
   Caption = 
     'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
     'V. Delphi DX10'
-  ClientHeight = 494
+  ClientHeight = 552
   ClientWidth = 874
   Color = clBtnFace
   Constraints.MinHeight = 480
@@ -17,7 +17,7 @@ object fmMain: TfmMain
   OldCreateOrder = False
   DesignSize = (
     874
-    494)
+    552)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
@@ -96,11 +96,25 @@ object fmMain: TfmMain
     Height = 13
     Caption = 'URL'
   end
+  object Label14: TLabel
+    Left = 586
+    Top = 259
+    Width = 71
+    Height = 13
+    Caption = 'Face Temp IDs'
+  end
+  object Label15: TLabel
+    Left = 601
+    Top = 330
+    Width = 56
+    Height = 13
+    Caption = 'Face List ID'
+  end
   object memLog: TMemo
-    Left = 7
-    Top = 327
-    Width = 859
-    Height = 159
+    Left = 8
+    Top = 358
+    Width = 857
+    Height = 187
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
     Font.Charset = RUSSIAN_CHARSET
@@ -130,7 +144,7 @@ object fmMain: TfmMain
   end
   object btnClearLog: TButton
     Left = 8
-    Top = 296
+    Top = 327
     Width = 75
     Height = 25
     Caption = 'Clear log'
@@ -199,7 +213,7 @@ object fmMain: TfmMain
     Left = 8
     Top = 8
     Width = 509
-    Height = 281
+    Height = 313
     ActivePage = TabSheet2
     TabOrder = 11
     object TabSheet1: TTabSheet
@@ -319,12 +333,10 @@ object fmMain: TfmMain
       ImageIndex = 1
       object Label7: TLabel
         Left = 211
-        Top = 95
-        Width = 268
-        Height = 26
-        Caption = 
-          'Enter "Person Group ID"'#13#10'Enter "Face Temp ID 1" and optionally "' +
-          'Face Temp ID 2"'
+        Top = 101
+        Width = 219
+        Height = 13
+        Caption = 'Enter "Person Group ID" and "Face Temp IDs"'
       end
       object Label1: TLabel
         Left = 211
@@ -350,9 +362,23 @@ object fmMain: TfmMain
       object Label11: TLabel
         Left = 211
         Top = 194
-        Width = 219
+        Width = 108
         Height = 13
-        Caption = 'Enter "Face Temp ID 1" and "Face Temp ID 2"'
+        Caption = 'Enter "Face Temp IDs"'
+      end
+      object Label12: TLabel
+        Left = 211
+        Top = 225
+        Width = 200
+        Height = 13
+        Caption = 'Enter "Face Temp ID 1" and "Face List ID"'
+      end
+      object Label13: TLabel
+        Left = 211
+        Top = 256
+        Width = 215
+        Height = 13
+        Caption = 'Enter "Face Temp ID 1" and "Face Temp IDs"'
       end
       object btnDetectInFile: TButton
         Left = 3
@@ -417,14 +443,23 @@ object fmMain: TfmMain
         TabOrder = 6
         OnClick = btnGroupClick
       end
-      object btnFindSimilar: TButton
+      object btnFindSimilarWay1: TButton
         Left = 3
         Top = 220
         Width = 202
         Height = 25
-        Caption = 'Find Similar'
+        Caption = 'Find Similar - Way 1'
         TabOrder = 7
-        OnClick = btnFindSimilarClick
+        OnClick = btnFindSimilarWay1Click
+      end
+      object btnFindSimilarWay2: TButton
+        Left = 3
+        Top = 251
+        Width = 202
+        Height = 25
+        Caption = 'Find Similar - Way 2'
+        TabOrder = 8
+        OnClick = btnFindSimilarWay2Click
       end
     end
     object TabSheet3: TTabSheet
@@ -461,5 +496,22 @@ object fmMain: TfmMain
     Height = 21
     TabOrder = 12
     Text = 'http://1click.lv/FaceApi/sample1.jpg'
+  end
+  object memFaceTempIDs: TMemo
+    Left = 663
+    Top = 256
+    Width = 202
+    Height = 65
+    ScrollBars = ssVertical
+    TabOrder = 13
+    WantTabs = True
+  end
+  object edtFaceListID: TEdit
+    Left = 663
+    Top = 327
+    Width = 202
+    Height = 21
+    TabOrder = 14
+    Text = 'edtFaceListID'
   end
 end
