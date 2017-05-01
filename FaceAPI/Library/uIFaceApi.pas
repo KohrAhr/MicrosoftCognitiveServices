@@ -226,6 +226,32 @@ type
     function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
+    ///   Divide candidate faces into groups based on face similarity.
+    ///   The output is one or more disjointed face groups and a messyGroup. A face group contains faces that have similar looking, often of the same person.
+    ///   Face groups are ranked by group size, i.e. number of faces. Notice that faces belonging to a same person might be split into several groups in the result.
+    ///   MessyGroup is a special face group containing faces that cannot find any similar counterpart face from original faces. The messyGroup will not appear in the result if all faces found their counterparts.
+    ///   Group API needs at least 2 candidate faces and 1000 at most. We suggest to try <see cref="uIFaceApi|IFaceApi.Verify">Face - Verify</see> when you only have 2 candidate faces.
+    /// </summary>
+    /// <param name="AFaceIDS">
+    ///   Array of candidate faceId created by Face - Detect. The maximum is 1000 faces.
+    /// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns one or more groups of similar faces (rank by group size) and a messyGroup.
+    ///   JSON fields in response body:
+    ///   Fields	    Type	  Description
+    ///   groups	    Array	  A partition of the original faces based on face similarity. Groups are ranked by number of faces.
+    ///   messyGroup	Array	  Face ids array of faces that cannot find any similar faces from original faces.
+    ///
+    ///   [ERROR]
+    ///   Response 400, 401, 403, 415, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function Group(AFaceIDS: TStringList): String;
+
+    /// <summary>
     ///   Define your access key and define your server location
     /// </summary>
 		/// <param name="AAccess">

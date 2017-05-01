@@ -68,6 +68,11 @@ type
     ///   Implements <see cref="uIFaceApi|IFaceApi.Identify">interface Identify</see>
     /// </summary>
     function Identify(AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
+    /// </summary>
+    function Group(AFaceIDS: TStringList): String;
   end;
 
 implementation
@@ -241,6 +246,29 @@ begin
       StringHelper.StringToBytesArray(Format(
           '{ "personGroupId":"%s", "faceIds":[%s], "maxNumOfCandidatesReturned":%s,"confidenceThreshold":%s }',
           [AGroupID.ToLower, StringHelper.StringListToGuidsString(AFaceIDS, '"', ','), AMaxNumOfCandidatesReturned.ToString, AConfidenceThreshold.ToString]
+        )
+      )
+    );
+
+    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
+end;
+
+function TFaceApiCore.Group(AFaceIDS: TStringList): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
+begin
+  LURL := Format('%s/group', [ServerBaseUrl]);
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(Format(
+          '{ "faceIds":[%s] }',
+          [StringHelper.StringListToGuidsString(AFaceIDS, '"', ',')]
         )
       )
     );

@@ -200,7 +200,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 509
     Height = 249
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
@@ -320,7 +320,7 @@ object fmMain: TfmMain
       object Label7: TLabel
         Left = 211
         Top = 95
-        Width = 278
+        Width = 268
         Height = 26
         Caption = 
           'Enter "Person Group ID"'#13#10'Enter "Face Temp ID 1" and optionally "' +
@@ -346,6 +346,13 @@ object fmMain: TfmMain
         Width = 285
         Height = 13
         Caption = 'Enter "Face Temp ID 1", "Person ID" and "Person Group ID"'
+      end
+      object Label11: TLabel
+        Left = 211
+        Top = 194
+        Width = 219
+        Height = 13
+        Caption = 'Enter "Face Temp ID 1" and "Face Temp ID 2"'
       end
       object btnDetectInFile: TButton
         Left = 3
@@ -400,6 +407,15 @@ object fmMain: TfmMain
         Caption = 'Verify two faces - Way 2'
         TabOrder = 5
         OnClick = btnVerifyTwoFacesWay2Click
+      end
+      object btnGroup: TButton
+        Left = 3
+        Top = 189
+        Width = 202
+        Height = 25
+        Caption = 'Group'
+        TabOrder = 6
+        OnClick = btnGroupClick
       end
     end
     object TabSheet3: TTabSheet

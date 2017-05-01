@@ -61,6 +61,8 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
+    btnGroup: TButton;
+    Label11: TLabel;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -77,6 +79,7 @@ type
     procedure btnIdentifyClick(Sender: TObject);
     procedure btnUpdatePersonGroupClick(Sender: TObject);
     procedure btnGetPersonGroupClick(Sender: TObject);
+    procedure btnGroupClick(Sender: TObject);
   private
   public
   end;
@@ -185,6 +188,25 @@ begin
   memLog.Lines.Add(
     FaceApiHelper.GetPersonGroupTrainingStatus(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
+end;
+
+procedure TfmMain.btnGroupClick(Sender: TObject);
+var
+  LStringList: TStringList;
+begin
+  LStringList := TStringList.Create;
+  try
+    if edtFaceTempID1.Text <> '' then
+      LStringList.Add(edtFaceTempID1.Text);
+    if edtFaceTempID2.Text <> '' then
+      LStringList.Add(edtFaceTempID2.Text);
+
+    memLog.Lines.Add(
+      FaceApiHelper.Group(Access(edtAccessKey.Text, fasWestUS), LStringList)
+    );
+  finally
+    LStringList.Free;
+  end;
 end;
 
 procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);

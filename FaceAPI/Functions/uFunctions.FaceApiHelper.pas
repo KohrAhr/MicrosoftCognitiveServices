@@ -82,6 +82,11 @@ type
     ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.Identify">interface UpdatePersonGroup</see>
     /// </summary>
     class function GetPersonGroup(AAccess: TAccess; const AGroupID: String): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
+    /// </summary>
+    class function Group(AAccess: TAccess; AFaceIDS: TStringList): String;
   end;
 
 implementation
@@ -260,6 +265,17 @@ begin
   LIFaceApiPersonGroup.SetAccessKey(AAccess);
 
   Result := LIFaceApiPersonGroup.GetPersonGroup(AGroupID);
+end;
+
+class function FaceApiHelper.Group(AAccess: TAccess; AFaceIDS: TStringList): String;
+var
+  LIFaceApi: IFaceApi;
+begin
+  LIFaceApi := TFaceApiCore.Create;
+
+  LIFaceApi.SetAccessKey(AAccess);
+
+  Result := LIFaceApi.Group(AFaceIDS);
 end;
 
 end.
