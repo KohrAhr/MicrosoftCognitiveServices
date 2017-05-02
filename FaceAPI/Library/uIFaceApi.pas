@@ -68,7 +68,28 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function CreatePerson(const AGroupID: String; const APersonName: String; const APersonUserData: String = ''): String;
+    function CreatePerson(const AGroupID, APersonName: String; const APersonUserData: String = ''): String;
+
+    /// <summary>
+    ///   Delete an existing person from a person group. Persisted face images of the person will also be deleted.
+    /// </summary>
+		/// <param name="AGroupID">
+    ///   Specifying the person group containing the person.
+		/// </param>
+		/// <param name="APersonID">
+    ///   The target personId to delete.
+		/// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns an empty response body.
+    ///
+    ///   [ERROR]
+    ///   Response 401, 403, 404, 409, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function DeletePerson(const AGroupID, APersonID: String): String;
 
     /// <summary>
     ///   Define your access key and define your server location

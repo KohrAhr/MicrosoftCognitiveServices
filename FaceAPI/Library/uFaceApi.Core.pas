@@ -30,6 +30,11 @@ type
     ///   Implements <see cref="uIFaceApi|IFaceApi.CreatePerson">interface CreatePerson</see>
     /// </summary>
     function CreatePerson(const AGroupID: String; const APersonName: String; const APersonUserData: String = ''): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi|IFaceApi.DeletePerson">interface DeletePerson</see>
+    /// </summary>
+    function DeletePerson(const AGroupID, APersonID: String): String;
   end;
 
 implementation
@@ -70,6 +75,21 @@ begin
   finally
     LRequestContent.Free;
   end;
+end;
+
+function TFaceApiCore.DeletePerson(const AGroupID, APersonID: String): String;
+var
+  LURL: String;
+begin
+  LURL := Format(
+    '%s/persongroups/%s/persons/%s',
+    [
+      ServerBaseUrl,
+      AGroupID.ToLower, APersonID.ToLower
+    ]
+  );
+
+  Result := InetHelper.DeleteRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApiCore.ListPersonsInPersonGroup(const AGroupID: String): String;

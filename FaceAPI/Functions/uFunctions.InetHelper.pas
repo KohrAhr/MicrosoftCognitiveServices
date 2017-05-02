@@ -17,6 +17,8 @@ type
   public
     class function GetRequest(AAccessKey: TNetHeader; const AURL: String; const AContentType: String): String;
 
+    class function DeleteRequest(AAccessKey: TNetHeader; const AURL: String; const AContentType: String): String;
+
     class function PostRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String; overload;
     class function PostRequest(AAccessKey: TNetHeader; const AURL: String; const AData: string; const AContentType: String): String; overload;
 
@@ -33,6 +35,22 @@ uses
   System.SysUtils,
   { SetContentType }
   System.NetConsts;
+
+class function InetHelper.DeleteRequest(AAccessKey: TNetHeader; const AURL: String; const AContentType: String): String;
+var
+  LHTTPClient: THTTPClient;
+  LStream: TStream;
+  LHeaders: TNetHeaders;
+begin
+  LHTTPClient := PrepareHTTPClient(AAccessKey, LHeaders, AContentType);
+  try
+    LStream := LHTTPClient.Delete(AURL, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
+    LHTTPClient.Free;
+  end;
+end;
 
 class function InetHelper.GetRequest(AAccessKey: TNetHeader; const AURL: String; const AContentType: String): String;
 var

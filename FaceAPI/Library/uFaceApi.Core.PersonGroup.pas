@@ -157,9 +157,9 @@ end;
 function TFaceApiCorePersonGroup.DeletePersonGroup(const AGroupID: String): String;
 var
   LURL: String;
-  LHTTPClient: THTTPClient;
-  LStream: TStream;
-  LHeaders: TNetHeaders;
+//  LHTTPClient: THTTPClient;
+//  LStream: TStream;
+//  LHeaders: TNetHeaders;
 begin
   LURL := Format(
     '%s/persongroups/%s',
@@ -169,14 +169,16 @@ begin
     ]
   );
 
-  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
-  try
-    LStream := LHTTPClient.Delete(LURL, nil, LHeaders).ContentStream;
+  Result := InetHelper.DeleteRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
 
-    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
-  finally
-    LHTTPClient.Free;
-  end;
+//  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
+//  try
+//    LStream := LHTTPClient.Delete(LURL, nil, LHeaders).ContentStream;
+//
+//    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
+//  finally
+//    LHTTPClient.Free;
+//  end;
 end;
 
 function TFaceApiCorePersonGroup.UpdatePersonGroup(const AGroupID, AGroupName, AGroupUserData: String): String;
