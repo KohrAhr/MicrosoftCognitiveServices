@@ -122,7 +122,7 @@ procedure TfmMain.btnCreatePersonClick(Sender: TObject);
 begin
   memLog.Lines.Add(
     FaceApiHelper.CreateNewPerson(
-      Access(edtAccessKey.Text, fasWestUS),
+      AccessServer(edtAccessKey.Text, fasWestUS),
       edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
   );
 end;
@@ -131,7 +131,7 @@ procedure TfmMain.btnDetectInFileClick(Sender: TObject);
 begin
   memLog.Lines.Add(
     FaceApiHelper.DetectFile(
-      Access(edtAccessKey.Text, fasWestUS),
+      AccessServer(edtAccessKey.Text, fasWestUS),
       'C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
     )
   );
@@ -141,7 +141,7 @@ procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 begin
   memLog.Lines.Add(
     FaceApiHelper.DetectURL(
-      Access(edtAccessKey.Text, fasWestUS),
+      AccessServer(edtAccessKey.Text, fasWestUS),
       edtUrl.Text, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
     )
   );
@@ -157,7 +157,7 @@ begin
 
     memLog.Lines.Add(
       FaceApiHelper.DetectStream(
-        Access(edtAccessKey.Text, fasWestUS),
+        AccessServer(edtAccessKey.Text, fasWestUS),
         LRequestContent, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
       )
     );
@@ -170,14 +170,14 @@ end;
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.ListPersonGroups(Access(edtAccessKey.Text, fasWestUS))
+    FaceApiHelper.ListPersonGroups(AccessServer(edtAccessKey.Text, fasWestUS))
   );
 end;
 
 procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.ListPersonsInPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
+    FaceApiHelper.ListPersonsInPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
 end;
 
@@ -185,7 +185,7 @@ procedure TfmMain.btnRunPersonGroupTrainingClick(Sender: TObject);
 var
   LResult: String;
 begin
-  LResult := FaceApiHelper.TrainPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
+  LResult := FaceApiHelper.TrainPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Training for group was requested! Check your status now';
@@ -196,7 +196,7 @@ end;
 procedure TfmMain.btnGetPersonGroupTrainingStatusClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.GetPersonGroupTrainingStatus(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
+    FaceApiHelper.GetPersonGroupTrainingStatus(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
 end;
 
@@ -209,7 +209,7 @@ begin
     LStringList.Text := memLog.Text;
 
     memLog.Lines.Add(
-      FaceApiHelper.Group(Access(edtAccessKey.Text, fasWestUS), LStringList)
+      FaceApiHelper.Group(AccessServer(edtAccessKey.Text, fasWestUS), LStringList)
     );
   finally
     LStringList.Free;
@@ -221,7 +221,7 @@ var
   LResult: String;
 begin
   LResult := FaceApiHelper.CreatePersonGroup(
-    Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupName.Text, edtPersonGroupUserData.Text
+    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupName.Text, edtPersonGroupUserData.Text
   );
 
   if LResult = '' then
@@ -234,7 +234,7 @@ procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
 var
   LResult: String;
 begin
-  LResult := FaceApiHelper.DeletePersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
+  LResult := FaceApiHelper.DeletePersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
 
   if LResult = '' then
     LResult := 'Group was deleted';
@@ -247,7 +247,7 @@ procedure TfmMain.btnVerifyTwoFacesWay1Click(Sender: TObject);
 begin
   memLog.Lines.Add(
     FaceApiHelper.Verify(
-      Access(edtAccessKey.Text, fasWestUS),
+      AccessServer(edtAccessKey.Text, fasWestUS),
       edtFaceTempID1.Text, edtFaceTempID2.Text
     )
   );
@@ -257,7 +257,7 @@ procedure TfmMain.btnVerifyTwoFacesWay2Click(Sender: TObject);
 begin
   memLog.Lines.Add(
     FaceApiHelper.Verify(
-      Access(edtAccessKey.Text, fasWestUS),
+      AccessServer(edtAccessKey.Text, fasWestUS),
       edtFaceTempID1.Text, edtPersonID.Text, edtPersonGroupID.Text
     )
   );
@@ -273,7 +273,7 @@ begin
 
     memLog.Lines.Add(
       FaceApiHelper.Identify(
-        Access(edtAccessKey.Text, fasWestUS),
+        AccessServer(edtAccessKey.Text, fasWestUS),
         LStringList, edtPersonGroupID.Text
       )
     );
@@ -287,7 +287,7 @@ var
   LResult: String;
 begin
   LResult := FaceApiHelper.UpdatePersonGroup(
-    Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupName.Text, edtPersonGroupUserData.Text
+    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text, edtPersonGroupName.Text, edtPersonGroupUserData.Text
   );
 
   if LResult = '' then
@@ -299,14 +299,14 @@ end;
 procedure TfmMain.btnGetPersonGroupClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.GetPersonGroup(Access(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
+    FaceApiHelper.GetPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
   );
 end;
 
 procedure TfmMain.btnFindSimilarWay1Click(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.FindSimilar(Access(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, '')
+    FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, '')
   );
 end;
 
@@ -319,7 +319,7 @@ begin
     LStringList.Text := memFaceTempIDs.Text;
 
     memLog.Lines.Add(
-      FaceApiHelper.FindSimilar(Access(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, edtFaceListID.Text)
+      FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, edtFaceListID.Text)
     );
   finally
     LStringList.Free;

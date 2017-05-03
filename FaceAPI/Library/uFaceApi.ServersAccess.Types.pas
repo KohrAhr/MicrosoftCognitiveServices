@@ -7,16 +7,16 @@ uses
   uFaceApi.Servers.Types;
 
 type
-  TAccess = record
+  TAccessServer = record
     AccessKey: String;
     AccessServer: TFaceApiServer;
   end;
 
-  function Access(AAccessKey: String; AAccessServer: TFaceApiServer): TAccess;
+  function AccessServer(AAccessKey: String; AAccessServer: TFaceApiServer): TAccessServer;
 
 implementation
 
-function Access(AAccessKey: String; AAccessServer: TFaceApiServer): TAccess;
+function AccessServer(AAccessKey: String; AAccessServer: TFaceApiServer): TAccessServer;
 begin
   Result.AccessKey := AAccessKey;
   Result.AccessServer := AAccessServer;

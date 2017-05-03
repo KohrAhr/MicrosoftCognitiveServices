@@ -76,9 +76,7 @@ uses
   { Format }
   System.SysUtils,
   { StringHelper }
-  uFunctions.StringHelper,
-  { InetHelper }
-  uFunctions.InetHelper;
+  uFunctions.StringHelper;
 
 function TFaceApiCoreFace.DetectBase(ARequestType: TContentType; const AData: String; AStreamData: TBytesStream; const ADetectOptions: TDetectOptions): String;
 var
@@ -90,9 +88,8 @@ begin
       Exit;
 
   LURL := Format(
-    '%s/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
+    '/detect?returnFaceId=%s&returnFaceLandmarks=%s&returnFaceAttributes=%s',
     [
-      ServerBaseUrl,
       BoolToStr(ADetectOptions.FaceId, True).ToLower,
       BoolToStr(ADetectOptions.FaceLandmarks, True).ToLower,
       ADetectOptions.FaceAttributesToString
@@ -112,9 +109,9 @@ begin
       );
 
     if ARequestType = rtFile then
-      Result := InetHelper.PostRequest(GetAccessKey, LURL, AData, CONST_CONTENT_TYPE[ARequestType])
+      Result := PostRequest(LURL, AData, CONST_CONTENT_TYPE[ARequestType])
     else
-      Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE[ARequestType]);
+      Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE[ARequestType]);
   finally
     LRequestContent.Free;
   end;
@@ -140,7 +137,7 @@ var
   LURL: String;
   LRequestContent: TBytesStream;
 begin
-  LURL := Format('%s/findsimilars', [ServerBaseUrl]);
+  LURL := '/findsimilars';
 
   LRequestContent := nil;
   try
@@ -153,7 +150,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -164,7 +161,7 @@ var
   LURL: String;
   LRequestContent: TBytesStream;
 begin
-  LURL := Format('%s/findsimilars', [ServerBaseUrl]);
+  LURL := '/findsimilars';
 
   LRequestContent := nil;
   try
@@ -176,7 +173,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -187,7 +184,7 @@ var
   LURL: String;
   LRequestContent: TBytesStream;
 begin
-  LURL := Format('%s/group', [ServerBaseUrl]);
+  LURL := '/group';
 
   LRequestContent := nil;
   try
@@ -199,7 +196,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -210,7 +207,7 @@ var
   LURL: String;
   LRequestContent: TBytesStream;
 begin
-  LURL := Format('%s/identify', [ServerBaseUrl]);
+  LURL := '/identify';
 
   LRequestContent := nil;
   try
@@ -222,7 +219,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -233,7 +230,7 @@ var
   LURL: String;
   LRequestContent: TBytesStream;
 begin
-  LURL := Format('%s/verify', [ServerBaseUrl]);
+  LURL := '/verify';
 
   LRequestContent := nil;
   try
@@ -246,7 +243,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -257,7 +254,7 @@ var
   LURL: String;
   LRequestContent: TBytesStream;
 begin
-  LURL := Format('%s/verify', [ServerBaseUrl]);
+  LURL := '/verify';
 
   LRequestContent := nil;
   try
@@ -270,7 +267,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;

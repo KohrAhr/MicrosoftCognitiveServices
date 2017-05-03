@@ -10,8 +10,6 @@ uses
   System.Classes,
   { THTTPClient }
   System.Net.HttpClient,
-  { TNetHeaders }
-  System.Net.URLClient,
   { TContentType }
   uFaceApi.Content.Types,
   { TFaceApiBase }
@@ -67,24 +65,21 @@ uses
   { Format }
   System.SysUtils,
   { StringHelper }
-  uFunctions.StringHelper,
-  { InetHelper }
-  uFunctions.InetHelper;
+  uFunctions.StringHelper;
 
 function TFaceApiCorePersonGroup.ListPersonGroups(const AStart: String; const ATop: Integer): String;
 var
   LURL: String;
 begin
   LURL := Format(
-    '%s/persongroups?start=%s&top=%s',
+    '/persongroups?start=%s&top=%s',
     [
-      ServerBaseUrl,
       AStart,
       ATop.ToString
     ]
   );
 
-  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
+  Result := GetRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApiCorePersonGroup.GetPersonGroupTrainingStatus(const AGroupID: String): String;
@@ -92,14 +87,13 @@ var
   LURL: String;
 begin
   LURL := Format(
-    '%s/persongroups/%s/training',
+    '/persongroups/%s/training',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
-  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
+  Result := GetRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApiCorePersonGroup.TrainPersonGroup(const AGroupID: String): String;
@@ -107,34 +101,28 @@ var
   LURL: String;
 begin
   LURL := Format(
-    '%s/persongroups/%s/train',
+    '/persongroups/%s/train',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
-  Result := InetHelper.PostRequest(GetAccessKey, LURL, nil, CONST_CONTENT_TYPE_JSON);
+  Result := PostRequest(LURL, nil, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApiCorePersonGroup.CreatePersonGroup(const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 var
   LURL: String;
-  LHTTPClient: THTTPClient;
-  LStream: TStream;
-  LHeaders: TNetHeaders;
   LRequestContent: TBytesStream;
 begin
   LURL := Format(
-    '%s/persongroups/%s',
+    '/persongroups/%s',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
   LRequestContent := nil;
-  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
   try
     LRequestContent := TBytesStream.Create(
       StringHelper.StringToBytesArray(
@@ -145,60 +133,39 @@ begin
       )
     );
 
-    LStream := LHTTPClient.Put(LURL, LRequestContent, nil, LHeaders).ContentStream;
-
-    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
+    Result := PutRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
-    LHTTPClient.Free;
   end;
 end;
 
 function TFaceApiCorePersonGroup.DeletePersonGroup(const AGroupID: String): String;
 var
   LURL: String;
-//  LHTTPClient: THTTPClient;
-//  LStream: TStream;
-//  LHeaders: TNetHeaders;
 begin
   LURL := Format(
-    '%s/persongroups/%s',
+    '/persongroups/%s',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
-  Result := InetHelper.DeleteRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
-
-//  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
-//  try
-//    LStream := LHTTPClient.Delete(LURL, nil, LHeaders).ContentStream;
-//
-//    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
-//  finally
-//    LHTTPClient.Free;
-//  end;
+  Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApiCorePersonGroup.UpdatePersonGroup(const AGroupID, AGroupName, AGroupUserData: String): String;
 var
   LURL: String;
-  LHTTPClient: THTTPClient;
-  LStream: TStream;
-  LHeaders: TNetHeaders;
   LRequestContent: TBytesStream;
 begin
   LURL := Format(
-    '%s/persongroups/%s',
+    '/persongroups/%s',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
   LRequestContent := nil;
-  LHTTPClient := InetHelper.PrepareHTTPClient(GetAccessKey, LHeaders, CONST_CONTENT_TYPE_JSON);
   try
     LRequestContent := TBytesStream.Create(
       StringHelper.StringToBytesArray(
@@ -209,12 +176,9 @@ begin
       )
     );
 
-    LStream := LHTTPClient.Patch(LURL, LRequestContent, nil, LHeaders).ContentStream;
-
-    Result := InetHelper.ProceedHttpClientData(LHTTPClient, LStream);
+    Result :=  PatchRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
-    LHTTPClient.Free;
   end;
 end;
 
@@ -223,14 +187,13 @@ var
   LURL: String;
 begin
   LURL := Format(
-    '%s/persongroups/%s',
+    '/persongroups/%s',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
-  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
+  Result := GetRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 end.

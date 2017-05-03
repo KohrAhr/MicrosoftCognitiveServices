@@ -17,7 +17,8 @@ uses
   uFaceApi.Core.PersonGroup in 'Library\uFaceApi.Core.PersonGroup.pas',
   uIFaceApi.PersonGroup in 'Library\uIFaceApi.PersonGroup.pas',
   uFaceApi.Core.Face in 'Library\uFaceApi.Core.Face.pas',
-  uIFaceApi.Face in 'Library\uIFaceApi.Face.pas';
+  uIFaceApi.Face in 'Library\uIFaceApi.Face.pas',
+  uIFaceApi.Base in 'Library\uIFaceApi.Base.pas';
 
 {$R *.res}
 

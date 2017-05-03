@@ -13,6 +13,9 @@ uses
 type
   InetHelper = class
   private
+    class function PrepareHttpClient(AAccessKey: TNetHeader; var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
+    class function ProceedHttpClientData(AClient: THTTPClient; AData: TStream): String;
+
     class function PostRequestBase(AAccessKey: TNetHeader; const AURL, AData: String; ARequestContent: TBytesStream; const AContentType: String): String;
   public
     class function GetRequest(AAccessKey: TNetHeader; const AURL: String; const AContentType: String): String;
@@ -22,8 +25,10 @@ type
     class function PostRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String; overload;
     class function PostRequest(AAccessKey: TNetHeader; const AURL: String; const AData: string; const AContentType: String): String; overload;
 
-    class function PrepareHttpClient(AAccessKey: TNetHeader; var AHeaders: TNetHeaders; const AContentType: String): THTTPClient;
-    class function ProceedHttpClientData(AClient: THTTPClient; AData: TStream): String;
+    class function PatchRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String;
+    class function PutRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String;
+
+
   end;
 
 implementation
@@ -131,6 +136,40 @@ begin
     Result := StringHelper.MemoryStreamToString(LResponse);
   finally
     LResponse.Free;
+  end;
+end;
+
+class function InetHelper.PatchRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream;
+  const AContentType: String): String;
+var
+  LHTTPClient: THTTPClient;
+  LStream: TStream;
+  LHeaders: TNetHeaders;
+begin
+  LHTTPClient := PrepareHTTPClient(AAccessKey, LHeaders, AContentType);
+  try
+    LStream := LHTTPClient.Patch(AURL, ARequestContent, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
+    LHTTPClient.Free;
+  end;
+end;
+
+class function InetHelper.PutRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream;
+  const AContentType: String): String;
+var
+  LHTTPClient: THTTPClient;
+  LStream: TStream;
+  LHeaders: TNetHeaders;
+begin
+  LHTTPClient := PrepareHTTPClient(AAccessKey, LHeaders, AContentType);
+  try
+    LStream := LHTTPClient.Put(AURL, ARequestContent, nil, LHeaders).ContentStream;
+
+    Result := ProceedHttpClientData(LHTTPClient, LStream);
+  finally
+    LHTTPClient.Free;
   end;
 end;
 

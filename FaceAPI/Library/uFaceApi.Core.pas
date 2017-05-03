@@ -43,9 +43,7 @@ uses
   { Format }
   System.SysUtils,
   { StringHelper }
-  uFunctions.StringHelper,
-  { InetHelper }
-  uFunctions.InetHelper;
+  uFunctions.StringHelper;
 
 function TFaceApiCore.CreatePerson(const AGroupID, APersonName, APersonUserData: String): String;
 var
@@ -53,9 +51,8 @@ var
   LRequestContent: TBytesStream;
 begin
   LURL := Format(
-    '%s/persongroups/%s/persons',
+    '/persongroups/%s/persons',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
@@ -71,7 +68,7 @@ begin
       )
     );
 
-    Result := InetHelper.PostRequest(GetAccessKey, LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
   finally
     LRequestContent.Free;
   end;
@@ -82,14 +79,13 @@ var
   LURL: String;
 begin
   LURL := Format(
-    '%s/persongroups/%s/persons/%s',
+    '/persongroups/%s/persons/%s',
     [
-      ServerBaseUrl,
       AGroupID.ToLower, APersonID.ToLower
     ]
   );
 
-  Result := InetHelper.DeleteRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
+  Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 function TFaceApiCore.ListPersonsInPersonGroup(const AGroupID: String): String;
@@ -97,14 +93,13 @@ var
   LURL: String;
 begin
   LURL := Format(
-    '%s/persongroups/%s/persons',
+    '/persongroups/%s/persons',
     [
-      ServerBaseUrl,
       AGroupID.ToLower
     ]
   );
 
-  Result := InetHelper.GetRequest(GetAccessKey, LURL, CONST_CONTENT_TYPE_JSON);
+  Result := GetRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 

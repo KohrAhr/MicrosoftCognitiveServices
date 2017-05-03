@@ -6,14 +6,14 @@ unit uIFaceApi.PersonGroup;
 interface
 
 uses
-  { TAccess }
-  uFaceApi.ServersAccess.Types;
+  { IFaceApiBase }
+  uIFaceApi.Base;
 
 type
   /// <summary>
   ///   Main Interface for "Person Group" functionality for Face API Microsoft Cognitive Services 1.0
   /// </summary>
-  IFaceApiPersonGroup = interface(IInterface)
+  IFaceApiPersonGroup = interface(IFaceApiBase)
     ['{4837303E-2840-4C74-B3FA-E468F6564D36}']
 
     /// <summary>
@@ -178,15 +178,6 @@ type
     ///   Error Code	Error Message Description
     /// </returns>
     function GetPersonGroup(const AGroupID: String): String;
-
-    /// <summary>
-    ///   Define your access key and define your server location
-    /// </summary>
-		/// <param name="AAccess">
-    ///   - Subscription key which provides access to this API. Found in your Cognitive Services accounts.
-    ///   - Cognitive Api server location
-		/// </param>
-    procedure SetAccessKey(const AAccess: TAccess);
   end;
 
 implementation

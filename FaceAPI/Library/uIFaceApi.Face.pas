@@ -12,14 +12,14 @@ uses
   uFaceApi.FaceDetectOptions,
   { TContentType }
   uFaceApi.Content.Types,
-  { TAccess }
-  uFaceApi.ServersAccess.Types;
+  { IFaceApiBase }
+  uIFaceApi.Base;
 
 type
   /// <summary>
   ///   Main Interface for "Face" functionality for Face API Microsoft Cognitive Services 1.0
   /// </summary>
-  IFaceApiFace = interface(IInterface)
+  IFaceApiFace = interface(IFaceApiBase)
     ['{B4DAE3AA-C4F8-4E4A-9281-85FAC6533EA7}']
 
     /// <summary>
@@ -275,15 +275,6 @@ type
     ///   Using existing personGroupId
 		/// </param>
     function Verify(const AFaceTempID, APersonID, AGroupID: String): String; overload;
-
-    /// <summary>
-    ///   Define your access key and define your server location
-    /// </summary>
-		/// <param name="AAccess">
-    ///   - Subscription key which provides access to this API. Found in your Cognitive Services accounts.
-    ///   - Cognitive Api server location
-		/// </param>
-    procedure SetAccessKey(const AAccess: TAccess);
   end;
 
 implementation

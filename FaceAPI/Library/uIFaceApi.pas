@@ -6,14 +6,13 @@ unit uIFaceApi;
 interface
 
 uses
-  { TAccess }
-  uFaceApi.ServersAccess.Types;
+  uIFaceApi.Base;
 
 type
   /// <summary>
   ///   Main Interface for Face API Microsoft Cognitive Services 1.0
   /// </summary>
-  IFaceApi = interface(IInterface)
+  IFaceApi = interface(IFaceApiBase)
     ['{904FC5EC-6ECC-49EB-A3B0-7D785A5D23D2}']
 
     /// <summary>
@@ -91,14 +90,6 @@ type
     /// </returns>
     function DeletePerson(const AGroupID, APersonID: String): String;
 
-    /// <summary>
-    ///   Define your access key and define your server location
-    /// </summary>
-		/// <param name="AAccess">
-    ///   - Subscription key which provides access to this API. Found in your Cognitive Services accounts.
-    ///   - Cognitive Api server location
-		/// </param>
-    procedure SetAccessKey(const AAccess: TAccess);
   end;
 
 implementation

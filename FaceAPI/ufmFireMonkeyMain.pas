@@ -50,7 +50,7 @@ procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 begin
   memLog.Lines.Add(
     FaceApiHelper.DetectURL(
-      Access(edtAccessKey.Text, fasWestUS),
+      AccessServer(edtAccessKey.Text, fasWestUS),
       'http://1click.lv/faceapi/sample1.jpg',
       Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
     )
@@ -60,7 +60,7 @@ end;
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.ListPersonGroups(Access(edtAccessKey.Text, fasWestUS))
+    FaceApiHelper.ListPersonGroups(AccessServer(edtAccessKey.Text, fasWestUS))
   );
 end;
 
