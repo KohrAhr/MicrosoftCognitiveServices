@@ -12,14 +12,14 @@ uses
   uFaceApi.Content.Types,
   { TFaceApiBase }
   uFaceApi.Base,
-  { IFaceApi }
-  uIFaceApi;
+  { IFaceApiCore }
+  uIFaceApi.Core;
 
 type
   /// <summary>
   ///   Main Class implementation for Face API Microsoft Cognitive Services 1.0
   /// </summary>
-  TFaceApiCore = class(TFaceApiBase, IFaceApi)
+  TFaceApiCore = class(TFaceApiBase, IFaceApiCore)
   public
     /// <summary>
     ///   Implements <see cref="uIFaceApi|IFaceApi.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>

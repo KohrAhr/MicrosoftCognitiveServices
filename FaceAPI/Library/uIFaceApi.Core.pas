@@ -1,7 +1,7 @@
 /// <summary>
 ///   Unit contain the Main Interface declaration for Face API Microsoft Cognitive Services 1.0
 /// </summary>
-unit uIFaceApi;
+unit uIFaceApi.Core;
 
 interface
 
@@ -12,7 +12,7 @@ type
   /// <summary>
   ///   Main Interface for Face API Microsoft Cognitive Services 1.0
   /// </summary>
-  IFaceApi = interface(IFaceApiBase)
+  IFaceApiCore = interface(IFaceApiBase)
     ['{904FC5EC-6ECC-49EB-A3B0-7D785A5D23D2}']
 
     /// <summary>

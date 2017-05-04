@@ -102,8 +102,8 @@ type
 implementation
 
 uses
-  { IFaceApi }
-  uIFaceApi,
+  { IFaceApiCore }
+  uIFaceApi.Core,
   { TFaceApiCore }
   uFaceApi.Core,
   { IFaceApiFace }
@@ -117,13 +117,13 @@ uses
 
 class function FaceApiHelper.CreateNewPerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiCore: IFaceApiCore;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiCore := TFaceApiCore.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiCore.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.CreatePerson(AGroupID, APersonName, APersonUserData);
+  Result := LIFaceApiCore.CreatePerson(AGroupID, APersonName, APersonUserData);
 end;
 
 class function FaceApiHelper.CreatePersonGroup(AAccess: TAccessServer; const AGroupID, AGroupName, AGroupUserData: String): String;
@@ -205,13 +205,13 @@ end;
 
 class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
 var
-  LIFaceApi: IFaceApi;
+  LIFaceApiCore: IFaceApiCore;
 begin
-  LIFaceApi := TFaceApiCore.Create;
+  LIFaceApiCore := TFaceApiCore.Create;
 
-  LIFaceApi.SetAccessKey(AAccess);
+  LIFaceApiCore.SetAccessKey(AAccess);
 
-  Result := LIFaceApi.ListPersonsInPersonGroup(AGroupID);
+  Result := LIFaceApiCore.ListPersonsInPersonGroup(AGroupID);
 end;
 
 class function FaceApiHelper.TrainPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;

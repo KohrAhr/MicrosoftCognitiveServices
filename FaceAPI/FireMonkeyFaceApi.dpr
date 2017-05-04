@@ -10,7 +10,7 @@ uses
   uFaceApi.FaceDetectOptions in 'Library\uFaceApi.FaceDetectOptions.pas',
   uFaceApi.Core in 'Library\uFaceApi.Core.pas',
   uFaceApi.Servers.Types in 'Library\uFaceApi.Servers.Types.pas',
-  uIFaceApi in 'Library\uIFaceApi.pas',
+  uIFaceApi.Core in 'Library\uIFaceApi.Core.pas',
   uFunctions.FaceApiHelper in 'Functions\uFunctions.FaceApiHelper.pas',
   uFunctions.StringHelper in 'Functions\uFunctions.StringHelper.pas',
   uFunctions.InetHelper in 'Functions\uFunctions.InetHelper.pas',
