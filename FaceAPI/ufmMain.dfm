@@ -2,8 +2,8 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 
-    'Microsoft Cognitive Services Face Api demo Y2017 by ZAM@1CLICK.L' +
-    'V. Delphi DX10'
+    '(C) 2017  by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cognitive Ser' +
+    'vices Face Api 1.0'
   ClientHeight = 552
   ClientWidth = 874
   Color = clBtnFace
@@ -111,7 +111,7 @@ object fmMain: TfmMain
     Caption = 'Face List ID'
   end
   object memLog: TMemo
-    Left = 8
+    Left = 9
     Top = 358
     Width = 857
     Height = 187
@@ -144,7 +144,7 @@ object fmMain: TfmMain
   end
   object btnClearLog: TButton
     Left = 8
-    Top = 327
+    Top = 328
     Width = 75
     Height = 25
     Caption = 'Clear log'
@@ -214,7 +214,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 509
     Height = 313
-    ActivePage = TabSheet2
+    ActivePage = TabSheet4
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
