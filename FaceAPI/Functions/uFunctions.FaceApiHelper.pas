@@ -13,15 +13,15 @@ uses
 type
   FaceApiHelper = class
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.DetectURL">interface DetectURL</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectURL">interface DetectURL</see>
     /// </summary>
     class function DetectURL(AAccess: TAccessServer; const AURL: String; const ADetectOptions: TDetectOptions): String;
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.DetectFile">interface DetectFile</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectFile">interface DetectFile</see>
     /// </summary>
     class function DetectFile(AAccess: TAccessServer; const AFileName: String; const ADetectOptions: TDetectOptions): String;
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.DetectStream">interface DetectStream</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectStream">interface DetectStream</see>
     /// </summary>
     class function DetectStream(AAccess: TAccessServer; AStream: TBytesStream; const ADetectOptions: TDetectOptions): String;
 
@@ -31,14 +31,20 @@ type
     class function ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = 1000): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
     /// </summary>
     class function ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.CreatePerson">interface CreatePerson</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.AddPersonFaceURL">interface AddPersonFaceURL</see>
     /// </summary>
-    class function CreateNewPerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
+    function AddPersonFaceURL(AAccess: TAccessServer; const AGroupID, APersonID,
+      AURL,  ATargetFace: String; const AUserData: String = ''): String;
+
+    /// <summary>
+    ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.CreatePerson">interface CreatePerson</see>
+    /// </summary>
+    class function CreatePerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
@@ -60,41 +66,41 @@ type
     class function DeletePersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.Verify">interface Verify (overload)</see>
     /// </summary>
     class function Verify(AAccess: TAccessServer; const AFaceTempID1, AFaceTempID2: String): String; overload;
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Verify">interface Verify (overload)</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.Verify">interface Verify (overload)</see>
     /// </summary>
     class function Verify(AAccess: TAccessServer; const AFaceTempID, APersonID, AGroupID: String): String; overload;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Identify">interface Identify</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
     /// </summary>
     class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApi.Identify">interface UpdatePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.UpdatePersonGroup">interface UpdatePersonGroup</see>
     /// </summary>
     class function UpdatePersonGroup(AAccess: TAccessServer; const AGroupID: String; const AGroupName: String; const AGroupUserData: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.Identify">interface UpdatePersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.GetPersonGroup">interface GetPersonGroup</see>
     /// </summary>
     class function GetPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
     class function FindSimilar(AAccess: TAccessServer; const AFaceID: String; const AListID: String; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.FindSimilar">interface FindSimilar</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
     class function FindSimilar(AAccess: TAccessServer; const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi|IFaceApi.Group">interface Group</see>
+    ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.Group">interface Group</see>
     /// </summary>
     class function Group(AAccess: TAccessServer; AFaceIDS: TStringList): String;
   end;
@@ -115,7 +121,20 @@ uses
   { TFaceApiCorePersonGroup }
   uFaceApi.Core.PersonGroup;
 
-class function FaceApiHelper.CreateNewPerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
+function FaceApiHelper.AddPersonFaceURL(AAccess: TAccessServer; const AGroupID,
+  APersonID, AURL, ATargetFace: String; const AUserData: String): String;
+var
+  LIFaceApiCore: IFaceApiCore;
+begin
+  LIFaceApiCore := TFaceApiCore.Create;
+
+  LIFaceApiCore.SetAccessKey(AAccess);
+
+  Result := LIFaceApiCore.AddPersonFaceURL(AGroupID, APersonID, AURL,
+    ATargetFace, AUserData);
+end;
+
+class function FaceApiHelper.CreatePerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
 var
   LIFaceApiCore: IFaceApiCore;
 begin

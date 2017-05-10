@@ -121,7 +121,7 @@ end;
 procedure TfmMain.btnCreatePersonClick(Sender: TObject);
 begin
   memLog.Lines.Add(
-    FaceApiHelper.CreateNewPerson(
+    FaceApiHelper.CreatePerson(
       AccessServer(edtAccessKey.Text, fasWestUS),
       edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
   );
