@@ -71,6 +71,7 @@ type
     memFaceTempIDs: TMemo;
     Label15: TLabel;
     edtFaceListID: TEdit;
+    btnDetectInFileAsync: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -90,7 +91,9 @@ type
     procedure btnGroupClick(Sender: TObject);
     procedure btnFindSimilarWay1Click(Sender: TObject);
     procedure btnFindSimilarWay2Click(Sender: TObject);
+    procedure btnDetectInFileAsyncClick(Sender: TObject);
   private
+    procedure DetectInFileAsyncCompleted(const AResult: String);
   public
   end;
 
@@ -109,7 +112,9 @@ uses
   { FaceApiHelper }
   uFunctions.FaceApiHelper,
   { Access }
-  uFaceApi.ServersAccess.Types;
+  uFaceApi.ServersAccess.Types,
+  { ITask }
+  System.Threading;
 
 {$R *.dfm}
 
@@ -125,6 +130,31 @@ begin
       AccessServer(edtAccessKey.Text, fasWestUS),
       edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
   );
+end;
+
+
+procedure TfmMain.DetectInFileAsyncCompleted(const AResult: String);
+begin
+  memLog.Lines.Add(AResult);
+end;
+
+procedure TfmMain.btnDetectInFileAsyncClick(Sender: TObject);
+var
+  LResult: String;
+  LTask: ITask;
+begin
+  LTask := TTask.Create(
+    procedure
+    begin
+      LResult := FaceApiHelper.DetectFile(
+        AccessServer(edtAccessKey.Text, fasWestUS),
+        'C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
+      );
+
+      DetectInFileAsyncCompleted(LResult);
+    end
+  );
+  LTask.Start;
 end;
 
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);

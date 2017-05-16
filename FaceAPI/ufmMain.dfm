@@ -214,7 +214,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 509
     Height = 313
-    ActivePage = TabSheet4
+    ActivePage = TabSheet2
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
@@ -460,6 +460,15 @@ object fmMain: TfmMain
         Caption = 'Find Similar - Way 2'
         TabOrder = 8
         OnClick = btnFindSimilarWay2Click
+      end
+      object btnDetectInFileAsync: TButton
+        Left = 211
+        Top = 3
+        Width = 202
+        Height = 25
+        Caption = 'Detect in File Async'
+        TabOrder = 9
+        OnClick = btnDetectInFileAsyncClick
       end
     end
     object TabSheet3: TTabSheet
