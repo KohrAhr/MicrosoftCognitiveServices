@@ -27,8 +27,6 @@ type
 
     class function PatchRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String;
     class function PutRequest(AAccessKey: TNetHeader; const AURL: String; ARequestContent: TBytesStream; const AContentType: String): String;
-
-
   end;
 
 implementation

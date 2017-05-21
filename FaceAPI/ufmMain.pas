@@ -3,7 +3,7 @@ unit ufmMain;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages,
+  Winapi.Windows,
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls;
 
@@ -111,10 +111,10 @@ uses
   uFaceApi.FaceDetectOptions,
   { FaceApiHelper }
   uFunctions.FaceApiHelper,
+  { FaceApiAsyncHelper }
+  uFunctions.FaceApiAsyncHelper,
   { Access }
-  uFaceApi.ServersAccess.Types,
-  { ITask }
-  System.Threading;
+  uFaceApi.ServersAccess.Types;
 
 {$R *.dfm}
 
@@ -139,22 +139,13 @@ begin
 end;
 
 procedure TfmMain.btnDetectInFileAsyncClick(Sender: TObject);
-var
-  LResult: String;
-  LTask: ITask;
 begin
-  LTask := TTask.Create(
-    procedure
-    begin
-      LResult := FaceApiHelper.DetectFile(
-        AccessServer(edtAccessKey.Text, fasWestUS),
-        'C:\Temp\index.jpg', Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
-      );
-
-      DetectInFileAsyncCompleted(LResult);
-    end
+  FaceApiAsyncHelper.DetectFile(
+    AccessServer(edtAccessKey.Text, fasWestUS),
+    'C:\Temp\index.jpg',
+    Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]),
+    DetectInFileAsyncCompleted
   );
-  LTask.Start;
 end;
 
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);

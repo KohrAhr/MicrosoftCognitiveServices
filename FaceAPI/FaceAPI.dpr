@@ -18,7 +18,8 @@ uses
   uFaceApi.Core.Face in 'Library\uFaceApi.Core.Face.pas',
   uIFaceApi.Face in 'Library\uIFaceApi.Face.pas',
   uIFaceApi.Base in 'Library\uIFaceApi.Base.pas',
-  uIFaceApi.Core in 'Library\uIFaceApi.Core.pas';
+  uIFaceApi.Core in 'Library\uIFaceApi.Core.pas',
+  uFunctions.FaceApiAsyncHelper in 'Functions\uFunctions.FaceApiAsyncHelper.pas';
 
 {$R *.res}
 
