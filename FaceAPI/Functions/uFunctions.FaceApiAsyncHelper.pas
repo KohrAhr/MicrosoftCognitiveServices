@@ -75,14 +75,26 @@ uses
   { FaceApiHelper }
   uFunctions.FaceApiHelper;
 
+procedure RunAsync(AProc: TProc);
+var
+  LTask: ITask;
+begin
+  LTask := TTask.Create(
+    procedure
+    begin
+      AProc;
+    end
+  );
+  LTask.Start;
+end;
+
 class function FaceApiAsyncHelper.DetectFile(AAccess: TAccessServer;
   const AFileName: String; const ADetectOptions: TDetectOptions;
   ACallbackMethod: TFaceApiAsyncCallback): String;
 var
   LResult: String;
-  LTask: ITask;
 begin
-  LTask := TTask.Create(
+  RunAsync(
     procedure
     begin
       LResult := FaceApiHelper.DetectFile(AAccess, AFileName, ADetectOptions);
@@ -91,7 +103,6 @@ begin
         ACallbackMethod(LResult);
     end
   );
-  LTask.Start;
 end;
 
 class function FaceApiAsyncHelper.DetectStream(AAccess: TAccessServer;
@@ -99,9 +110,8 @@ class function FaceApiAsyncHelper.DetectStream(AAccess: TAccessServer;
   ACallbackMethod: TFaceApiAsyncCallback): String;
 var
   LResult: String;
-  LTask: ITask;
 begin
-  LTask := TTask.Create(
+  RunAsync(
     procedure
     begin
       LResult := FaceApiHelper.DetectStream(AAccess, AStream, ADetectOptions);
@@ -110,7 +120,6 @@ begin
         ACallbackMethod(LResult);
     end
   );
-  LTask.Start;
 end;
 
 class function FaceApiAsyncHelper.DetectURL(AAccess: TAccessServer;
@@ -118,9 +127,8 @@ class function FaceApiAsyncHelper.DetectURL(AAccess: TAccessServer;
   ACallbackMethod: TFaceApiAsyncCallback): String;
 var
   LResult: String;
-  LTask: ITask;
 begin
-  LTask := TTask.Create(
+  RunAsync(
     procedure
     begin
       LResult := FaceApiHelper.DetectURL(AAccess, AURL, ADetectOptions);
@@ -129,7 +137,6 @@ begin
         ACallbackMethod(LResult);
     end
   );
-  LTask.Start;
 end;
 
 class function FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
@@ -137,9 +144,8 @@ class function FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
   ACallbackMethod: TFaceApiAsyncCallback): String;
 var
   LResult: String;
-  LTask: ITask;
 begin
-  LTask := TTask.Create(
+  RunAsync(
     procedure
     begin
       LResult := FaceApiHelper.ListPersonGroups(AAccess, AStart, ATop);
@@ -148,7 +154,6 @@ begin
         ACallbackMethod(LResult);
     end
   );
-  LTask.Start;
 end;
 
 class function FaceApiAsyncHelper.ListPersonsInPersonGroup(
@@ -156,9 +161,8 @@ class function FaceApiAsyncHelper.ListPersonsInPersonGroup(
   ACallbackMethod: TFaceApiAsyncCallback): String;
 var
   LResult: String;
-  LTask: ITask;
 begin
-  LTask := TTask.Create(
+  RunAsync(
     procedure
     begin
       LResult := FaceApiHelper.ListPersonsInPersonGroup(AAccess, AGroupID);
@@ -167,7 +171,6 @@ begin
         ACallbackMethod(LResult);
     end
   );
-  LTask.Start;
 end;
 
 end.
