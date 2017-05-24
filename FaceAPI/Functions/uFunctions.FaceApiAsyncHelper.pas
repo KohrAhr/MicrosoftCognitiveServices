@@ -15,23 +15,42 @@ type
 
   FaceApiAsyncHelper = class
     /// <summary>
-    ///   Implements asynchronous top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectURL">interface DetectURL</see>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.Face|IFaceApiFace.DetectURL">interface DetectURL</see>
     /// </summary>
     class function DetectURL(AAccess: TAccessServer; const AURL: String;
       const ADetectOptions: TDetectOptions;
       ACallbackMethod: TFaceApiAsyncCallback): String;
     /// <summary>
-    ///   Implements asynchronous top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectFile">interface DetectFile</see>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.Face|IFaceApiFace.DetectFile">interface DetectFile</see>
     /// </summary>
     class function DetectFile(AAccess: TAccessServer; const AFileName: String;
       const ADetectOptions: TDetectOptions;
       ACallbackMethod: TFaceApiAsyncCallback): String;
     /// <summary>
-    ///   Implements asynchronous top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectStream">interface DetectStream</see>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.Face|IFaceApiFace.DetectStream">interface DetectStream</see>
     /// </summary>
     class function DetectStream(AAccess: TAccessServer; AStream: TBytesStream;
       const ADetectOptions: TDetectOptions;
       ACallbackMethod: TFaceApiAsyncCallback): String;
+
+    /// <summary>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonGroups">interface ListPersonGroups</see>
+    /// </summary>
+    class function ListPersonGroups(AAccess: TAccessServer;
+      const AStart: String = ''; const ATop: Integer = 1000;
+      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+
+    /// <summary>
+    ///   Implements top layout for
+    ///   <see cref="uIFaceApi.Core|IFaceApiCore.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
+    /// </summary>
+    class function ListPersonsInPersonGroup(AAccess: TAccessServer;
+      const AGroupID: String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
   end;
 
 implementation
@@ -105,6 +124,44 @@ begin
     procedure
     begin
       LResult := FaceApiHelper.DetectURL(AAccess, AURL, ADetectOptions);
+
+      if Assigned(ACallbackMethod) then
+        ACallbackMethod(LResult);
+    end
+  );
+  LTask.Start;
+end;
+
+class function FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
+  const AStart: String; const ATop: Integer;
+  ACallbackMethod: TFaceApiAsyncCallback): String;
+var
+  LResult: String;
+  LTask: ITask;
+begin
+  LTask := TTask.Create(
+    procedure
+    begin
+      LResult := FaceApiHelper.ListPersonGroups(AAccess, AStart, ATop);
+
+      if Assigned(ACallbackMethod) then
+        ACallbackMethod(LResult);
+    end
+  );
+  LTask.Start;
+end;
+
+class function FaceApiAsyncHelper.ListPersonsInPersonGroup(
+  AAccess: TAccessServer; const AGroupID: String;
+  ACallbackMethod: TFaceApiAsyncCallback): String;
+var
+  LResult: String;
+  LTask: ITask;
+begin
+  LTask := TTask.Create(
+    procedure
+    begin
+      LResult := FaceApiHelper.ListPersonsInPersonGroup(AAccess, AGroupID);
 
       if Assigned(ACallbackMethod) then
         ACallbackMethod(LResult);
