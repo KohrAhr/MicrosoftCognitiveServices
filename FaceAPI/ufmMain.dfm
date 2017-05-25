@@ -214,7 +214,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 736
     Height = 313
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
@@ -326,6 +326,15 @@ object fmMain: TfmMain
         Caption = 'Get Person Group'
         TabOrder = 6
         OnClick = btnGetPersonGroupClick
+      end
+      object btnListPersonGroupsAsync: TButton
+        Left = 211
+        Top = 129
+        Width = 202
+        Height = 25
+        Caption = 'List Person Groups Async'
+        TabOrder = 7
+        OnClick = btnListPersonGroupsAsyncClick
       end
     end
     object TabSheet2: TTabSheet

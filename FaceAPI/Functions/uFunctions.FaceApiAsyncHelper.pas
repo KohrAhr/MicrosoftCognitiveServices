@@ -41,8 +41,8 @@ type
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonGroups">interface ListPersonGroups</see>
     /// </summary>
     class function ListPersonGroups(AAccess: TAccessServer;
-      const AStart: String = ''; const ATop: Integer = 1000;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback;
+      const AStart: String = ''; const ATop: Integer = 1000): String;
 
     /// <summary>
     ///   Implements top layout for
@@ -140,8 +140,8 @@ begin
 end;
 
 class function FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
-  const AStart: String; const ATop: Integer;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback;
+  const AStart: String; const ATop: Integer): String;
 var
   LResult: String;
 begin

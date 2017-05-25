@@ -74,6 +74,7 @@ type
     btnDetectInFileAsync: TButton;
     btnDetectInUrlAsync: TButton;
     btnDetectInStreamAsync: TButton;
+    btnListPersonGroupsAsync: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -96,6 +97,7 @@ type
     procedure btnDetectInFileAsyncClick(Sender: TObject);
     procedure btnDetectInUrlAsyncClick(Sender: TObject);
     procedure btnDetectInStreamAsyncClick(Sender: TObject);
+    procedure btnListPersonGroupsAsyncClick(Sender: TObject);
   private
     procedure AsyncTaskCompleted(const AResult: String);
   public
@@ -219,6 +221,13 @@ begin
   finally
     LRequestContent.Free;
   end;
+end;
+
+procedure TfmMain.btnListPersonGroupsAsyncClick(Sender: TObject);
+begin
+  FaceApiAsyncHelper.ListPersonGroups(
+    AccessServer(edtAccessKey.Text, fasWestUS), AsyncTaskCompleted
+  );
 end;
 
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
