@@ -72,6 +72,8 @@ type
     Label15: TLabel;
     edtFaceListID: TEdit;
     btnDetectInFileAsync: TButton;
+    btnDetectInUrlAsync: TButton;
+    btnDetectInStreamAsync: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -92,8 +94,10 @@ type
     procedure btnFindSimilarWay1Click(Sender: TObject);
     procedure btnFindSimilarWay2Click(Sender: TObject);
     procedure btnDetectInFileAsyncClick(Sender: TObject);
+    procedure btnDetectInUrlAsyncClick(Sender: TObject);
+    procedure btnDetectInStreamAsyncClick(Sender: TObject);
   private
-    procedure DetectInFileAsyncCompleted(const AResult: String);
+    procedure AsyncTaskCompleted(const AResult: String);
   public
   end;
 
@@ -133,7 +137,7 @@ begin
 end;
 
 
-procedure TfmMain.DetectInFileAsyncCompleted(const AResult: String);
+procedure TfmMain.AsyncTaskCompleted(const AResult: String);
 begin
   memLog.Lines.Add(AResult);
 end;
@@ -144,7 +148,7 @@ begin
     AccessServer(edtAccessKey.Text, fasWestUS),
     'C:\Temp\index.jpg',
     Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]),
-    DetectInFileAsyncCompleted
+    AsyncTaskCompleted
   );
 end;
 
@@ -158,6 +162,16 @@ begin
   );
 end;
 
+procedure TfmMain.btnDetectInUrlAsyncClick(Sender: TObject);
+begin
+  FaceApiAsyncHelper.DetectURL(
+    AccessServer(edtAccessKey.Text, fasWestUS),
+    edtUrl.Text,
+    Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]),
+    AsyncTaskCompleted
+  );
+end;
+
 procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 begin
   memLog.Lines.Add(
@@ -166,6 +180,26 @@ begin
       edtUrl.Text, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion])
     )
   );
+end;
+
+procedure TfmMain.btnDetectInStreamAsyncClick(Sender: TObject);
+var
+  LRequestContent: TStringStream;
+begin
+  LRequestContent := TStringStream.Create;
+  try
+    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+
+    memLog.Lines.Add(
+      FaceApiAsyncHelper.DetectStream(
+        AccessServer(edtAccessKey.Text, fasWestUS),
+        LRequestContent, Detect(True, True, [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]),
+        AsyncTaskCompleted
+      )
+    );
+  finally
+    LRequestContent.Free;
+  end;
 end;
 
 procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
@@ -186,7 +220,6 @@ begin
     LRequestContent.Free;
   end;
 end;
-
 
 procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 begin

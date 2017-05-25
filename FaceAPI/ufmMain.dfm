@@ -5,7 +5,7 @@ object fmMain: TfmMain
     '(C) 2017  by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cognitive Ser' +
     'vices Face Api 1.0'
   ClientHeight = 552
-  ClientWidth = 874
+  ClientWidth = 1080
   Color = clBtnFace
   Constraints.MinHeight = 480
   Constraints.MinWidth = 890
@@ -16,13 +16,13 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    874
+    1080
     552)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAccessKey: TLabel
-    Left = 594
-    Top = 235
+    Left = 801
+    Top = 227
     Width = 63
     Height = 13
     Caption = 'Access key'
@@ -34,78 +34,78 @@ object fmMain: TfmMain
     ParentFont = False
   end
   object lblPersonName: TLabel
-    Left = 595
-    Top = 91
+    Left = 802
+    Top = 83
     Width = 62
     Height = 13
     Caption = 'Person name'
   end
   object lblPersonUserData: TLabel
-    Left = 575
-    Top = 117
+    Left = 782
+    Top = 109
     Width = 82
     Height = 13
     Caption = 'Person user data'
   end
   object lblPersonGroupId: TLabel
-    Left = 578
-    Top = 19
+    Left = 785
+    Top = 11
     Width = 79
     Height = 13
     Caption = 'Person Group ID'
   end
   object lblPersonGroupUserData: TLabel
-    Left = 543
-    Top = 67
+    Left = 750
+    Top = 59
     Width = 114
     Height = 13
     Caption = 'Person Group user data'
   end
   object lblFaceTempId1: TLabel
-    Left = 582
-    Top = 163
+    Left = 789
+    Top = 155
     Width = 75
     Height = 13
     Caption = 'Face Temp ID 1'
   end
   object lblFaceTempId2: TLabel
-    Left = 582
-    Top = 187
+    Left = 789
+    Top = 179
     Width = 75
     Height = 13
     Caption = 'Face Temp ID 2'
   end
   object lblPersonId: TLabel
-    Left = 610
-    Top = 139
+    Left = 817
+    Top = 131
     Width = 47
     Height = 13
     Caption = 'Person ID'
   end
   object lblPersonGroupName: TLabel
-    Left = 562
-    Top = 43
+    Left = 769
+    Top = 35
     Width = 95
     Height = 13
     Caption = 'Person Group Name'
   end
   object lblUrl: TLabel
-    Left = 638
-    Top = 211
+    Left = 845
+    Top = 203
     Width = 19
     Height = 13
     Caption = 'URL'
   end
   object Label14: TLabel
-    Left = 586
-    Top = 259
+    Left = 793
+    Top = 251
     Width = 71
     Height = 13
     Caption = 'Face Temp IDs'
   end
   object Label15: TLabel
-    Left = 601
-    Top = 330
+    Left = 808
+    Top = 322
     Width = 56
     Height = 13
     Caption = 'Face List ID'
@@ -113,7 +113,7 @@ object fmMain: TfmMain
   object memLog: TMemo
     Left = 9
     Top = 358
-    Width = 857
+    Width = 1063
     Height = 187
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
@@ -128,16 +128,16 @@ object fmMain: TfmMain
     WantTabs = True
   end
   object edtPersonGroupID: TEdit
-    Left = 663
-    Top = 16
+    Left = 870
+    Top = 8
     Width = 202
     Height = 21
     TabOrder = 1
     Text = 'edtPersonGroupID'
   end
   object edtAccessKey: TEdit
-    Left = 663
-    Top = 232
+    Left = 870
+    Top = 224
     Width = 202
     Height = 21
     TabOrder = 2
@@ -152,16 +152,16 @@ object fmMain: TfmMain
     OnClick = btnClearLogClick
   end
   object edtPersonName: TEdit
-    Left = 663
-    Top = 88
+    Left = 870
+    Top = 80
     Width = 202
     Height = 21
     TabOrder = 4
     Text = 'edtPersonName'
   end
   object edtPersonUserData: TEdit
-    Left = 663
-    Top = 112
+    Left = 870
+    Top = 104
     Width = 202
     Height = 21
     Hint = '(16 KByte text)'
@@ -169,8 +169,8 @@ object fmMain: TfmMain
     Text = 'edtPersonUserData'
   end
   object edtPersonGroupUserData: TEdit
-    Left = 663
-    Top = 64
+    Left = 870
+    Top = 56
     Width = 202
     Height = 21
     Hint = '(16 KByte text)'
@@ -178,32 +178,32 @@ object fmMain: TfmMain
     Text = 'edtPersonGroupUserData'
   end
   object edtFaceTempID1: TEdit
-    Left = 663
-    Top = 160
+    Left = 870
+    Top = 152
     Width = 202
     Height = 21
     TabOrder = 7
     Text = 'edtFaceTempID1'
   end
   object edtFaceTempID2: TEdit
-    Left = 663
-    Top = 184
+    Left = 870
+    Top = 176
     Width = 202
     Height = 21
     TabOrder = 8
     Text = 'edtFaceTempID2'
   end
   object edtPersonID: TEdit
-    Left = 663
-    Top = 136
+    Left = 870
+    Top = 128
     Width = 202
     Height = 21
     TabOrder = 9
     Text = 'edtPersonID'
   end
   object edtPersonGroupName: TEdit
-    Left = 663
-    Top = 40
+    Left = 870
+    Top = 32
     Width = 202
     Height = 21
     TabOrder = 10
@@ -212,7 +212,7 @@ object fmMain: TfmMain
   object PageControl1: TPageControl
     Left = 8
     Top = 8
-    Width = 509
+    Width = 736
     Height = 313
     ActivePage = TabSheet2
     TabOrder = 11
@@ -332,49 +332,49 @@ object fmMain: TfmMain
       Caption = 'Face'
       ImageIndex = 1
       object Label7: TLabel
-        Left = 211
+        Left = 435
         Top = 101
         Width = 219
         Height = 13
         Caption = 'Enter "Person Group ID" and "Face Temp IDs"'
       end
       object Label1: TLabel
-        Left = 211
+        Left = 435
         Top = 39
         Width = 56
         Height = 13
         Caption = 'Enter "URL"'
       end
       object Label2: TLabel
-        Left = 211
+        Left = 435
         Top = 132
         Width = 219
         Height = 13
         Caption = 'Enter "Face Temp ID 1" and "Face Temp ID 2"'
       end
       object Label3: TLabel
-        Left = 211
+        Left = 435
         Top = 163
         Width = 285
         Height = 13
         Caption = 'Enter "Face Temp ID 1", "Person ID" and "Person Group ID"'
       end
       object Label11: TLabel
-        Left = 211
+        Left = 435
         Top = 194
         Width = 108
         Height = 13
         Caption = 'Enter "Face Temp IDs"'
       end
       object Label12: TLabel
-        Left = 211
+        Left = 435
         Top = 225
         Width = 200
         Height = 13
         Caption = 'Enter "Face Temp ID 1" and "Face List ID"'
       end
       object Label13: TLabel
-        Left = 211
+        Left = 435
         Top = 256
         Width = 215
         Height = 13
@@ -470,6 +470,24 @@ object fmMain: TfmMain
         TabOrder = 9
         OnClick = btnDetectInFileAsyncClick
       end
+      object btnDetectInUrlAsync: TButton
+        Left = 211
+        Top = 34
+        Width = 202
+        Height = 25
+        Caption = 'Detect in URL Async'
+        TabOrder = 10
+        OnClick = btnDetectInUrlAsyncClick
+      end
+      object btnDetectInStreamAsync: TButton
+        Left = 211
+        Top = 65
+        Width = 202
+        Height = 25
+        Caption = 'Detect in Stream Async'
+        TabOrder = 11
+        OnClick = btnDetectInStreamAsyncClick
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'Face List'
@@ -499,16 +517,16 @@ object fmMain: TfmMain
     end
   end
   object edtUrl: TEdit
-    Left = 663
-    Top = 208
+    Left = 870
+    Top = 200
     Width = 202
     Height = 21
     TabOrder = 12
     Text = 'http://1click.lv/FaceApi/sample1.jpg'
   end
   object memFaceTempIDs: TMemo
-    Left = 663
-    Top = 256
+    Left = 870
+    Top = 248
     Width = 202
     Height = 65
     ScrollBars = ssVertical
@@ -516,8 +534,8 @@ object fmMain: TfmMain
     WantTabs = True
   end
   object edtFaceListID: TEdit
-    Left = 663
-    Top = 327
+    Left = 870
+    Top = 319
     Width = 202
     Height = 21
     TabOrder = 14
