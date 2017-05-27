@@ -1,3 +1,6 @@
+/// <summary>
+///   Contain Main class with FaceAPI functions for end-user
+/// </summary>
 unit uFunctions.FaceApiHelper;
 
 interface
@@ -11,6 +14,9 @@ uses
   uFaceApi.ServersAccess.Types;
 
 type
+  /// <summary>
+  ///   Main class with FaceAPI functions for end-user
+  /// </summary>
   FaceApiHelper = class
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.DetectURL">interface DetectURL</see>
@@ -36,10 +42,12 @@ type
     class function ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.AddPersonFaceURL">interface AddPersonFaceURL</see>
+    ///   Implements top layout for
+    ///   <see cref="uIFaceApi.Core|IFaceApiCore.AddPersonFaceURL">interface AddPersonFaceURL</see>
     /// </summary>
-    function AddPersonFaceURL(AAccess: TAccessServer; const AGroupID, APersonID,
-      AURL,  ATargetFace: String; const AUserData: String = ''): String;
+    class function AddPersonFaceURL(AAccess: TAccessServer;
+      const AGroupID, APersonID, AURL, ATargetFace: String;
+      const AUserData: String = ''): String;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.CreatePerson">interface CreatePerson</see>
@@ -121,7 +129,7 @@ uses
   { TFaceApiCorePersonGroup }
   uFaceApi.Core.PersonGroup;
 
-function FaceApiHelper.AddPersonFaceURL(AAccess: TAccessServer; const AGroupID,
+class function FaceApiHelper.AddPersonFaceURL(AAccess: TAccessServer; const AGroupID,
   APersonID, AURL, ATargetFace: String; const AUserData: String): String;
 var
   LIFaceApiCore: IFaceApiCore;

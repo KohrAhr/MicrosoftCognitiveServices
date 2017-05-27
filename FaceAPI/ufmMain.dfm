@@ -528,7 +528,7 @@ object fmMain: TfmMain
         Top = 34
         Width = 202
         Height = 25
-        Caption = 'List Persons In Person Group'
+        Caption = 'List Persons In Person Group Async'
         TabOrder = 2
         OnClick = btnListPersonsInPersonGroupAsyncClick
       end
