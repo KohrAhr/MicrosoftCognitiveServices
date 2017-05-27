@@ -214,12 +214,12 @@ object fmMain: TfmMain
     Top = 8
     Width = 736
     Height = 313
-    ActivePage = TabSheet4
+    ActivePage = TabSheet1
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
       object Label4: TLabel
-        Left = 211
+        Left = 444
         Top = 3
         Width = 250
         Height = 26
@@ -228,35 +228,35 @@ object fmMain: TfmMain
           'erson Group User Data"'
       end
       object Label5: TLabel
-        Left = 211
+        Left = 444
         Top = 39
         Width = 116
         Height = 13
         Caption = 'Enter "Person Group ID"'
       end
       object Label6: TLabel
-        Left = 211
+        Left = 444
         Top = 72
         Width = 116
         Height = 13
         Caption = 'Enter "Person Group ID"'
       end
       object Label8: TLabel
-        Left = 211
+        Left = 444
         Top = 103
         Width = 116
         Height = 13
         Caption = 'Enter "Person Group ID"'
       end
       object Label9: TLabel
-        Left = 211
+        Left = 444
         Top = 165
         Width = 116
         Height = 13
         Caption = 'Enter "Person Group ID"'
       end
       object Label10: TLabel
-        Left = 211
+        Left = 444
         Top = 191
         Width = 250
         Height = 26
@@ -335,6 +335,60 @@ object fmMain: TfmMain
         Caption = 'List Person Groups Async'
         TabOrder = 7
         OnClick = btnListPersonGroupsAsyncClick
+      end
+      object btnCreatePersonGroupAsync: TButton
+        Left = 211
+        Top = 3
+        Width = 202
+        Height = 25
+        Caption = 'Create Person Group Async'
+        TabOrder = 8
+        OnClick = btnCreatePersonGroupAsyncClick
+      end
+      object btnDeletePersonGroupAsync: TButton
+        Left = 211
+        Top = 34
+        Width = 202
+        Height = 25
+        Caption = 'Delete Person Group Async'
+        TabOrder = 9
+        OnClick = btnDeletePersonGroupAsyncClick
+      end
+      object btnGetPersonGroupAsync: TButton
+        Left = 211
+        Top = 67
+        Width = 202
+        Height = 25
+        Caption = 'Get Person Group Async'
+        TabOrder = 10
+        OnClick = btnGetPersonGroupAsyncClick
+      end
+      object btnGetPersonGroupTrainingStatusAsync: TButton
+        Left = 211
+        Top = 98
+        Width = 202
+        Height = 25
+        Caption = 'Get Person Group training status Async'
+        TabOrder = 11
+        OnClick = btnGetPersonGroupTrainingStatusAsyncClick
+      end
+      object btnRunPersonGroupTrainingAsync: TButton
+        Left = 211
+        Top = 160
+        Width = 202
+        Height = 25
+        Caption = 'Run Person Group training Async'
+        TabOrder = 12
+        OnClick = btnRunPersonGroupTrainingAsyncClick
+      end
+      object btnUpdatePersonGroupAsync: TButton
+        Left = 211
+        Top = 191
+        Width = 202
+        Height = 25
+        Caption = 'Update Person Group Async'
+        TabOrder = 13
+        OnClick = btnUpdatePersonGroupAsyncClick
       end
     end
     object TabSheet2: TTabSheet
@@ -531,6 +585,15 @@ object fmMain: TfmMain
         Caption = 'List Persons In Person Group Async'
         TabOrder = 2
         OnClick = btnListPersonsInPersonGroupAsyncClick
+      end
+      object btnCreatePersonAsync: TButton
+        Left = 211
+        Top = 3
+        Width = 202
+        Height = 25
+        Caption = 'Create Person Async'
+        TabOrder = 3
+        OnClick = btnCreatePersonAsyncClick
       end
     end
   end

@@ -19,7 +19,7 @@ type
   /// <summary>
   ///   Type of callback procedure with result for async functions
   /// </summary>
-  TFaceApiAsyncCallback = procedure(const AResult: String) of object;
+  TFaceApiAsyncCallback = procedure(AResult: String) of object;
 
   /// <summary>
   ///   Main class with FaceAPI async functions for end-user
