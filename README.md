@@ -2,7 +2,9 @@
 Microsoft Cognitive Services on Embarcadero DELPHI
 
 This is free and open source library (wrapper - interface/class/types) for communicate with Microsoft Cognitive services Face API 1.0.
-*New! Available async functions!
+
+New! Available async functions!
+
 
 Support Delphi DX10 "Seattle", Delphi DX10.1 "Berlin", Delphi DX10.2 "Tokyo".
 
