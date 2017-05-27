@@ -220,7 +220,17 @@ class function FaceApiAsyncHelper.AddPersonFaceURL(AAccess: TAccessServer;
   const AGroupID, APersonID, AURL, ATargetFace, AUserData: String;
   ACallbackMethod: TFaceApiAsyncCallback): String;
 begin
+  RunAsync(
+    procedure
+    var
+      LResult: String;
+    begin
+      LResult := FaceApiHelper.AddPersonFaceURL(AAccess, AGroupID, APersonID,
+        AURL, ATargetFace, AUserData);
 
+      CallCallback(ACallbackMethod, LResult);
+    end
+  );
 end;
 
 class function FaceApiAsyncHelper.CreatePerson(AAccess: TAccessServer; AGroupID,
