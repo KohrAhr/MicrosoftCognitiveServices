@@ -2,8 +2,8 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 
-    '(C) 2017  by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cognitive Ser' +
-    'vices Face Api 1.0'
+    '(C) 2017, 2018  by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cogniti' +
+    've Services Face Api 1.0'
   ClientHeight = 552
   ClientWidth = 1080
   Color = clBtnFace
@@ -214,7 +214,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 736
     Height = 313
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
@@ -550,6 +550,42 @@ object fmMain: TfmMain
         Caption = 'Detect in Stream Async'
         TabOrder = 11
         OnClick = btnDetectInStreamAsyncClick
+      end
+      object btnIdentifyAsync: TButton
+        Left = 211
+        Top = 96
+        Width = 202
+        Height = 25
+        Caption = 'Identify Async'
+        TabOrder = 12
+        OnClick = btnIdentifyAsyncClick
+      end
+      object btnVerifyTwoFacesWayAsync1: TButton
+        Left = 211
+        Top = 127
+        Width = 202
+        Height = 25
+        Caption = 'Verify two faces Async - Way 1'
+        TabOrder = 13
+        OnClick = btnVerifyTwoFacesWayAsync1Click
+      end
+      object btnVerifyTwoFacesWayAsync2: TButton
+        Left = 211
+        Top = 158
+        Width = 202
+        Height = 25
+        Caption = 'Verify two faces Async - Way 2'
+        TabOrder = 14
+        OnClick = btnVerifyTwoFacesWayAsync2Click
+      end
+      object btnGroupAsync: TButton
+        Left = 211
+        Top = 189
+        Width = 202
+        Height = 25
+        Caption = 'Group Async'
+        TabOrder = 15
+        OnClick = btnGroupAsyncClick
       end
     end
     object TabSheet3: TTabSheet

@@ -83,6 +83,10 @@ type
     btnGetPersonGroupTrainingStatusAsync: TButton;
     btnRunPersonGroupTrainingAsync: TButton;
     btnUpdatePersonGroupAsync: TButton;
+    btnIdentifyAsync: TButton;
+    btnVerifyTwoFacesWayAsync1: TButton;
+    btnVerifyTwoFacesWayAsync2: TButton;
+    btnGroupAsync: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -114,6 +118,10 @@ type
     procedure btnGetPersonGroupTrainingStatusAsyncClick(Sender: TObject);
     procedure btnRunPersonGroupTrainingAsyncClick(Sender: TObject);
     procedure btnUpdatePersonGroupAsyncClick(Sender: TObject);
+    procedure btnIdentifyAsyncClick(Sender: TObject);
+    procedure btnVerifyTwoFacesWayAsync1Click(Sender: TObject);
+    procedure btnVerifyTwoFacesWayAsync2Click(Sender: TObject);
+    procedure btnGroupAsyncClick(Sender: TObject);
   private
     procedure AsyncTaskCompleted(AResult: String);
   public
@@ -147,8 +155,8 @@ end;
 
 procedure TfmMain.btnCreatePersonAsyncClick(Sender: TObject);
 begin
-  FaceApiAsyncHelper.CreatePerson(
-    AccessServer(edtAccessKey.Text, fasWestUS),
+	FaceApiAsyncHelper.CreatePerson(
+		AccessServer(edtAccessKey.Text, fasWestUS),
     edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text,
     AsyncTaskCompleted
   );
@@ -167,334 +175,389 @@ end;
 procedure TfmMain.AsyncTaskCompleted(AResult: String);
 begin
   { Special handling for task, which return empty result when operation completed successfully }
-  if AResult = '' then
-    AResult := 'Request completed successfully';
+	if AResult = '' then
+		AResult := 'Request completed successfully';
 
-  memLog.Lines.Add(AResult);
+	memLog.Lines.Add(AResult);
+end;
+
+{$region 'Face'}
+procedure TfmMain.btnDetectInFileClick(Sender: TObject);
+begin
+	memLog.Lines.Add(
+		FaceApiHelper.DetectFile(
+			AccessServer(edtAccessKey.Text, fasWestUS),
+			'C:\Temp\index.jpg',
+			Detect(True, True,
+				[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+			)
+		)
+	);
 end;
 
 procedure TfmMain.btnDetectInFileAsyncClick(Sender: TObject);
 begin
-  FaceApiAsyncHelper.DetectFile(
-    AccessServer(edtAccessKey.Text, fasWestUS),
-    'C:\Temp\index.jpg',
-    Detect(True, True,
-      [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-    ),
-    AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnDetectInFileClick(Sender: TObject);
-begin
-  memLog.Lines.Add(
-    FaceApiHelper.DetectFile(
-      AccessServer(edtAccessKey.Text, fasWestUS),
-      'C:\Temp\index.jpg',
-      Detect(True, True,
-        [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-      )
-    )
-  );
-end;
-
-procedure TfmMain.btnDetectInUrlAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.DetectURL(
-    AccessServer(edtAccessKey.Text, fasWestUS),
-    edtUrl.Text,
-    Detect(True, True,
-      [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-    ),
-    AsyncTaskCompleted
-  );
+	FaceApiAsyncHelper.DetectFile(
+		AccessServer(edtAccessKey.Text, fasWestUS),
+		'C:\Temp\index.jpg',
+		Detect(True, True,
+			[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+		),
+		AsyncTaskCompleted
+	);
 end;
 
 procedure TfmMain.btnDetectInUrlClick(Sender: TObject);
 begin
-  memLog.Lines.Add(
-    FaceApiHelper.DetectURL(
-      AccessServer(edtAccessKey.Text, fasWestUS),
-      edtUrl.Text,
-      Detect(True, True,
-        [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-      )
-    )
-  );
+	memLog.Lines.Add(
+		FaceApiHelper.DetectURL(
+			AccessServer(edtAccessKey.Text, fasWestUS),
+			edtUrl.Text,
+			Detect(True, True,
+				[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+			)
+		)
+	);
 end;
 
-procedure TfmMain.btnDetectInStreamAsyncClick(Sender: TObject);
-var
-  LRequestContent: TStringStream;
+procedure TfmMain.btnDetectInUrlAsyncClick(Sender: TObject);
 begin
-  LRequestContent := TStringStream.Create;
-  try
-    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
-
-    memLog.Lines.Add(
-      FaceApiAsyncHelper.DetectStream(
-        AccessServer(edtAccessKey.Text, fasWestUS),
-        LRequestContent,
-        Detect(True, True,
-          [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-        ),
-        AsyncTaskCompleted
-      )
-    );
-  finally
-    LRequestContent.Free;
-  end;
+	FaceApiAsyncHelper.DetectURL(
+		AccessServer(edtAccessKey.Text, fasWestUS),
+		edtUrl.Text,
+		Detect(True, True,
+			[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+		),
+		AsyncTaskCompleted
+	);
 end;
 
 procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
 var
-  LRequestContent: TStringStream;
+	LRequestContent: TStringStream;
 begin
-  LRequestContent := TStringStream.Create;
-  try
-    LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+	LRequestContent := TStringStream.Create;
+	try
+		LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
-    memLog.Lines.Add(
-      FaceApiHelper.DetectStream(
-        AccessServer(edtAccessKey.Text, fasWestUS),
-        LRequestContent,
-        Detect(True, True,
-          [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-        )
-      )
-    );
-  finally
-    LRequestContent.Free;
-  end;
+		memLog.Lines.Add(
+			FaceApiHelper.DetectStream(
+				AccessServer(edtAccessKey.Text, fasWestUS),
+				LRequestContent,
+				Detect(True, True,
+					[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+				)
+			)
+		);
+	finally
+		LRequestContent.Free;
+	end;
 end;
 
-procedure TfmMain.btnListPersonGroupsAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.ListPersonGroups(
-    AccessServer(edtAccessKey.Text, fasWestUS), AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
-begin
-  memLog.Lines.Add(
-    FaceApiHelper.ListPersonGroups(AccessServer(edtAccessKey.Text, fasWestUS))
-  );
-end;
-
-procedure TfmMain.btnListPersonsInPersonGroupAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.ListPersonsInPersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-    AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
-begin
-  memLog.Lines.Add(
-    FaceApiHelper.ListPersonsInPersonGroup(
-      AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
-    )
-  );
-end;
-
-procedure TfmMain.btnRunPersonGroupTrainingAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.TrainPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
-end;
-
-procedure TfmMain.btnRunPersonGroupTrainingClick(Sender: TObject);
+procedure TfmMain.btnDetectInStreamAsyncClick(Sender: TObject);
 var
-  LResult: String;
+	LRequestContent: TStringStream;
 begin
-  LResult := FaceApiHelper.TrainPersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
-  );
+	LRequestContent := TStringStream.Create;
+	try
+		LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
-  if LResult = '' then
-    LResult := 'Training for group was requested! Check your status now';
-
-  memLog.Lines.Add(LResult);
+		memLog.Lines.Add(
+			FaceApiAsyncHelper.DetectStream(
+				AccessServer(edtAccessKey.Text, fasWestUS),
+				LRequestContent,
+				Detect(True, True,
+					[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+				),
+				AsyncTaskCompleted
+			)
+		);
+	finally
+		LRequestContent.Free;
+	end;
 end;
 
-procedure TfmMain.btnGetPersonGroupTrainingStatusAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.GetPersonGroupTrainingStatus(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-    AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnGetPersonGroupTrainingStatusClick(Sender: TObject);
-begin
-  memLog.Lines.Add(
-    FaceApiHelper.GetPersonGroupTrainingStatus(
-      AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
-    )
-  );
-end;
-
-procedure TfmMain.btnGroupClick(Sender: TObject);
+procedure TfmMain.btnIdentifyClick(Sender: TObject);
 var
-  LStringList: TStringList;
+	LStringList: TStringList;
 begin
-  LStringList := TStringList.Create;
-  try
-    LStringList.Text := memLog.Text;
+	LStringList := TStringList.Create;
+	try
+		LStringList.Text := memFaceTempIDs.Text;
 
-    memLog.Lines.Add(
-      FaceApiHelper.Group(
-        AccessServer(edtAccessKey.Text, fasWestUS), LStringList
-      )
-    );
-  finally
-    LStringList.Free;
-  end;
+		memLog.Lines.Add(
+			FaceApiHelper.Identify(
+				AccessServer(edtAccessKey.Text, fasWestUS),
+				LStringList, edtPersonGroupID.Text
+			)
+		);
+	finally
+		LStringList.Free;
+	end;
 end;
 
-procedure TfmMain.btnCreatePersonGroupAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.CreatePersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-    edtPersonGroupName.Text, edtPersonGroupUserData.Text, AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
+procedure TfmMain.btnIdentifyAsyncClick(Sender: TObject);
 var
-  LResult: String;
+	LStringList: TStringList;
 begin
-  LResult := FaceApiHelper.CreatePersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-    edtPersonGroupName.Text, edtPersonGroupUserData.Text
-  );
+	LStringList := TStringList.Create;
+	try
+		LStringList.Text := memFaceTempIDs.Text;
 
-  if LResult = '' then
-    LResult := 'Group was created';
-
-  memLog.Lines.Add(LResult);
+		FaceApiAsyncHelper.Identify(
+			AccessServer(edtAccessKey.Text, fasWestUS),
+			LStringList, edtPersonGroupID.Text,
+      AsyncTaskCompleted
+		);
+	finally
+    // Don't need to release LStringList, it will be done in FaceApiAsyncHelper
+	end;
 end;
-
-procedure TfmMain.btnDeletePersonGroupAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.DeletePersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS),
-    edtPersonGroupID.Text, AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
-var
-  LResult: String;
-begin
-  LResult := FaceApiHelper.DeletePersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
-  );
-
-  if LResult = '' then
-    LResult := 'Group was deleted';
-
-  memLog.Lines.Add(LResult);
-end;
-
 
 procedure TfmMain.btnVerifyTwoFacesWay1Click(Sender: TObject);
 begin
-  memLog.Lines.Add(
-    FaceApiHelper.Verify(
-      AccessServer(edtAccessKey.Text, fasWestUS),
-      edtFaceTempID1.Text, edtFaceTempID2.Text
-    )
+	memLog.Lines.Add(
+		FaceApiHelper.Verify(
+			AccessServer(edtAccessKey.Text, fasWestUS),
+			edtFaceTempID1.Text, edtFaceTempID2.Text
+		)
+	);
+end;
+
+procedure TfmMain.btnVerifyTwoFacesWayAsync1Click(Sender: TObject);
+begin
+  FaceApiAsyncHelper.Verify(
+    AccessServer(edtAccessKey.Text, fasWestUS),
+    edtFaceTempID1.Text, edtFaceTempID2.Text,
+    AsyncTaskCompleted
   );
 end;
 
 procedure TfmMain.btnVerifyTwoFacesWay2Click(Sender: TObject);
 begin
-  memLog.Lines.Add(
-    FaceApiHelper.Verify(
-      AccessServer(edtAccessKey.Text, fasWestUS),
-      edtFaceTempID1.Text, edtPersonID.Text, edtPersonGroupID.Text
-    )
-  );
+	memLog.Lines.Add(
+		FaceApiHelper.Verify(
+			AccessServer(edtAccessKey.Text, fasWestUS),
+			edtFaceTempID1.Text, edtPersonID.Text, edtPersonGroupID.Text
+		)
+	);
 end;
 
-procedure TfmMain.btnIdentifyClick(Sender: TObject);
-var
-  LStringList: TStringList;
+procedure TfmMain.btnVerifyTwoFacesWayAsync2Click(Sender: TObject);
 begin
-  LStringList := TStringList.Create;
-  try
-    LStringList.Text := memLog.Text;
-
-    memLog.Lines.Add(
-      FaceApiHelper.Identify(
-        AccessServer(edtAccessKey.Text, fasWestUS),
-        LStringList, edtPersonGroupID.Text
-      )
-    );
-  finally
-    LStringList.Free;
-  end;
-end;
-
-procedure TfmMain.btnUpdatePersonGroupAsyncClick(Sender: TObject);
-begin
-  FaceApiAsyncHelper.UpdatePersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-    edtPersonGroupName.Text, edtPersonGroupUserData.Text,
+  FaceApiAsyncHelper.Verify(
+    AccessServer(edtAccessKey.Text, fasWestUS),
+    edtFaceTempID1.Text, edtPersonID.Text, edtPersonGroupID.Text,
     AsyncTaskCompleted
   );
 end;
 
-procedure TfmMain.btnUpdatePersonGroupClick(Sender: TObject);
+procedure TfmMain.btnGroupClick(Sender: TObject);
 var
-  LResult: String;
+	LStringList: TStringList;
 begin
-  LResult := FaceApiHelper.UpdatePersonGroup(
-    AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-    edtPersonGroupName.Text, edtPersonGroupUserData.Text
-  );
+	LStringList := TStringList.Create;
+	try
+		LStringList.Text := memFaceTempIDs.Text;
 
-  if LResult = '' then
-    LResult := 'Group was updated';
-
-  memLog.Lines.Add(LResult);
+		memLog.Lines.Add(
+			FaceApiHelper.Group(
+				AccessServer(edtAccessKey.Text, fasWestUS), LStringList
+			)
+		);
+	finally
+		LStringList.Free;
+	end;
 end;
 
-procedure TfmMain.btnGetPersonGroupAsyncClick(Sender: TObject);
+procedure TfmMain.btnGroupAsyncClick(Sender: TObject);
+var
+	LStringList: TStringList;
 begin
-  FaceApiAsyncHelper.GetPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
-end;
+	LStringList := TStringList.Create;
+	try
+		LStringList.Text := memFaceTempIDs.Text;
 
-procedure TfmMain.btnGetPersonGroupClick(Sender: TObject);
-begin
-  memLog.Lines.Add(
-    FaceApiHelper.GetPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
-  );
+    FaceApiAsyncHelper.Group(
+      AccessServer(edtAccessKey.Text, fasWestUS), LStringList,
+      AsyncTaskCompleted
+    );
+	finally
+    // Don't need to release LStringList, it will be done in FaceApiAsyncHelper
+	end;
 end;
 
 procedure TfmMain.btnFindSimilarWay1Click(Sender: TObject);
 begin
-  memLog.Lines.Add(
-    FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, '')
-  );
+	memLog.Lines.Add(
+		FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, '')
+	);
 end;
 
 procedure TfmMain.btnFindSimilarWay2Click(Sender: TObject);
 var
-  LStringList: TStringList;
+	LStringList: TStringList;
 begin
-  LStringList := TStringList.Create;
-  try
-    LStringList.Text := memFaceTempIDs.Text;
+	LStringList := TStringList.Create;
+	try
+		LStringList.Text := memFaceTempIDs.Text;
 
-    memLog.Lines.Add(
-      FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, edtFaceListID.Text)
-    );
-  finally
-    LStringList.Free;
-  end;
+		memLog.Lines.Add(
+			FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, edtFaceListID.Text)
+		);
+	finally
+		LStringList.Free;
+	end;
+end;
+{$endregion 'Face'}
+
+procedure TfmMain.btnListPersonGroupsAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.ListPersonGroups(
+		AccessServer(edtAccessKey.Text, fasWestUS), AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
+begin
+	memLog.Lines.Add(
+		FaceApiHelper.ListPersonGroups(AccessServer(edtAccessKey.Text, fasWestUS))
+	);
+end;
+
+procedure TfmMain.btnListPersonsInPersonGroupAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.ListPersonsInPersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
+begin
+	memLog.Lines.Add(
+		FaceApiHelper.ListPersonsInPersonGroup(
+			AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
+		)
+	);
+end;
+
+procedure TfmMain.btnRunPersonGroupTrainingAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.TrainPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
+end;
+
+procedure TfmMain.btnRunPersonGroupTrainingClick(Sender: TObject);
+var
+	LResult: String;
+begin
+	LResult := FaceApiHelper.TrainPersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
+	);
+
+	if LResult = '' then
+		LResult := 'Training for group was requested! Check your status now';
+
+	memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnGetPersonGroupTrainingStatusAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.GetPersonGroupTrainingStatus(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnGetPersonGroupTrainingStatusClick(Sender: TObject);
+begin
+	memLog.Lines.Add(
+		FaceApiHelper.GetPersonGroupTrainingStatus(
+			AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
+		)
+	);
+end;
+
+procedure TfmMain.btnCreatePersonGroupAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.CreatePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		edtPersonGroupName.Text, edtPersonGroupUserData.Text, AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
+var
+	LResult: String;
+begin
+	LResult := FaceApiHelper.CreatePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		edtPersonGroupName.Text, edtPersonGroupUserData.Text
+	);
+
+	if LResult = '' then
+		LResult := 'Group was created';
+
+	memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnDeletePersonGroupAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.DeletePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS),
+		edtPersonGroupID.Text, AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
+var
+	LResult: String;
+begin
+	LResult := FaceApiHelper.DeletePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
+	);
+
+	if LResult = '' then
+		LResult := 'Group was deleted';
+
+	memLog.Lines.Add(LResult);
+end;
+
+
+procedure TfmMain.btnUpdatePersonGroupAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.UpdatePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		edtPersonGroupName.Text, edtPersonGroupUserData.Text,
+		AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnUpdatePersonGroupClick(Sender: TObject);
+var
+	LResult: String;
+begin
+	LResult := FaceApiHelper.UpdatePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		edtPersonGroupName.Text, edtPersonGroupUserData.Text
+	);
+
+	if LResult = '' then
+		LResult := 'Group was updated';
+
+	memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnGetPersonGroupAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.GetPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text);
+end;
+
+procedure TfmMain.btnGetPersonGroupClick(Sender: TObject);
+begin
+	memLog.Lines.Add(
+		FaceApiHelper.GetPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
+	);
 end;
 
 end.

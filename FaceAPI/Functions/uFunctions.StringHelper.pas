@@ -42,6 +42,11 @@ class function StringHelper.StringListToGuidsString(AStringList: TStringList; co
 var
   LValue: String;
 begin
+  Result := '';
+
+  if AStringList = nil then
+    Exit;
+
   for LValue in AStringList do
     if Trim(LValue) <> '' then
       begin

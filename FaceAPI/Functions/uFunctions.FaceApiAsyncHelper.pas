@@ -137,7 +137,17 @@ type
     class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
       const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1;
       const AConfidenceThreshold: Double = 0.5;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil): String; overload;
+
+    /// <summary>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
+    ///   <para>Overloaded -- same as above, but params in differet order</para>
+    /// </summary>
+    class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
+      const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
+      const AMaxNumOfCandidatesReturned: Integer = 1;
+      const AConfidenceThreshold: Double = 0.5): String; overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
@@ -404,9 +414,22 @@ begin
     begin
       LResult := FaceApiHelper.Group(AAccess, AFaceIDS);
 
+      // Yep, was async call, that is why we release it here
+      AFaceIDS.Free;
+
       CallCallback(ACallbackMethod, LResult);
     end
   );
+end;
+
+class function FaceApiAsyncHelper.Identify(AAccess: TAccessServer;
+  AFaceIDS: TStringList; const AGroupID: String;
+  ACallbackMethod: TFaceApiAsyncCallback;
+  const AMaxNumOfCandidatesReturned: Integer;
+  const AConfidenceThreshold: Double): String;
+begin
+  Result := Identify(AAccess, AFaceIDS, AGroupID,
+    AMaxNumOfCandidatesReturned, AConfidenceThreshold, ACallbackMethod);
 end;
 
 class function FaceApiAsyncHelper.Identify(AAccess: TAccessServer;
@@ -422,6 +445,9 @@ begin
     begin
       LResult := FaceApiHelper.Identify(AAccess, AFaceIDS, AGroupID,
         AMaxNumOfCandidatesReturned, AConfidenceThreshold);
+
+      // Yep, was async call, that is why we release it here
+      AFaceIDS.Free;
 
       CallCallback(ACallbackMethod, LResult);
     end
