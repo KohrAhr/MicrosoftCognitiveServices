@@ -587,6 +587,24 @@ object fmMain: TfmMain
         TabOrder = 15
         OnClick = btnGroupAsyncClick
       end
+      object btnFindSimilarWayAsync1: TButton
+        Left = 211
+        Top = 220
+        Width = 202
+        Height = 25
+        Caption = 'Find Similar Async - Way 1'
+        TabOrder = 16
+        OnClick = btnFindSimilarWayAsync1Click
+      end
+      object btnFindSimilarWayAsync2: TButton
+        Left = 211
+        Top = 251
+        Width = 202
+        Height = 25
+        Caption = 'Find Similar - Way 2'
+        TabOrder = 17
+        OnClick = btnFindSimilarWayAsync2Click
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'Face List'

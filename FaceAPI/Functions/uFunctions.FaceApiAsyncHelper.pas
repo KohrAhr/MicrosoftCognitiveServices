@@ -35,161 +35,181 @@ type
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.DetectURL">interface DetectURL</see>
     /// </summary>
-    class function DetectURL(AAccess: TAccessServer; const AURL: String;
+    class procedure DetectURL(AAccess: TAccessServer; const AURL: String;
       const ADetectOptions: TDetectOptions;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.DetectFile">interface DetectFile</see>
     /// </summary>
-    class function DetectFile(AAccess: TAccessServer; const AFileName: String;
+    class procedure DetectFile(AAccess: TAccessServer; const AFileName: String;
       const ADetectOptions: TDetectOptions;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.DetectStream">interface DetectStream</see>
     /// </summary>
-    class function DetectStream(AAccess: TAccessServer; AStream: TBytesStream;
+    class procedure DetectStream(AAccess: TAccessServer; AStream: TBytesStream;
       const ADetectOptions: TDetectOptions;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonGroups">interface ListPersonGroups</see>
     /// </summary>
-    class function ListPersonGroups(AAccess: TAccessServer;
+    class procedure ListPersonGroups(AAccess: TAccessServer;
       ACallbackMethod: TFaceApiAsyncCallback = nil;
-      const AStart: String = ''; const ATop: Integer = 1000): String;
+      const AStart: String = ''; const ATop: Integer = 1000);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Core|IFaceApiCore.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
     /// </summary>
-    class function ListPersonsInPersonGroup(AAccess: TAccessServer;
+    class procedure ListPersonsInPersonGroup(AAccess: TAccessServer;
       const AGroupID: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Core|IFaceApiCore.AddPersonFaceURL">interface AddPersonFaceURL</see>
     /// </summary>
-    class function AddPersonFaceURL(AAccess: TAccessServer; const AGroupID, APersonID,
+    class procedure AddPersonFaceURL(AAccess: TAccessServer; const AGroupID, APersonID,
       AURL,  ATargetFace: String; const AUserData: String = '';
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Core|IFaceApiCore.CreatePerson">interface CreatePerson</see>
     /// </summary>
-    class function CreatePerson(AAccess: TAccessServer; AGroupID: String;
+    class procedure CreatePerson(AAccess: TAccessServer; AGroupID: String;
       APersonName: String; APersonUserData: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.GetPersonGroupTrainingStatus">interface GetPersonGroupTrainingStatus</see>
     /// </summary>
-    class function GetPersonGroupTrainingStatus(AAccess: TAccessServer;
+    class procedure GetPersonGroupTrainingStatus(AAccess: TAccessServer;
       const AGroupID: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.TrainPersonGroup">interface TrainPersonGroup</see>
     /// </summary>
-    class function TrainPersonGroup(AAccess: TAccessServer;
+    class procedure TrainPersonGroup(AAccess: TAccessServer;
       const AGroupID: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.CreatePersonGroup">interface CreatePersonGroup</see>
     /// </summary>
-    class function CreatePersonGroup(AAccess: TAccessServer;
+    class procedure CreatePersonGroup(AAccess: TAccessServer;
       const AGroupID, AGroupName, AGroupUserData: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.DeletePersonGroup">interface DeletePersonGroup</see>
     /// </summary>
-    class function DeletePersonGroup(AAccess: TAccessServer;
-      const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+    class procedure DeletePersonGroup(AAccess: TAccessServer;
+      const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.Verify">interface Verify (overload)</see>
     /// </summary>
-    class function Verify(AAccess: TAccessServer;
+    class procedure Verify(AAccess: TAccessServer;
       const AFaceTempID1, AFaceTempID2: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String; overload;
+      ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.Verify">interface Verify (overload)</see>
     /// </summary>
-    class function Verify(AAccess: TAccessServer;
+    class procedure Verify(AAccess: TAccessServer;
       const AFaceTempID, APersonID, AGroupID: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String; overload;
+      ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
     /// </summary>
-    class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
+    class procedure Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
       const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1;
       const AConfidenceThreshold: Double = 0.5;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String; overload;
+      ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
     ///   <para>Overloaded -- same as above, but params in differet order</para>
     /// </summary>
-    class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
+    class procedure Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
       const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
       const AMaxNumOfCandidatesReturned: Integer = 1;
-      const AConfidenceThreshold: Double = 0.5): String; overload;
+      const AConfidenceThreshold: Double = 0.5); overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.UpdatePersonGroup">interface UpdatePersonGroup</see>
     /// </summary>
-    class function UpdatePersonGroup(AAccess: TAccessServer;
+    class procedure UpdatePersonGroup(AAccess: TAccessServer;
       const AGroupID: String; const AGroupName: String;
       const AGroupUserData: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.GetPersonGroup">interface GetPersonGroup</see>
     /// </summary>
-    class function GetPersonGroup(AAccess: TAccessServer;
+    class procedure GetPersonGroup(AAccess: TAccessServer;
       const AGroupID: String;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
-    class function FindSimilar(AAccess: TAccessServer; const AFaceID: String;
+    class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
       const AListID: String; const AMaxNumOfCandidatesReturned: Integer = 20;
       AFindMode: String = 'matchPerson';
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String; overload;
+      ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
+
+    /// <summary>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
+    ///   <para>Overloaded -- same as above, but params in differet order</para>
+    /// </summary>
+    class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
+      const AListID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
+      const AMaxNumOfCandidatesReturned: Integer = 20;
+      AFindMode: String = 'matchPerson'); overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
-    class function FindSimilar(AAccess: TAccessServer; const AFaceID: String;
+    class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
       AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20;
       AFindMode: String = 'matchPerson';
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String; overload;
+      ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
+
+    /// <summary>
+    ///   Implements asynchronous top layout for
+    ///   <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
+    ///   <para>Overloaded -- same as above, but params in differet order</para>
+    /// </summary>
+    class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
+      AFaceIDS: TStringList; ACallbackMethod: TFaceApiAsyncCallback = nil;
+      const AMaxNumOfCandidatesReturned: Integer = 20;
+      AFindMode: String = 'matchPerson'); overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.Group">interface Group</see>
     /// </summary>
-    class function Group(AAccess: TAccessServer; AFaceIDS: TStringList;
-      ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+    class procedure Group(AAccess: TAccessServer; AFaceIDS: TStringList;
+      ACallbackMethod: TFaceApiAsyncCallback = nil);
   end;
 
 implementation
@@ -226,9 +246,9 @@ begin
     ACallbackMethod(AResult);
 end;
 
-class function FaceApiAsyncHelper.AddPersonFaceURL(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.AddPersonFaceURL(AAccess: TAccessServer;
   const AGroupID, APersonID, AURL, ATargetFace, AUserData: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -243,9 +263,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.CreatePerson(AAccess: TAccessServer; AGroupID,
+class procedure FaceApiAsyncHelper.CreatePerson(AAccess: TAccessServer; AGroupID,
   APersonName, APersonUserData: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -259,9 +279,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.CreatePersonGroup(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.CreatePersonGroup(AAccess: TAccessServer;
   const AGroupID, AGroupName, AGroupUserData: String;
-  ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+  ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
     procedure
@@ -275,8 +295,8 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.DeletePersonGroup(AAccess: TAccessServer;
-  const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+class procedure FaceApiAsyncHelper.DeletePersonGroup(AAccess: TAccessServer;
+  const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
     procedure
@@ -290,9 +310,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.DetectFile(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.DetectFile(AAccess: TAccessServer;
   const AFileName: String; const ADetectOptions: TDetectOptions;
-  ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+  ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
     procedure
@@ -306,9 +326,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.DetectStream(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.DetectStream(AAccess: TAccessServer;
   AStream: TBytesStream; const ADetectOptions: TDetectOptions;
-  ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+  ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
     procedure
@@ -317,14 +337,17 @@ begin
     begin
       LResult := FaceApiHelper.DetectStream(AAccess, AStream, ADetectOptions);
 
+      // Yep, was async call, that is why we release it here
+      AStream.Free;
+
       CallCallback(ACallbackMethod, LResult);
     end
   );
 end;
 
-class function FaceApiAsyncHelper.DetectURL(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.DetectURL(AAccess: TAccessServer;
   const AURL: String; const ADetectOptions: TDetectOptions;
-  ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+  ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
     procedure
@@ -338,9 +361,26 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.FindSimilar(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.FindSimilar(AAccess: TAccessServer;
+  const AFaceID, AListID: String; ACallbackMethod: TFaceApiAsyncCallback;
+  const AMaxNumOfCandidatesReturned: Integer; AFindMode: String);
+begin
+  FindSimilar(AAccess, AFaceID, AListID, AMaxNumOfCandidatesReturned,
+    AFindMode, ACallbackMethod);
+end;
+
+class procedure FaceApiAsyncHelper.FindSimilar(AAccess: TAccessServer;
+  const AFaceID: String; AFaceIDS: TStringList;
+  ACallbackMethod: TFaceApiAsyncCallback;
+  const AMaxNumOfCandidatesReturned: Integer; AFindMode: String);
+begin
+  FindSimilar(AAccess, AFaceID, AFaceIDS, AMaxNumOfCandidatesReturned,
+    AFindMode, ACallbackMethod);
+end;
+
+class procedure FaceApiAsyncHelper.FindSimilar(AAccess: TAccessServer;
   const AFaceID, AListID: String; const AMaxNumOfCandidatesReturned: Integer;
-  AFindMode: String; ACallbackMethod: TFaceApiAsyncCallback): String;
+  AFindMode: String; ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -355,10 +395,10 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.FindSimilar(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.FindSimilar(AAccess: TAccessServer;
   const AFaceID: String; AFaceIDS: TStringList;
   const AMaxNumOfCandidatesReturned: Integer; AFindMode: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -373,8 +413,8 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.GetPersonGroup(AAccess: TAccessServer;
-  const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback): String;
+class procedure FaceApiAsyncHelper.GetPersonGroup(AAccess: TAccessServer;
+  const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -388,9 +428,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.GetPersonGroupTrainingStatus(
+class procedure FaceApiAsyncHelper.GetPersonGroupTrainingStatus(
   AAccess: TAccessServer; const AGroupID: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -404,8 +444,8 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.Group(AAccess: TAccessServer;
-  AFaceIDS: TStringList; ACallbackMethod: TFaceApiAsyncCallback): String;
+class procedure FaceApiAsyncHelper.Group(AAccess: TAccessServer;
+  AFaceIDS: TStringList; ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -422,21 +462,21 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.Identify(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.Identify(AAccess: TAccessServer;
   AFaceIDS: TStringList; const AGroupID: String;
   ACallbackMethod: TFaceApiAsyncCallback;
   const AMaxNumOfCandidatesReturned: Integer;
-  const AConfidenceThreshold: Double): String;
+  const AConfidenceThreshold: Double);
 begin
-  Result := Identify(AAccess, AFaceIDS, AGroupID,
+  Identify(AAccess, AFaceIDS, AGroupID,
     AMaxNumOfCandidatesReturned, AConfidenceThreshold, ACallbackMethod);
 end;
 
-class function FaceApiAsyncHelper.Identify(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.Identify(AAccess: TAccessServer;
   AFaceIDS: TStringList; const AGroupID: String;
   const AMaxNumOfCandidatesReturned: Integer;
   const AConfidenceThreshold: Double;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -454,9 +494,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
   ACallbackMethod: TFaceApiAsyncCallback = nil;
-  const AStart: String = ''; const ATop: Integer = 1000): String;
+  const AStart: String = ''; const ATop: Integer = 1000);
 begin
   RunAsync(
     procedure
@@ -470,9 +510,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.ListPersonsInPersonGroup(
+class procedure FaceApiAsyncHelper.ListPersonsInPersonGroup(
   AAccess: TAccessServer; const AGroupID: String;
-  ACallbackMethod: TFaceApiAsyncCallback = nil): String;
+  ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
     procedure
@@ -486,8 +526,8 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.TrainPersonGroup(AAccess: TAccessServer;
-  const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback): String;
+class procedure FaceApiAsyncHelper.TrainPersonGroup(AAccess: TAccessServer;
+  const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -501,9 +541,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.UpdatePersonGroup(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.UpdatePersonGroup(AAccess: TAccessServer;
   const AGroupID, AGroupName, AGroupUserData: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -518,9 +558,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.Verify(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.Verify(AAccess: TAccessServer;
   const AFaceTempID1, AFaceTempID2: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure
@@ -534,9 +574,9 @@ begin
   );
 end;
 
-class function FaceApiAsyncHelper.Verify(AAccess: TAccessServer;
+class procedure FaceApiAsyncHelper.Verify(AAccess: TAccessServer;
   const AFaceTempID, APersonID, AGroupID: String;
-  ACallbackMethod: TFaceApiAsyncCallback): String;
+  ACallbackMethod: TFaceApiAsyncCallback);
 begin
   RunAsync(
     procedure

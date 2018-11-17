@@ -87,6 +87,8 @@ type
     btnVerifyTwoFacesWayAsync1: TButton;
     btnVerifyTwoFacesWayAsync2: TButton;
     btnGroupAsync: TButton;
+    btnFindSimilarWayAsync1: TButton;
+    btnFindSimilarWayAsync2: TButton;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -122,6 +124,8 @@ type
     procedure btnVerifyTwoFacesWayAsync1Click(Sender: TObject);
     procedure btnVerifyTwoFacesWayAsync2Click(Sender: TObject);
     procedure btnGroupAsyncClick(Sender: TObject);
+    procedure btnFindSimilarWayAsync1Click(Sender: TObject);
+    procedure btnFindSimilarWayAsync2Click(Sender: TObject);
   private
     procedure AsyncTaskCompleted(AResult: String);
   public
@@ -262,18 +266,16 @@ begin
 	try
 		LRequestContent.LoadFromFile('C:\Temp\index.jpg');
 
-		memLog.Lines.Add(
-			FaceApiAsyncHelper.DetectStream(
-				AccessServer(edtAccessKey.Text, fasWestUS),
-				LRequestContent,
-				Detect(True, True,
-					[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
-				),
-				AsyncTaskCompleted
-			)
-		);
+    FaceApiAsyncHelper.DetectStream(
+      AccessServer(edtAccessKey.Text, fasWestUS),
+      LRequestContent,
+      Detect(True, True,
+        [doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
+      ),
+      AsyncTaskCompleted
+    );
 	finally
-		LRequestContent.Free;
+    // Don't need to release LStringList, it will be done in FaceApiAsyncHelper
 	end;
 end;
 
@@ -390,8 +392,19 @@ end;
 procedure TfmMain.btnFindSimilarWay1Click(Sender: TObject);
 begin
 	memLog.Lines.Add(
-		FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, '')
+		FaceApiHelper.FindSimilar(
+      AccessServer(edtAccessKey.Text, fasWestUS),
+      edtFaceTempID1.Text, ''
+    )
 	);
+end;
+
+procedure TfmMain.btnFindSimilarWayAsync1Click(Sender: TObject);
+begin
+  FaceApiAsyncHelper.FindSimilar(
+    AccessServer(edtAccessKey.Text, fasWestUS),
+    edtFaceTempID1.Text, '', AsyncTaskCompleted
+  );
 end;
 
 procedure TfmMain.btnFindSimilarWay2Click(Sender: TObject);
@@ -403,10 +416,31 @@ begin
 		LStringList.Text := memFaceTempIDs.Text;
 
 		memLog.Lines.Add(
-			FaceApiHelper.FindSimilar(AccessServer(edtAccessKey.Text, fasWestUS), edtFaceTempID1.Text, edtFaceListID.Text)
+			FaceApiHelper.FindSimilar(
+        AccessServer(edtAccessKey.Text, fasWestUS),
+        edtFaceTempID1.Text, edtFaceListID.Text
+      )
 		);
 	finally
 		LStringList.Free;
+	end;
+end;
+
+procedure TfmMain.btnFindSimilarWayAsync2Click(Sender: TObject);
+var
+	LStringList: TStringList;
+begin
+	LStringList := TStringList.Create;
+	try
+		LStringList.Text := memFaceTempIDs.Text;
+
+    FaceApiAsyncHelper.FindSimilar(
+      AccessServer(edtAccessKey.Text, fasWestUS),
+      edtFaceTempID1.Text, edtFaceListID.Text,
+      AsyncTaskCompleted
+    );
+	finally
+    // Don't need to release LStringList, it will be done in FaceApiAsyncHelper
 	end;
 end;
 {$endregion 'Face'}
