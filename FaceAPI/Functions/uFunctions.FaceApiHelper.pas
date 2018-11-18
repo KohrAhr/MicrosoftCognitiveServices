@@ -11,7 +11,8 @@ uses
   { TBytesStream }
   System.Classes,
   { TAccess }
-  uFaceApi.ServersAccess.Types;
+	uFaceApi.ServersAccess.Types,
+	uFaceApi.Consts;
 
 type
   /// <summary>
@@ -34,7 +35,7 @@ type
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonGroups">interface ListPersonGroups</see>
     /// </summary>
-    class function ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = 1000): String;
+    class function ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP): String;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
@@ -85,7 +86,7 @@ type
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
     /// </summary>
-    class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1; const AConfidenceThreshold: Double = 0.5): String;
+		class function Identify(AAccess: TAccessServer; AFaceIDS: TStringList; const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_IDENTIFY_MaxNumOfCandidatesReturned; const AConfidenceThreshold: Double = CONST_Default_ConfidenceThreshold): String;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.UpdatePersonGroup">interface UpdatePersonGroup</see>
@@ -100,12 +101,12 @@ type
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
-    class function FindSimilar(AAccess: TAccessServer; const AFaceID: String; const AListID: String; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
+		class function FindSimilar(AAccess: TAccessServer; const AFaceID: String; const AListID: String; const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_SIMILAR_MaxNumOfCandidatesReturned; AFindMode: String = 'matchPerson'): String; overload;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
-    class function FindSimilar(AAccess: TAccessServer; const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20; AFindMode: String = 'matchPerson'): String; overload;
+		class function FindSimilar(AAccess: TAccessServer; const AFaceID: String; AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_SIMILAR_MaxNumOfCandidatesReturned; AFindMode: String = 'matchPerson'): String; overload;
 
     /// <summary>
     ///   Implements top layout for <see cref="uIFaceApi.Face|IFaceApiFace.Group">interface Group</see>
@@ -219,7 +220,7 @@ begin
   Result := LIFaceApiPersonGroup.GetPersonGroupTrainingStatus(AGroupID);
 end;
 
-class function FaceApiHelper.ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = 1000): String;
+class function FaceApiHelper.ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP): String;
 var
   LIFaceApiPersonGroup: IFaceApiPersonGroup;
 begin

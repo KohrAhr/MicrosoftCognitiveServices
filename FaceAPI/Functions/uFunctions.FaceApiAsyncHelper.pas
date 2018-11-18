@@ -13,7 +13,8 @@ uses
   { TBytesStream }
   System.Classes,
   { TAccess }
-  uFaceApi.ServersAccess.Types;
+	uFaceApi.ServersAccess.Types,
+	uFaceApi.Consts;
 
 type
   /// <summary>
@@ -59,7 +60,7 @@ type
     /// </summary>
     class procedure ListPersonGroups(AAccess: TAccessServer;
       ACallbackMethod: TFaceApiAsyncCallback = nil;
-      const AStart: String = ''; const ATop: Integer = 1000);
+      const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP);
 
     /// <summary>
     ///   Implements asynchronous top layout for
@@ -135,19 +136,19 @@ type
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
     /// </summary>
     class procedure Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
-      const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = 1;
-      const AConfidenceThreshold: Double = 0.5;
-      ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
+      const AGroupID: String; const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_IDENTIFY_MaxNumOfCandidatesReturned;
+			const AConfidenceThreshold: Double = CONST_Default_ConfidenceThreshold;
+			ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
 
-    /// <summary>
-    ///   Implements asynchronous top layout for
-    ///   <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
-    ///   <para>Overloaded -- same as above, but params in differet order</para>
-    /// </summary>
-    class procedure Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
-      const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
-      const AMaxNumOfCandidatesReturned: Integer = 1;
-      const AConfidenceThreshold: Double = 0.5); overload;
+		/// <summary>
+		///   Implements asynchronous top layout for
+		///   <see cref="uIFaceApi.Face|IFaceApiFace.Identify">interface Identify</see>
+		///   <para>Overloaded -- same as above, but params in differet order</para>
+		/// </summary>
+		class procedure Identify(AAccess: TAccessServer; AFaceIDS: TStringList;
+			const AGroupID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
+			const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_IDENTIFY_MaxNumOfCandidatesReturned;
+			const AConfidenceThreshold: Double = CONST_Default_ConfidenceThreshold); overload;
 
     /// <summary>
     ///   Implements asynchronous top layout for
@@ -171,7 +172,7 @@ type
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
     class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
-      const AListID: String; const AMaxNumOfCandidatesReturned: Integer = 20;
+			const AListID: String; const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_SIMILAR_MaxNumOfCandidatesReturned;
       AFindMode: String = 'matchPerson';
       ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
 
@@ -181,16 +182,16 @@ type
     ///   <para>Overloaded -- same as above, but params in differet order</para>
     /// </summary>
     class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
-      const AListID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
-      const AMaxNumOfCandidatesReturned: Integer = 20;
-      AFindMode: String = 'matchPerson'); overload;
+			const AListID: String; ACallbackMethod: TFaceApiAsyncCallback = nil;
+			const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_SIMILAR_MaxNumOfCandidatesReturned;
+			AFindMode: String = 'matchPerson'); overload;
 
-    /// <summary>
-    ///   Implements asynchronous top layout for
+		/// <summary>
+		///   Implements asynchronous top layout for
     ///   <see cref="uIFaceApi.Face|IFaceApiFace.FindSimilar">interface FindSimilar (overload)</see>
     /// </summary>
     class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
-      AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = 20;
+			AFaceIDS: TStringList; const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_SIMILAR_MaxNumOfCandidatesReturned;
       AFindMode: String = 'matchPerson';
       ACallbackMethod: TFaceApiAsyncCallback = nil); overload;
 
@@ -201,7 +202,7 @@ type
     /// </summary>
     class procedure FindSimilar(AAccess: TAccessServer; const AFaceID: String;
       AFaceIDS: TStringList; ACallbackMethod: TFaceApiAsyncCallback = nil;
-      const AMaxNumOfCandidatesReturned: Integer = 20;
+			const AMaxNumOfCandidatesReturned: Integer = CONST_COMMAND_SIMILAR_MaxNumOfCandidatesReturned;
       AFindMode: String = 'matchPerson'); overload;
 
     /// <summary>
@@ -496,7 +497,7 @@ end;
 
 class procedure FaceApiAsyncHelper.ListPersonGroups(AAccess: TAccessServer;
   ACallbackMethod: TFaceApiAsyncCallback = nil;
-  const AStart: String = ''; const ATop: Integer = 1000);
+  const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP);
 begin
   RunAsync(
     procedure

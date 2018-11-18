@@ -2,8 +2,8 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 
-    '(C) 2017, 2018  by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cogniti' +
-    've Services Face Api 1.0'
+    '(C) 2017, 2018 by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cognitiv' +
+    'e Services Face Api 1.0'
   ClientHeight = 552
   ClientWidth = 1080
   Color = clBtnFace
