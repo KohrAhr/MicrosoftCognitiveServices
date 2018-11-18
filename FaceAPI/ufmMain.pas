@@ -89,6 +89,9 @@ type
     btnGroupAsync: TButton;
     btnFindSimilarWayAsync1: TButton;
     btnFindSimilarWayAsync2: TButton;
+    Label16: TLabel;
+    Label17: TLabel;
+    OpenDialogImage: TOpenDialog;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -168,7 +171,7 @@ end;
 
 procedure TfmMain.btnCreatePersonClick(Sender: TObject);
 begin
-  memLog.Lines.Add(
+	memLog.Lines.Add(
     FaceApiHelper.CreatePerson(
       AccessServer(edtAccessKey.Text, fasWestUS),
       edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
@@ -187,11 +190,21 @@ end;
 
 {$region 'Face'}
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);
+var
+	LFileName: String;
 begin
+	if not OpenDialogImage.Execute then
+		Exit;
+
+	LFileName := OpenDialogImage.FileName;
+
+	if not FileExists(LFileName) then
+		Exit;
+
 	memLog.Lines.Add(
 		FaceApiHelper.DetectFile(
 			AccessServer(edtAccessKey.Text, fasWestUS),
-			'C:\Temp\index.jpg',
+			LFileName,
 			Detect(True, True,
 				[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
 			)
@@ -200,10 +213,20 @@ begin
 end;
 
 procedure TfmMain.btnDetectInFileAsyncClick(Sender: TObject);
+var
+	LFileName: String;
 begin
+	if not OpenDialogImage.Execute then
+		Exit;
+
+	LFileName := OpenDialogImage.FileName;
+
+	if not FileExists(LFileName) then
+		Exit;
+
 	FaceApiAsyncHelper.DetectFile(
 		AccessServer(edtAccessKey.Text, fasWestUS),
-		'C:\Temp\index.jpg',
+		LFileName,
 		Detect(True, True,
 			[doAge, doGender, doHeadPost, doSmile, doFacialHair, doGlasses, doEmotion]
 		),
@@ -238,11 +261,20 @@ end;
 
 procedure TfmMain.btnDetectInStreamClick(Sender: TObject);
 var
+	LFileName: String;
 	LRequestContent: TStringStream;
 begin
+	if not OpenDialogImage.Execute then
+		Exit;
+
+	LFileName := OpenDialogImage.FileName;
+
+	if not FileExists(LFileName) then
+		Exit;
+
 	LRequestContent := TStringStream.Create;
 	try
-		LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+		LRequestContent.LoadFromFile(LFileName);
 
 		memLog.Lines.Add(
 			FaceApiHelper.DetectStream(
@@ -260,11 +292,20 @@ end;
 
 procedure TfmMain.btnDetectInStreamAsyncClick(Sender: TObject);
 var
+	LFileName: String;
 	LRequestContent: TStringStream;
 begin
+	if not OpenDialogImage.Execute then
+		Exit;
+
+	LFileName := OpenDialogImage.FileName;
+
+	if not FileExists(LFileName) then
+		Exit;
+
 	LRequestContent := TStringStream.Create;
 	try
-		LRequestContent.LoadFromFile('C:\Temp\index.jpg');
+		LRequestContent.LoadFromFile(LFileName);
 
     FaceApiAsyncHelper.DetectStream(
       AccessServer(edtAccessKey.Text, fasWestUS),
@@ -275,7 +316,7 @@ begin
       AsyncTaskCompleted
     );
 	finally
-    // Don't need to release LStringList, it will be done in FaceApiAsyncHelper
+    // Don't need to release LRequestContent, it will be done in FaceApiAsyncHelper
 	end;
 end;
 
