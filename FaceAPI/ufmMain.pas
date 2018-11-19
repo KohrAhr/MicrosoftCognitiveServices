@@ -92,6 +92,10 @@ type
     Label16: TLabel;
     Label17: TLabel;
     OpenDialogImage: TOpenDialog;
+    Label18: TLabel;
+    edtStart: TEdit;
+    Label19: TLabel;
+    edtTop: TEdit;
     procedure btnDetectInFileClick(Sender: TObject);
     procedure btnDetectInUrlClick(Sender: TObject);
     procedure btnDetectInStreamClick(Sender: TObject);
@@ -315,7 +319,7 @@ begin
       ),
       AsyncTaskCompleted
     );
-	finally
+  finally
     // Don't need to release LRequestContent, it will be done in FaceApiAsyncHelper
 	end;
 end;

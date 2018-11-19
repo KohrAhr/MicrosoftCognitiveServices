@@ -20,7 +20,9 @@ uses
   uIFaceApi.Base in 'Library\uIFaceApi.Base.pas',
   uIFaceApi.Core in 'Library\uIFaceApi.Core.pas',
   uFunctions.FaceApiAsyncHelper in 'Functions\uFunctions.FaceApiAsyncHelper.pas',
-  uFaceApi.Consts in 'Library\uFaceApi.Consts.pas';
+  uFaceApi.Consts in 'Library\uFaceApi.Consts.pas',
+  uFaceApi.Core.Person in 'Library\uFaceApi.Core.Person.pas',
+  uIFaceApi.Person in 'Library\uIFaceApi.Person.pas';
 
 {$R *.res}
 

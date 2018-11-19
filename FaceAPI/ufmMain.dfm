@@ -16,7 +16,7 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    1170
+    1168
     552)
   PixelsPerInch = 96
   TextHeight = 13
@@ -110,11 +110,25 @@ object fmMain: TfmMain
     Height = 13
     Caption = 'Face List ID'
   end
+  object Label18: TLabel
+    Left = 810
+    Top = 347
+    Width = 86
+    Height = 13
+    Caption = '[OPTIONAL] Start'
+  end
+  object Label19: TLabel
+    Left = 816
+    Top = 371
+    Width = 80
+    Height = 13
+    Caption = '[OPTIONAL] Top'
+  end
   object memLog: TMemo
     Left = 9
-    Top = 358
-    Width = 1153
-    Height = 187
+    Top = 392
+    Width = 1151
+    Height = 153
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clInfoBk
     Font.Charset = RUSSIAN_CHARSET
@@ -214,7 +228,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 768
     Height = 313
-    ActivePage = TabSheet2
+    ActivePage = TabSheet4
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
@@ -611,7 +625,7 @@ object fmMain: TfmMain
       ImageIndex = 2
     end
     object TabSheet4: TTabSheet
-      Caption = 'Person'
+      Caption = 'Person Group Person'
       ImageIndex = 3
       object Label16: TLabel
         Left = 443
@@ -623,16 +637,16 @@ object fmMain: TfmMain
       object Label17: TLabel
         Left = 443
         Top = 39
-        Width = 116
+        Width = 188
         Height = 13
-        Caption = 'Enter "Person Group ID"'
+        Caption = 'Enter "Person Group ID", "Start", "Top"'
       end
       object btnCreatePerson: TButton
         Left = 3
         Top = 3
         Width = 202
         Height = 25
-        Caption = 'Create Person'
+        Caption = 'Create'
         TabOrder = 0
         OnClick = btnCreatePersonClick
       end
@@ -641,7 +655,7 @@ object fmMain: TfmMain
         Top = 34
         Width = 202
         Height = 25
-        Caption = 'List Persons In Person Group'
+        Caption = 'List'
         TabOrder = 1
         OnClick = btnListPersonsInPersonGroupClick
       end
@@ -650,7 +664,7 @@ object fmMain: TfmMain
         Top = 34
         Width = 202
         Height = 25
-        Caption = 'List Persons In Person Group Async'
+        Caption = 'List Async'
         TabOrder = 2
         OnClick = btnListPersonsInPersonGroupAsyncClick
       end
@@ -659,7 +673,7 @@ object fmMain: TfmMain
         Top = 3
         Width = 202
         Height = 25
-        Caption = 'Create Person Async'
+        Caption = 'Create Async'
         TabOrder = 3
         OnClick = btnCreatePersonAsyncClick
       end
@@ -689,6 +703,20 @@ object fmMain: TfmMain
     Height = 21
     TabOrder = 14
     Text = 'edtFaceListID'
+  end
+  object edtStart: TEdit
+    Left = 902
+    Top = 344
+    Width = 202
+    Height = 21
+    TabOrder = 15
+  end
+  object edtTop: TEdit
+    Left = 902
+    Top = 368
+    Width = 202
+    Height = 21
+    TabOrder = 16
   end
   object OpenDialogImage: TOpenDialog
     Filter = 'JPEG Image|*.jpg;*.jpeg|All files|*.*'

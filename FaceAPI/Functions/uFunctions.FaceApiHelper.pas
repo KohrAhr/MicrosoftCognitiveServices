@@ -128,7 +128,11 @@ uses
   { IFaceApiPersonGroup }
   uIFaceApi.PersonGroup,
   { TFaceApiCorePersonGroup }
-  uFaceApi.Core.PersonGroup;
+  uFaceApi.Core.PersonGroup,
+  { IFaceApiPerson }
+  uIFaceApi.Person,
+  { TFaceApiPerson }
+  uFaceApi.Core.Person;
 
 class function FaceApiHelper.AddPersonFaceURL(AAccess: TAccessServer; const AGroupID,
   APersonID, AURL, ATargetFace: String; const AUserData: String): String;
@@ -143,17 +147,31 @@ begin
     ATargetFace, AUserData);
 end;
 
+{$region 'Person'}
 class function FaceApiHelper.CreatePerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
 var
-  LIFaceApiCore: IFaceApiCore;
+  LIFaceApiPerson: IFaceApiPerson;
 begin
-  LIFaceApiCore := TFaceApiCore.Create;
+  LIFaceApiPerson := TFaceApiPerson.Create;
 
-  LIFaceApiCore.SetAccessKey(AAccess);
+  LIFaceApiPerson.SetAccessKey(AAccess);
 
-  Result := LIFaceApiCore.CreatePerson(AGroupID, APersonName, APersonUserData);
+  Result := LIFaceApiPerson.CreatePerson(AGroupID, APersonName, APersonUserData);
 end;
 
+class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
+var
+  LIFaceApiPerson: IFaceApiPerson;
+begin
+  LIFaceApiPerson := TFaceApiPerson.Create;
+
+  LIFaceApiPerson.SetAccessKey(AAccess);
+
+  Result := LIFaceApiPerson.ListPersonsInPersonGroup(AGroupID);
+end;
+{$endregion 'Person'}
+
+{$region 'Person Group'}
 class function FaceApiHelper.CreatePersonGroup(AAccess: TAccessServer; const AGroupID, AGroupName, AGroupUserData: String): String;
 var
   LIFaceApiPersonGroup: IFaceApiPersonGroup;
@@ -175,6 +193,62 @@ begin
 
   Result := LIFaceApiPersonGroup.DeletePersonGroup(AGroupID);
 end;
+
+class function FaceApiHelper.GetPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
+var
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
+begin
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
+
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
+
+  Result := LIFaceApiPersonGroup.GetPersonGroup(AGroupID);
+end;
+
+class function FaceApiHelper.GetPersonGroupTrainingStatus(AAccess: TAccessServer; const AGroupID: String): String;
+var
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
+begin
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
+
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
+
+  Result := LIFaceApiPersonGroup.GetPersonGroupTrainingStatus(AGroupID);
+end;
+
+class function FaceApiHelper.ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP): String;
+var
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
+begin
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
+
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
+
+  Result := LIFaceApiPersonGroup.ListPersonGroups(AStart, ATop);
+end;
+
+class function FaceApiHelper.TrainPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
+var
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
+begin
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
+
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
+
+  Result := LIFaceApiPersonGroup.TrainPersonGroup(AGroupID);
+end;
+
+class function FaceApiHelper.UpdatePersonGroup(AAccess: TAccessServer; const AGroupID, AGroupName, AGroupUserData: String): String;
+var
+  LIFaceApiPersonGroup: IFaceApiPersonGroup;
+begin
+  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
+
+  LIFaceApiPersonGroup.SetAccessKey(AAccess);
+
+  Result := LIFaceApiPersonGroup.UpdatePersonGroup(AGroupID, AGroupName, AGroupUserData);
+end;
+{$endregion 'Person Group'}
 
 class function FaceApiHelper.DetectFile(AAccess: TAccessServer; const AFileName: String; const ADetectOptions: TDetectOptions): String;
 var
@@ -209,50 +283,6 @@ begin
   Result := LIFaceApiFace.DetectURL(AURL, ADetectOptions);
 end;
 
-class function FaceApiHelper.GetPersonGroupTrainingStatus(AAccess: TAccessServer; const AGroupID: String): String;
-var
-  LIFaceApiPersonGroup: IFaceApiPersonGroup;
-begin
-  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
-
-  LIFaceApiPersonGroup.SetAccessKey(AAccess);
-
-  Result := LIFaceApiPersonGroup.GetPersonGroupTrainingStatus(AGroupID);
-end;
-
-class function FaceApiHelper.ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP): String;
-var
-  LIFaceApiPersonGroup: IFaceApiPersonGroup;
-begin
-  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
-
-  LIFaceApiPersonGroup.SetAccessKey(AAccess);
-
-  Result := LIFaceApiPersonGroup.ListPersonGroups(AStart, ATop);
-end;
-
-class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
-var
-  LIFaceApiCore: IFaceApiCore;
-begin
-  LIFaceApiCore := TFaceApiCore.Create;
-
-  LIFaceApiCore.SetAccessKey(AAccess);
-
-  Result := LIFaceApiCore.ListPersonsInPersonGroup(AGroupID);
-end;
-
-class function FaceApiHelper.TrainPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
-var
-  LIFaceApiPersonGroup: IFaceApiPersonGroup;
-begin
-  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
-
-  LIFaceApiPersonGroup.SetAccessKey(AAccess);
-
-  Result := LIFaceApiPersonGroup.TrainPersonGroup(AGroupID);
-end;
-
 class function FaceApiHelper.Verify(AAccess: TAccessServer; const AFaceTempID1, AFaceTempID2: String): String;
 var
   LIFaceApiFace: IFaceApiFace;
@@ -284,28 +314,6 @@ begin
   LIFaceApiFace.SetAccessKey(AAccess);
 
   Result := LIFaceApiFace.Identify(AFaceIDS, AGroupID, AMaxNumOfCandidatesReturned, AConfidenceThreshold);
-end;
-
-class function FaceApiHelper.UpdatePersonGroup(AAccess: TAccessServer; const AGroupID, AGroupName, AGroupUserData: String): String;
-var
-  LIFaceApiPersonGroup: IFaceApiPersonGroup;
-begin
-  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
-
-  LIFaceApiPersonGroup.SetAccessKey(AAccess);
-
-  Result := LIFaceApiPersonGroup.UpdatePersonGroup(AGroupID, AGroupName, AGroupUserData);
-end;
-
-class function FaceApiHelper.GetPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
-var
-  LIFaceApiPersonGroup: IFaceApiPersonGroup;
-begin
-  LIFaceApiPersonGroup := TFaceApiCorePersonGroup.Create;
-
-  LIFaceApiPersonGroup.SetAccessKey(AAccess);
-
-  Result := LIFaceApiPersonGroup.GetPersonGroup(AGroupID);
 end;
 
 class function FaceApiHelper.Group(AAccess: TAccessServer; AFaceIDS: TStringList): String;
