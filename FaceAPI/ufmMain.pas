@@ -155,7 +155,8 @@ uses
   { FaceApiAsyncHelper }
   uFunctions.FaceApiAsyncHelper,
   { Access }
-  uFaceApi.ServersAccess.Types;
+  uFaceApi.ServersAccess.Types,
+  uFaceApi.Consts;
 
 {$R *.dfm}
 
@@ -163,25 +164,6 @@ procedure TfmMain.btnClearLogClick(Sender: TObject);
 begin
   memLog.Clear;
 end;
-
-procedure TfmMain.btnCreatePersonAsyncClick(Sender: TObject);
-begin
-	FaceApiAsyncHelper.CreatePerson(
-		AccessServer(edtAccessKey.Text, fasWestUS),
-    edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text,
-    AsyncTaskCompleted
-  );
-end;
-
-procedure TfmMain.btnCreatePersonClick(Sender: TObject);
-begin
-	memLog.Lines.Add(
-    FaceApiHelper.CreatePerson(
-      AccessServer(edtAccessKey.Text, fasWestUS),
-      edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
-  );
-end;
-
 
 procedure TfmMain.AsyncTaskCompleted(AResult: String);
 begin
@@ -191,6 +173,46 @@ begin
 
 	memLog.Lines.Add(AResult);
 end;
+
+{$region 'PersonGroup'}
+procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
+var
+	LResult: String;
+begin
+	LResult := FaceApiHelper.CreatePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		edtPersonGroupName.Text, edtPersonGroupUserData.Text
+	);
+
+	if LResult = '' then
+		LResult := 'Group was created';
+
+	memLog.Lines.Add(LResult);
+end;
+
+procedure TfmMain.btnCreatePersonGroupAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.CreatePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+		edtPersonGroupName.Text, edtPersonGroupUserData.Text, AsyncTaskCompleted
+	);
+end;
+
+procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
+var
+	LResult: String;
+begin
+	LResult := FaceApiHelper.DeletePersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
+	);
+
+	if LResult = '' then
+		LResult := 'Group was deleted';
+
+	memLog.Lines.Add(LResult);
+end;
+
+{$endregion 'PersonGroup'}
 
 {$region 'Face'}
 procedure TfmMain.btnDetectInFileClick(Sender: TObject);
@@ -490,6 +512,7 @@ begin
 end;
 {$endregion 'Face'}
 
+
 procedure TfmMain.btnListPersonGroupsAsyncClick(Sender: TObject);
 begin
 	FaceApiAsyncHelper.ListPersonGroups(
@@ -501,23 +524,6 @@ procedure TfmMain.btnListPersonGroupsClick(Sender: TObject);
 begin
 	memLog.Lines.Add(
 		FaceApiHelper.ListPersonGroups(AccessServer(edtAccessKey.Text, fasWestUS))
-	);
-end;
-
-procedure TfmMain.btnListPersonsInPersonGroupAsyncClick(Sender: TObject);
-begin
-	FaceApiAsyncHelper.ListPersonsInPersonGroup(
-		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-		AsyncTaskCompleted
-	);
-end;
-
-procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
-begin
-	memLog.Lines.Add(
-		FaceApiHelper.ListPersonsInPersonGroup(
-			AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
-		)
 	);
 end;
 
@@ -557,49 +563,12 @@ begin
 	);
 end;
 
-procedure TfmMain.btnCreatePersonGroupAsyncClick(Sender: TObject);
-begin
-	FaceApiAsyncHelper.CreatePersonGroup(
-		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-		edtPersonGroupName.Text, edtPersonGroupUserData.Text, AsyncTaskCompleted
-	);
-end;
-
-procedure TfmMain.btnCreatePersonGroupClick(Sender: TObject);
-var
-	LResult: String;
-begin
-	LResult := FaceApiHelper.CreatePersonGroup(
-		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
-		edtPersonGroupName.Text, edtPersonGroupUserData.Text
-	);
-
-	if LResult = '' then
-		LResult := 'Group was created';
-
-	memLog.Lines.Add(LResult);
-end;
-
 procedure TfmMain.btnDeletePersonGroupAsyncClick(Sender: TObject);
 begin
 	FaceApiAsyncHelper.DeletePersonGroup(
 		AccessServer(edtAccessKey.Text, fasWestUS),
 		edtPersonGroupID.Text, AsyncTaskCompleted
 	);
-end;
-
-procedure TfmMain.btnDeletePersonGroupClick(Sender: TObject);
-var
-	LResult: String;
-begin
-	LResult := FaceApiHelper.DeletePersonGroup(
-		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text
-	);
-
-	if LResult = '' then
-		LResult := 'Group was deleted';
-
-	memLog.Lines.Add(LResult);
 end;
 
 
@@ -638,5 +607,60 @@ begin
 		FaceApiHelper.GetPersonGroup(AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text)
 	);
 end;
+
+{$region 'PersonGroup Person'}
+procedure TfmMain.btnCreatePersonClick(Sender: TObject);
+begin
+	memLog.Lines.Add(
+    FaceApiHelper.CreatePerson(
+      AccessServer(edtAccessKey.Text, fasWestUS),
+      edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text)
+  );
+end;
+
+procedure TfmMain.btnCreatePersonAsyncClick(Sender: TObject);
+begin
+	FaceApiAsyncHelper.CreatePerson(
+		AccessServer(edtAccessKey.Text, fasWestUS),
+    edtPersonGroupID.Text, edtPersonName.Text, edtPersonUserData.Text,
+    AsyncTaskCompleted
+  );
+end;
+
+procedure TfmMain.btnListPersonsInPersonGroupClick(Sender: TObject);
+var
+  LStart: String;
+  LTop: Integer;
+begin
+  LStart := Trim(edtStart.Text);
+
+  if not TryStrToInt(edtTop.Text, LTop) then
+    LTop := CONST_COMMAND_LIST_TOP;
+
+	memLog.Lines.Add(
+		FaceApiHelper.ListPersonsInPersonGroup(
+			AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+      LStart, LTop
+		)
+	);
+end;
+
+procedure TfmMain.btnListPersonsInPersonGroupAsyncClick(Sender: TObject);
+var
+  LStart: String;
+  LTop: Integer;
+begin
+  LStart := Trim(edtStart.Text);
+
+  if not TryStrToInt(edtTop.Text, LTop) then
+    LTop := CONST_COMMAND_LIST_TOP;
+
+	FaceApiAsyncHelper.ListPersonsInPersonGroup(
+		AccessServer(edtAccessKey.Text, fasWestUS), edtPersonGroupID.Text,
+    LStart, LTop,
+		AsyncTaskCompleted
+	);
+end;
+{$endregion 'PersonGroup Person'}
 
 end.

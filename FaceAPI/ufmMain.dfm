@@ -16,7 +16,7 @@ object fmMain: TfmMain
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    1168
+    1170
     552)
   PixelsPerInch = 96
   TextHeight = 13
@@ -118,11 +118,11 @@ object fmMain: TfmMain
     Caption = '[OPTIONAL] Start'
   end
   object Label19: TLabel
-    Left = 816
+    Left = 793
     Top = 371
-    Width = 80
+    Width = 103
     Height = 13
-    Caption = '[OPTIONAL] Top'
+    Caption = '[OPTIONAL] Top (int)'
   end
   object memLog: TMemo
     Left = 9
@@ -228,7 +228,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 768
     Height = 313
-    ActivePage = TabSheet4
+    ActivePage = TabSheet1
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'

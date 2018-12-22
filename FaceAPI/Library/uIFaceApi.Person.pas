@@ -26,17 +26,17 @@ type
     ///   Subscription level limit is 1000 for free tier subscription and can be
     ///   greater in paid tier subscriptions.
     /// </summary>
-		/// <param name="AGroupID">
+    /// <param name="AGroupID">
     ///   Specifying the target person group to create the person.
-		/// </param>
-		/// <param name="APersonName">
+    /// </param>
+    /// <param name="APersonName">
     ///   Display name of the target person. The maximum length is 128.
-		/// </param>
-		/// <param name="APersonUserData">
+    /// </param>
+    /// <param name="APersonUserData">
     ///   (optional)
     ///   Optional fields for user-provided data attached to a person. Size
     ///   limit is 16KB.
-		/// </param>
+    /// </param>
     /// <returns>
     ///   [OK]
     ///   Response 200
@@ -60,9 +60,9 @@ type
     /// <param name="AGroupID">
     ///   Specifying the person group containing the person.
     /// </param>
-		/// <param name="APersonID">
+    /// <param name="APersonID">
     ///   The target personId to delete.
-		/// </param>
+    /// </param>
     /// <returns>
     ///   [OK]
     ///   Response 200
@@ -80,9 +80,16 @@ type
     ///   (including personId, name, userData and persistedFaceIds of registered
     ///   faces of the person).
     /// </summary>
-		/// <param name="AGroupID">
+    /// <param name="AGroupID">
     ///   Id of the target person group.
-		/// </param>
+    /// </param>
+    /// <param name="AStart">
+    ///   List persons from the least personId greater than the "start".
+    ///   It contains no more than 64 characters. Default is empty.
+    /// </param>
+    /// <param name="ATop">
+    ///   The number of persons to list, ranging in [1, 1000]. Default is 1000.
+    /// </param>
     /// <returns>
     ///   [OK]
     ///   Response 200
@@ -97,11 +104,12 @@ type
     ///   the person.
     ///
     ///   [ERROR]
-    ///   Response 401, 403, 404, 409, 415, 429
+    ///   Response 401, 403, 404, 409, 429
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function ListPersonsInPersonGroup(const AGroupID: String): String;
+    function ListPersonsInPersonGroup(const AGroupID, AStart: String;
+      ATop: Integer): String;
   end;
 
 implementation

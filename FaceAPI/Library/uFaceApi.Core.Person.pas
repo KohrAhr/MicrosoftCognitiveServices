@@ -42,7 +42,8 @@ type
     ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.ListPersonsInPersonGroup">
     ///   interface ListPersonsInPersonGroup</see>
     /// </summary>
-    function ListPersonsInPersonGroup(const AGroupID: String): String;
+    function ListPersonsInPersonGroup(const AGroupID, AStart: String;
+      ATop: Integer): String;
   end;
 
 implementation
@@ -98,7 +99,8 @@ begin
   Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
-function TFaceApiPerson.ListPersonsInPersonGroup(const AGroupID: String): String;
+function TFaceApiPerson.ListPersonsInPersonGroup(const AGroupID, AStart: String;
+  ATop: Integer): String;
 var
   LURL: String;
 begin

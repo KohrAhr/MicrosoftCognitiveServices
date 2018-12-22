@@ -38,9 +38,10 @@ type
     class function ListPersonGroups(AAccess: TAccessServer; const AStart: String = ''; const ATop: Integer = CONST_COMMAND_LIST_TOP): String;
 
     /// <summary>
-    ///   Implements top layout for <see cref="uIFaceApi.Core|IFaceApiCore.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
+    ///   Implements top layout for <see cref="uIFaceApi.PersonGroup|IFaceApiPersonGroup.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
     /// </summary>
-    class function ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
+    class function ListPersonsInPersonGroup(AAccess: TAccessServer; const
+      AGroupID, AStart: String; ATop: Integer): String;
 
     /// <summary>
     ///   Implements top layout for
@@ -159,7 +160,8 @@ begin
   Result := LIFaceApiPerson.CreatePerson(AGroupID, APersonName, APersonUserData);
 end;
 
-class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccessServer; const AGroupID: String): String;
+class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccessServer;
+  const AGroupID, AStart: String; ATop: Integer): String;
 var
   LIFaceApiPerson: IFaceApiPerson;
 begin
@@ -167,7 +169,7 @@ begin
 
   LIFaceApiPerson.SetAccessKey(AAccess);
 
-  Result := LIFaceApiPerson.ListPersonsInPersonGroup(AGroupID);
+  Result := LIFaceApiPerson.ListPersonsInPersonGroup(AGroupID, AStart, ATop);
 end;
 {$endregion 'Person'}
 

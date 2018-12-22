@@ -67,7 +67,7 @@ type
     ///   <see cref="uIFaceApi.Core|IFaceApiCore.ListPersonsInPersonGroup">interface ListPersonsInPersonGroup</see>
     /// </summary>
     class procedure ListPersonsInPersonGroup(AAccess: TAccessServer;
-      const AGroupID: String;
+      const AGroupID, AStart: String; ATop: Integer;
       ACallbackMethod: TFaceApiAsyncCallback = nil);
 
     /// <summary>
@@ -512,7 +512,7 @@ begin
 end;
 
 class procedure FaceApiAsyncHelper.ListPersonsInPersonGroup(
-  AAccess: TAccessServer; const AGroupID: String;
+  AAccess: TAccessServer; const AGroupID, AStart: String; ATop: Integer;
   ACallbackMethod: TFaceApiAsyncCallback = nil);
 begin
   RunAsync(
@@ -520,7 +520,8 @@ begin
     var
       LResult: String;
     begin
-      LResult := FaceApiHelper.ListPersonsInPersonGroup(AAccess, AGroupID);
+      LResult := FaceApiHelper.ListPersonsInPersonGroup(AAccess, AGroupID,
+        AStart, ATop);
 
       CallCallback(ACallbackMethod, LResult);
     end
