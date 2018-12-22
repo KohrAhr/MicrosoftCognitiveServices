@@ -20,5 +20,5 @@ Currently implemented FaceAPI services:
 
 P.S. If necessary support for Delphi XE8 and XE7 also could be added.
 
-(C) 2017 by www.DiatomEnterprises.com and ZAM@1CLICK.LV
+2017 by ZAM@1CLICK.LV
 RIGA, LATVIA, EU.
