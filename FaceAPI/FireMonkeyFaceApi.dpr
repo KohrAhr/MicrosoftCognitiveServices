@@ -19,7 +19,10 @@ uses
   uIFaceApi.PersonGroup in 'Library\uIFaceApi.PersonGroup.pas',
   uFaceApi.Core.Face in 'Library\uFaceApi.Core.Face.pas',
   uIFaceApi.Face in 'Library\uIFaceApi.Face.pas',
-  uIFaceApi.Base in 'Library\uIFaceApi.Base.pas';
+  uIFaceApi.Base in 'Library\uIFaceApi.Base.pas',
+  uFaceApi.Consts in 'Library\uFaceApi.Consts.pas',
+  uFaceApi.Core.Person in 'Library\uFaceApi.Core.Person.pas',
+  uIFaceApi.Person in 'Library\uIFaceApi.Person.pas';
 
 {$R *.res}
 
