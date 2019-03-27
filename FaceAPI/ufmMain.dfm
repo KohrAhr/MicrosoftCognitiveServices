@@ -2,8 +2,8 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 
-    '(C) 2017, 2018 by ZAM@1CLICK.LV. Delphi DX10. Microsoft Cognitiv' +
-    'e Services Face Api 1.0'
+    '(C) 2017, 2018, 2019 by ZAM@1CLICK.LV. Delphi DX10. Microsoft Co' +
+    'gnitive Services Face Api 1.0'
   ClientHeight = 552
   ClientWidth = 1170
   Color = clBtnFace
@@ -15,6 +15,7 @@ object fmMain: TfmMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   DesignSize = (
     1170
     552)
@@ -228,7 +229,7 @@ object fmMain: TfmMain
     Top = 8
     Width = 768
     Height = 313
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     TabOrder = 11
     object TabSheet1: TTabSheet
       Caption = 'Person Group'
@@ -676,6 +677,18 @@ object fmMain: TfmMain
         Caption = 'Create Async'
         TabOrder = 3
         OnClick = btnCreatePersonAsyncClick
+      end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'Server'
+      ImageIndex = 4
+      object lstServers: TListBox
+        Left = 3
+        Top = 3
+        Width = 345
+        Height = 279
+        ItemHeight = 13
+        TabOrder = 0
       end
     end
   end
