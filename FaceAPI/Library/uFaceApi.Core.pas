@@ -58,7 +58,7 @@ var
   LRequestContent: TBytesStream;
 begin
   LURL := Format(
-    'persongroups/%s/persons/%s/persistedFaces?userData=%s&targetFace=%s',
+    '/persongroups/%s/persons/%s/persistedFaces?userData=%s&targetFace=%s',
     [
       AGroupID.ToLower, APersonID, AUserData, ATargetFace
     ]
@@ -81,7 +81,7 @@ var
   LRequestContent: TBytesStream;
 begin
   LURL := Format(
-    'persongroups/%s/persons/%s/persistedFaces?userData=%s&targetFace=%s',
+    '/persongroups/%s/persons/%s/persistedFaces?userData=%s&targetFace=%s',
     [
       AGroupID.ToLower, APersonID, AUserData, ATargetFace
     ]
