@@ -6,7 +6,7 @@ This is free and open source library (wrapper - interface/class/types) for commu
 New! Available async functions!
 
 
-Support Delphi DX10 "Seattle", Delphi DX10.1 "Berlin", Delphi DX10.2 "Tokyo".
+Support Delphi DX10 "Seattle", Delphi DX10.1 "Berlin", Delphi DX10.2 "Tokyo", Delphi DX10.3 "Rio".
 
 Library are designed for VCL and FMX platform. For 32bit and 64bit OS.
 
@@ -20,5 +20,5 @@ Currently implemented FaceAPI services:
 
 P.S. If necessary support for Delphi XE8 and XE7 also could be added.
 
-2017 by ZAM@1CLICK.LV
+(C) 2017-2019 by ZAM@1CLICK.LV
 RIGA, LATVIA, EU.
