@@ -2,8 +2,8 @@
 ///   Unit contain the Main Interface declaration for Face API Microsoft
 ///   Cognitive Services 1.0
 ///
-///   Later part of functions will be moved into new
-///     "uFaceApi.Person.pas" and into "uFaceApi.FaceList.pas"
+///   Later part of functions will be moved into
+///     "uFaceApi.Person.pas" or into "uFaceApi.FaceList.pas"
 /// </summary>
 unit uIFaceApi.Core;
 
@@ -114,7 +114,7 @@ type
     /// <param name="AGroupID">
     ///   Specifying the person group containing the target person.
     /// </param>
-		/// <param name="APersonID">
+    /// <param name="APersonID">
     ///   Target person that the face is added to.
 		/// </param>
 		/// <param name="AStream">
@@ -150,33 +150,6 @@ type
     /// </returns>
     function AddPersonFaceStream(const AGroupID, APersonID: String; AStream:
       TBytesStream; ATargetFace: String; const AUserData: String = ''): String;
-
-    /// <summary>
-    ///   Delete a face from a person. Relative image for the persisted face
-    ///   will also be deleted.
-    /// </summary>
-		/// <param name="AGroupID">
-    ///   Specifying the person group containing the target person.
-		/// </param>
-		/// <param name="APersonID">
-    ///   Specifying the person that the target persisted face belong to.
-		/// </param>
-		/// <param name="APersistedFaceID">
-    ///   The persisted face to remove. This persistedFaceId is returned from
-    ///   Person - Add a Person Face.
-		/// </param>
-    /// <returns>
-    ///   [OK]
-    ///   Response 200
-    ///   A successful call returns an empty response body.
-    ///
-    ///   [ERROR]
-    ///   Response 401, 403, 404, 409, 429
-    ///   Error code and message returned in JSON:
-    ///   Error Code	Error Message Description
-    /// </returns>
-    function DeletePersonFace(const AGroupID, APersonID: String;
-      APersistedFaceID: String): String;
   end;
 
 implementation

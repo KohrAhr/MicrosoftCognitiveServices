@@ -1,6 +1,6 @@
 /// <summary>
-///   Main Class implementation for "Person" functionality for Face API
-///   Microsoft Cognitive Services 1.0
+///   Main Class implementation for "PersonGroup Person" functionality for Face
+///   API Microsoft Cognitive Services 1.0
 /// </summary>
 unit uFaceApi.Core.Person;
 
@@ -29,21 +29,28 @@ type
     ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.CreatePerson">
     ///   interface CreatePerson</see>
     /// </summary>
-    function CreatePerson(const AGroupID: String; const APersonName: String;
+    function New(const AGroupID: String; const APersonName: String;
       const APersonUserData: String = ''): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.DeletePerson">
     ///   interface DeletePerson</see>
     /// </summary>
-    function DeletePerson(const AGroupID, APersonID: String): String;
+    function Delete(const AGroupID, APersonID: String): String;
 
     /// <summary>
     ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.ListPersonsInPersonGroup">
     ///   interface ListPersonsInPersonGroup</see>
     /// </summary>
-    function ListPersonsInPersonGroup(const AGroupID, AStart: String;
+    function List(const AGroupID, AStart: String;
       ATop: Integer): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.DeletePersonFace">
+    ///   interface DeletePersonFace</see>
+    /// </summary>
+    function DeletePersonFace(const AGroupID, APersonID: String;
+      APersistedFaceID: String): String;
   end;
 
 implementation
@@ -54,7 +61,7 @@ uses
   { StringHelper }
   uFunctions.StringHelper;
 
-function TFaceApiPerson.CreatePerson(const AGroupID, APersonName,
+function TFaceApiPerson.New(const AGroupID, APersonName,
   APersonUserData: String): String;
 var
   LURL: String;
@@ -84,7 +91,7 @@ begin
   end;
 end;
 
-function TFaceApiPerson.DeletePerson(const AGroupID,
+function TFaceApiPerson.Delete(const AGroupID,
   APersonID: String): String;
 var
   LURL: String;
@@ -99,7 +106,7 @@ begin
   Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
-function TFaceApiPerson.ListPersonsInPersonGroup(const AGroupID, AStart: String;
+function TFaceApiPerson.List(const AGroupID, AStart: String;
   ATop: Integer): String;
 var
   LURL: String;
@@ -112,6 +119,21 @@ begin
   );
 
   Result := GetRequest(LURL, CONST_CONTENT_TYPE_JSON);
+end;
+
+function TFaceApiPerson.DeletePersonFace(const AGroupID, APersonID: String;
+  APersistedFaceID: String): String;
+var
+  LURL: String;
+begin
+  LURL := Format(
+    '/persongroups/%s/persons/%s/persistedFaces/%s',
+    [
+      AGroupID.ToLower, APersonID.ToLower, APersistedFaceID
+    ]
+  );
+
+  Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 end.

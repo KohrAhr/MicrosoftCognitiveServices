@@ -1,6 +1,6 @@
 /// <summary>
-///   Unit contain the Main Interface declaration for "Person" functionality for
-///   Face API Microsoft Cognitive Services 1.0
+///   Unit contain the Main Interface declaration for "PersonGroup Person"
+///   functionality for Face API Microsoft Cognitive Services 1.0
 /// </summary>
 unit uIFaceApi.Person;
 
@@ -50,7 +50,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function CreatePerson(const AGroupID, APersonName: String; const
+    function New(const AGroupID, APersonName: String; const
       APersonUserData: String = ''): String;
 
     /// <summary>
@@ -73,7 +73,7 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function DeletePerson(const AGroupID, APersonID: String): String;
+    function Delete(const AGroupID, APersonID: String): String;
 
     /// <summary>
     ///   List all persons in a person group, and retrieve person information
@@ -108,8 +108,34 @@ type
     ///   Error code and message returned in JSON:
     ///   Error Code	Error Message Description
     /// </returns>
-    function ListPersonsInPersonGroup(const AGroupID, AStart: String;
-      ATop: Integer): String;
+    function List(const AGroupID, AStart: String; ATop: Integer): String;
+
+    /// <summary>
+    ///   Delete a face from a person. Relative image for the persisted face
+    ///   will also be deleted.
+    /// </summary>
+    /// <param name="AGroupID">
+    ///   Specifying the person group containing the target person.
+    /// </param>
+    /// <param name="APersonID">
+    ///   Specifying the person that the target persisted face belong to.
+    /// </param>
+    /// <param name="APersistedFaceID">
+    ///   The persisted face to remove. This persistedFaceId is returned from
+    ///   Person - Add a Person Face.
+    /// </param>
+    /// <returns>
+    ///   [OK]
+    ///   Response 200
+    ///   A successful call returns an empty response body.
+    ///
+    ///   [ERROR]
+    ///   Response 401, 403, 404, 409, 429
+    ///   Error code and message returned in JSON:
+    ///   Error Code	Error Message Description
+    /// </returns>
+    function DeletePersonFace(const AGroupID, APersonID: String;
+      APersistedFaceID: String): String;
   end;
 
 implementation

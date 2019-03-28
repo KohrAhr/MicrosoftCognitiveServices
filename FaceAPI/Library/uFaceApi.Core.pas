@@ -34,13 +34,6 @@ type
     /// </summary>
     function AddPersonFaceStream(const AGroupID, APersonID: String; AStreamData:
       TBytesStream; ATargetFace: String; const AUserData: String = ''): String;
-
-    /// <summary>
-    ///   Implements <see cref="uIFaceApi.Core|IFaceApiCore.DeletePersonFace">
-    ///   interface DeletePersonFace</see>
-    /// </summary>
-    function DeletePersonFace(const AGroupID, APersonID: String;
-      APersistedFaceID: String): String;
   end;
 
 implementation
@@ -102,21 +95,6 @@ begin
   finally
     LRequestContent.Free;
   end;
-end;
-
-function TFaceApiCore.DeletePersonFace(const AGroupID, APersonID: String;
-  APersistedFaceID: String): String;
-var
-  LURL: String;
-begin
-  LURL := Format(
-    '/persongroups/%s/persons/%s/persistedFaces/%s',
-    [
-      AGroupID.ToLower, APersonID.ToLower, APersistedFaceID
-    ]
-  );
-
-  Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
 end;
 
 end.

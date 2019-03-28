@@ -148,7 +148,7 @@ begin
     ATargetFace, AUserData);
 end;
 
-{$region 'Person'}
+{$region 'PersonGroup Person'}
 class function FaceApiHelper.CreatePerson(AAccess: TAccessServer; AGroupID: String; APersonName: String; APersonUserData: String): String;
 var
   LIFaceApiPerson: IFaceApiPerson;
@@ -157,7 +157,7 @@ begin
 
   LIFaceApiPerson.SetAccessKey(AAccess);
 
-  Result := LIFaceApiPerson.CreatePerson(AGroupID, APersonName, APersonUserData);
+  Result := LIFaceApiPerson.New(AGroupID, APersonName, APersonUserData);
 end;
 
 class function FaceApiHelper.ListPersonsInPersonGroup(AAccess: TAccessServer;
@@ -169,9 +169,9 @@ begin
 
   LIFaceApiPerson.SetAccessKey(AAccess);
 
-  Result := LIFaceApiPerson.ListPersonsInPersonGroup(AGroupID, AStart, ATop);
+  Result := LIFaceApiPerson.List(AGroupID, AStart, ATop);
 end;
-{$endregion 'Person'}
+{$endregion 'PersonGroup Person'}
 
 {$region 'Person Group'}
 class function FaceApiHelper.CreatePersonGroup(AAccess: TAccessServer; const AGroupID, AGroupName, AGroupUserData: String): String;
