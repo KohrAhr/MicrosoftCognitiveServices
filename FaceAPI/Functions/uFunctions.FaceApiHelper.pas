@@ -138,13 +138,13 @@ uses
 class function FaceApiHelper.AddPersonFaceURL(AAccess: TAccessServer; const AGroupID,
   APersonID, AURL, ATargetFace: String; const AUserData: String): String;
 var
-  LIFaceApiCore: IFaceApiCore;
+  LIFaceApiPerson: IFaceApiPerson;
 begin
-  LIFaceApiCore := TFaceApiCore.Create;
+  LIFaceApiPerson := TFaceApiPerson.Create;
 
-  LIFaceApiCore.SetAccessKey(AAccess);
+  LIFaceApiPerson.SetAccessKey(AAccess);
 
-  Result := LIFaceApiCore.AddPersonFaceURL(AGroupID, APersonID, AURL,
+  Result := LIFaceApiPerson.AddPersonFaceURL(AGroupID, APersonID, AURL,
     ATargetFace, AUserData);
 end;
 

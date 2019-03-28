@@ -51,6 +51,20 @@ type
     /// </summary>
     function DeletePersonFace(const AGroupID, APersonID: String;
       APersistedFaceID: String): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.AddPersonFaceURL">
+    ///   interface AddPersonFaceURL</see>
+    /// </summary>
+    function AddPersonFaceURL(const AGroupID, APersonID, AURL: String;
+      ATargetFace: String; const AUserData: String = ''): String;
+
+    /// <summary>
+    ///   Implements <see cref="uIFaceApi.Person|IFaceApiPerson.AddPersonFaceStream"
+    ///   >interface AddPersonFaceStream</see>
+    /// </summary>
+    function AddPersonFaceStream(const AGroupID, APersonID: String; AStreamData:
+      TBytesStream; ATargetFace: String; const AUserData: String = ''): String;
   end;
 
 implementation
@@ -134,6 +148,59 @@ begin
   );
 
   Result := DeleteRequest(LURL, CONST_CONTENT_TYPE_JSON);
+end;
+
+function TFaceApiPerson.AddPersonFaceStream(const AGroupID, APersonID: String;
+  AStreamData: TBytesStream; ATargetFace: String; const AUserData: String): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
+begin
+  LURL := Format(
+    '/persongroups/%s/persons/%s/persistedFaces?userData=%s&targetFace=%s',
+    [
+      AGroupID.ToLower, APersonID, AUserData, ATargetFace
+    ]
+  );
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(AStreamData.Bytes);
+
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
+end;
+
+function TFaceApiPerson.AddPersonFaceURL(const AGroupID, APersonID, AURL: String;
+  ATargetFace: String; const AUserData: String): String;
+var
+  LURL: String;
+  LRequestContent: TBytesStream;
+begin
+  LURL := Format(
+    '/persongroups/%s/persons/%s/persistedFaces?userData=%s&targetFace=%s',
+    [
+      AGroupID.ToLower, APersonID, AUserData, ATargetFace
+    ]
+  );
+
+  LRequestContent := nil;
+  try
+    LRequestContent := TBytesStream.Create(
+      StringHelper.StringToBytesArray(
+        Format(
+          '{ "url":"%s" }',
+          [AURL]
+        )
+      )
+    );
+
+    Result := PostRequest(LURL, LRequestContent, CONST_CONTENT_TYPE_JSON);
+  finally
+    LRequestContent.Free;
+  end;
 end;
 
 end.

@@ -5,6 +5,7 @@
 LEGEND:
 	[OK]	-- functionality done/available
 	!!		-- TODO
+	**		-- in progress
 
 =================================
 /uIFaceApi.PersonGroup.pas
@@ -31,9 +32,8 @@ LEGEND:
 
 
 =================================
-!!
-/uIFaceApi.Core.pas --> uIFaceApi.Core.FaceList.pas
-/uFaceApi.Core.pas --> uFaceApi.Core.FaceList.pas
+!!	uIFaceApi.Core.FaceList.pas
+!!	uFaceApi.Core.FaceList.pas
 =================================
 FaceList - Add Face 
 FaceList - Create 
@@ -48,7 +48,7 @@ FaceList - Update
 /uIFaceApi.Person.pas
 /uFaceApi.Core.Person.pas
 =================================
-!!	PersonGroup Person - Add Face 
+[OK]	PersonGroup Person - Add Face 
 [OK]	PersonGroup Person - Create 
 [OK]	PersonGroup Person - Delete 
 [OK]	PersonGroup Person - Delete Face 

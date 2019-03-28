@@ -18,3 +18,5 @@ OSX32
 *.tvsconfig
 *.deployproj
 *.dproj
+/FaceAPI/Access Key.txt
+/TestFaces
