@@ -1,0 +1,75 @@
+===========
+28/Mar/2019
+===========
+
+LEGEND:
+	[OK]	-- functionality done/available
+	!!		-- TODO
+
+=================================
+/uIFaceApi.PersonGroup.pas
+/uFaceApi.Core.PersonGroup.pas
+=================================
+[OK]	PersonGroup - Create 
+[OK]	PersonGroup - Delete 
+[OK]	PersonGroup - Get 
+[OK]	PersonGroup - Get Training Status 
+[OK]	PersonGroup - List 
+[OK]	PersonGroup - Train 
+[OK]	PersonGroup - Update
+
+
+=================================
+/IFaceApiFace.pas
+/uFaceApi.Core.Face.pas
+=================================
+[OK]	Face - Detect 
+[OK]	Face - Find Similar 
+[OK]	Face - Group 
+[OK]	Face - Identify 
+[OK]	Face - Verify 
+
+
+=================================
+!!
+/uIFaceApi.Core.pas --> uIFaceApi.Core.FaceList.pas
+/uFaceApi.Core.pas --> uFaceApi.Core.FaceList.pas
+=================================
+FaceList - Add Face 
+FaceList - Create 
+FaceList - Delete 
+FaceList - Delete Face 
+FaceList - Get 
+FaceList - List 
+FaceList - Update 
+
+
+=================================
+/uIFaceApi.Person.pas
+/uFaceApi.Core.Person.pas
+=================================
+!!	PersonGroup Person - Add Face 
+[OK]	PersonGroup Person - Create 
+[OK]	PersonGroup Person - Delete 
+[OK]	PersonGroup Person - Delete Face 
+!!	PersonGroup Person - Get 
+!!	PersonGroup Person - Get Face 
+[OK]	PersonGroup Person - List 
+!!	PersonGroup Person - Update 
+!!	PersonGroup Person - Update Face 
+
+
+=================================
+!!	LargePersonGroup 
+=================================
+
+
+=================================
+!!	LargeFaceList 
+=================================
+
+
+=================================
+!!	Snapshot 
+=================================
+
