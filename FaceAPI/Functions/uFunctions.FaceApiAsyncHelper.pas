@@ -216,10 +216,6 @@ type
 implementation
 
 uses
-  { IFaceApiCore }
-  uIFaceApi.Core,
-  { TFaceApiCore }
-  uFaceApi.Core,
   { IFaceApiFace }
   uIFaceApi.Face,
   { ITask }
