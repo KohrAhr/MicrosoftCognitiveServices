@@ -1,3 +1,5 @@
+https://www.diatomenterprises.com/technologies/a-practical-comparison-of-face-detection-and-recognition-tools/
+
 # MicrosoftCognitiveServices
 Microsoft Cognitive Services on Embarcadero DELPHI
 
